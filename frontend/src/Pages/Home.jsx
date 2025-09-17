@@ -1,6 +1,6 @@
 import React from 'react'
-import NavBar from './Component/NavBar.jsx'
-const App = () => {
+import NavBar from '../Component/NavBar.jsx'
+const Home = () => {
   return (
     <>
       <NavBar></NavBar>
@@ -11,4 +11,4 @@ const App = () => {
   )
 }
 
-export default App
+export default Home
