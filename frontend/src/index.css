@@ -1,5 +1,11 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "@fontsource/nunito";      
+@import "@fontsource/nunito/600.css";
+@import "@fontsource/nunito/700.css";
+
+/* @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap'); */
+
 
 @custom-variant dark (&:is(.dark *));
 
@@ -117,4 +123,12 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* :root {
+  --font-sans: 'Nunito', sans-serif;
+} */
+
+.font-nunito {
+  font-family: 'Nunito', sans-serif;
 }
