@@ -14,7 +14,7 @@ import Logo from "../assets/Logo.png";
 function App() {
   return (
     <div>
-      <NavigationMenu className="gap-10 absolute top-0 left-0 w-full flex items-center justify-between p-4 text-white z-50 bg-transparent">
+      <NavigationMenu className="gap-10 absolute top-0 left-11 w-full flex items-center justify-between p-4 text-white z-50 bg-transparent">
         <NavigationMenuList className="gap-10 items-center">
           <NavigationMenuItem>
             <img src={Logo} alt="Logo Dinas Pariwisata" width={50} />
@@ -31,17 +31,17 @@ function App() {
             <NavigationMenuContent>
               <ul className="grid w-[200px] gap-4 p-2">
                 <li>
-                  <NavigationMenuLink asChild>
+                  <NavigationMenuLink asChild className="hover:bg-black hover:text-white">
                     <Link to="#">Lore Lindu</Link>
                   </NavigationMenuLink>
                 </li>
                 <li>
-                  <NavigationMenuLink asChild>
+                  <NavigationMenuLink asChild className="hover:bg-black hover:text-white">
                     <Link to="#">Geopark Poso</Link>
                   </NavigationMenuLink>
                 </li>
                 <li>
-                  <NavigationMenuLink asChild>
+                  <NavigationMenuLink asChild className="hover:bg-black hover:text-white">
                     <Link to="#">Pulau Togean</Link>
                   </NavigationMenuLink>
                 </li>
@@ -58,62 +58,62 @@ function App() {
             <NavigationMenuContent className="relative left-1/2 -translate-x-1/2 p-4 rounded-md shadow-lg">
               <ul className="grid grid-cols-3 gap-4 p-2 w-[600px]">
                 <li>
-                  <NavigationMenuLink asChild>
+                  <NavigationMenuLink asChild className="hover:bg-black hover:text-white">
                     <Link to="#">Luk Panenteng</Link>
                   </NavigationMenuLink>
                 </li>
                 <li>
-                  <NavigationMenuLink asChild>
+                  <NavigationMenuLink asChild className="hover:bg-black hover:text-white">
                     <Link to="#">Towale</Link>
                   </NavigationMenuLink>
                 </li>
                 <li>
-                  <NavigationMenuLink asChild>
+                  <NavigationMenuLink asChild className="hover:bg-black hover:text-white">
                     <Link to="#">Karosondaya</Link>
                   </NavigationMenuLink>
                 </li>
                 <li>
-                  <NavigationMenuLink asChild>
+                  <NavigationMenuLink asChild className="hover:bg-black hover:text-white">
                     <Link to="#">Pulo Dua</Link>
                   </NavigationMenuLink>
                 </li>
                 <li>
-                  <NavigationMenuLink asChild>
+                  <NavigationMenuLink asChild className="hover:bg-black hover:text-white">
                     <Link to="#">Bonebaru</Link>
                   </NavigationMenuLink>
                 </li>
                 <li>
-                  <NavigationMenuLink asChild>
+                  <NavigationMenuLink asChild className="hover:bg-black hover:text-white">
                     <Link to="#">Pokekea</Link>
                   </NavigationMenuLink>
                 </li>
                 <li>
-                  <NavigationMenuLink asChild>
+                  <NavigationMenuLink asChild className="hover:bg-black hover:text-white">
                     <Link to="#">Malangga</Link>
                   </NavigationMenuLink>
-                </li>
+                </li> 
                 <li>
-                  <NavigationMenuLink asChild>
+                  <NavigationMenuLink asChild className="hover:bg-black hover:text-white">
                     <Link to="#">Mendaan</Link>
                   </NavigationMenuLink>
                 </li>
                 <li>
-                  <NavigationMenuLink asChild>
+                  <NavigationMenuLink asChild className="hover:bg-black hover:text-white">
                     <Link to="#">Labuan Belanda</Link>
                   </NavigationMenuLink>
                 </li>
                 <li>
-                  <NavigationMenuLink asChild>
+                  <NavigationMenuLink asChild className="hover:bg-black hover:text-white">
                     <Link to="#">Bente</Link>
                   </NavigationMenuLink>
                 </li>
                 <li>
-                  <NavigationMenuLink asChild>
+                  <NavigationMenuLink asChild className="hover:bg-black hover:text-white">
                     <Link to="#">Ungkea</Link>
                   </NavigationMenuLink>
                 </li>
                 <li>
-                  <NavigationMenuLink asChild>
+                  <NavigationMenuLink asChild className="hover:bg-black hover:text-white">
                     <Link to="#">Taman Anggrek</Link>
                   </NavigationMenuLink>
                 </li>
