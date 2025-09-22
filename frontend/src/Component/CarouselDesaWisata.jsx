@@ -119,7 +119,7 @@ export default function Carousel() {
     if (!slider) return;
     const interval = setInterval(() => {
       slider.current?.next();
-    }, 300000);
+    }, 100000);
     return () => clearInterval(interval);
   }, [slider]);
 

@@ -3,6 +3,7 @@ import Globe from "../assets/globe.png";
 import "../index.css";
 import CarouselWisataUnggulan from "../Component/CarouselWisataUnggulan.jsx";
 import CarouselDesaWisata from "../Component/CarouselDesaWisata.jsx";
+import CarouselEvent from "../Component/CarouselEvent.jsx";
 
 const Home = () => {
   return (
@@ -31,6 +32,8 @@ const Home = () => {
 
       <CarouselWisataUnggulan></CarouselWisataUnggulan>
       <CarouselDesaWisata></CarouselDesaWisata>
+      <CarouselEvent></CarouselEvent>
+
     </>
   );
 };
