@@ -1,15 +1,17 @@
-import React from 'react'
-import NavBar from './Component/NavBar.jsx'
+import { Routes, Route } from "react-router-dom";
+import Home from "./Pages/Home";
+import LukPanenteng from "./Pages/LukPanenteng";
 
-const App = () => {
+function App() {
   return (
-    <>
-      <NavBar></NavBar>
-    <div className='bg-black'>
-      <h1 className='text-white'>Ini Beranda</h1>
-    </div>
-    </>
-  )
+    <Routes>
+      {/* Halaman utama */}
+      <Route path="/" element={<Home />} />
+
+      {/* Halaman detail festival */}
+      <Route path="/luk-panenteng" element={<LukPanenteng />} />
+    </Routes>
+  );
 }
 
-export default App
+export default App;

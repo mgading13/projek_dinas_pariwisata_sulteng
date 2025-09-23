@@ -21,7 +21,7 @@ function App() {
           </NavigationMenuItem>
           <NavigationMenuItem>
             <NavigationMenuLink className="font-semibold">
-              <Link href="/docs">Beranda</Link>
+              <Link to="/docs">Beranda</Link>
             </NavigationMenuLink>
           </NavigationMenuItem>
           <NavigationMenuItem>
@@ -59,7 +59,7 @@ function App() {
               <ul className="grid grid-cols-3 gap-4 p-2 w-[600px]">
                 <li>
                   <NavigationMenuLink asChild className="hover:bg-black hover:text-white">
-                    <Link to="#">Luk Panenteng</Link>
+                    <Link to="/luk-panenteng">Luk Panenteng</Link>
                   </NavigationMenuLink>
                 </li>
                 <li>
@@ -122,7 +122,7 @@ function App() {
           </NavigationMenuItem>
           <NavigationMenuItem>
             <NavigationMenuLink className="font-semibold">
-              <Link href="/docs">Atraksi</Link>
+              <Link to="/docs">Atraksi</Link>
             </NavigationMenuLink>
           </NavigationMenuItem>
         </NavigationMenuList>
