@@ -8,6 +8,7 @@ import DanauLindu from "../assets/Event/FestivalDanauLindu.jpg";
 import FestivalDanauPoso from "../assets/Event/FestivalDanauPoso.jpg";
 import FestivalTelukTomini from "../assets/Event/FestivalTelukTomini.jpeg";
 import FestivalTumbe from "../assets/Event/FestivalTumbe.jpg";
+import { Link } from "react-router-dom";
 
 const slides = [
   {
@@ -39,10 +40,10 @@ const slides = [
 
   {
     id: 4,
-    title: "Festival Tumbe",
+    title: "Festival Malabot Tumbe",
     location: "Kabupaten Banggai Laut",
     description:
-      "Festival Tumbe adalah tradisi sakral yang diwariskan turun-temurun oleh masyarakat Banggai Laut. Perayaan ini mengisahkan perjalanan sejarah migrasi leluhur melalui simbol pertukaran telur, yang melambangkan persaudaraan dan persatuan. Festival ini bukan sekadar upacara adat, tetapi juga atraksi budaya yang memikat dengan tarian, musik, dan prosesi penuh warna. Bagi wisatawan, Tumbe menjadi kesempatan langka untuk menyelami sejarah, tradisi, dan filosofi hidup masyarakat Banggai Laut.",
+      "Festival Malabot Tumbe adalah tradisi sakral yang diwariskan turun-temurun oleh masyarakat Banggai Laut. Perayaan ini mengisahkan perjalanan sejarah migrasi leluhur melalui simbol pertukaran telur, yang melambangkan persaudaraan dan persatuan. Festival ini bukan sekadar upacara adat, tetapi juga atraksi budaya yang memikat dengan tarian, musik, dan prosesi penuh warna. Bagi wisatawan, Tumbe menjadi kesempatan langka untuk menyelami sejarah, tradisi, dan filosofi hidup masyarakat Banggai Laut.",
     image: FestivalTumbe,
   },
 ];
@@ -117,12 +118,46 @@ export default function Carousel() {
                   </button>
 
                   <div>
-                    <Button
-                      variant="outline"
-                      className="bg-gray-50/20 hover:bg-gray-50/30"
-                    >
-                      Info Detail
-                    </Button>
+                    {slide.id === 1 && (
+                      <Link to="/danau-lindu">
+                        <Button
+                          variant="outline"
+                          className="bg-gray-50/20 hover:bg-gray-50/30"
+                        >
+                          Info Detail
+                        </Button>
+                      </Link>
+                    )}
+                    {slide.id === 2 && (
+                      <Link to="/danau-poso">
+                        <Button
+                          variant="outline"
+                          className="bg-gray-50/20 hover:bg-gray-50/30"
+                        >
+                          Info Detail
+                        </Button>
+                      </Link>
+                    )}
+                    {slide.id === 3 && (
+                      <Link to="/teluk-tomini">
+                        <Button
+                          variant="outline"
+                          className="bg-gray-50/20 hover:bg-gray-50/30"
+                        >
+                          Info Detail
+                        </Button>
+                      </Link>
+                    )}
+                    {slide.id === 4 && (
+                      <Link to="/tumbe">
+                        <Button
+                          variant="outline"
+                          className="bg-gray-50/20 hover:bg-gray-50/30"
+                        >
+                          Info Detail
+                        </Button>
+                      </Link>
+                    )}
                   </div>
                 </div>
               </div>

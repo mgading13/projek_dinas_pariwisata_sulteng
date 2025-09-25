@@ -12,7 +12,8 @@ import { Link } from "react-router-dom";
 import Logo from "../assets/Logo.png";
 import { useState, useEffect } from "react";
 
-function App() {
+
+function NavBar() {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -22,6 +23,13 @@ function App() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const scrollToSection = (id) => {
+    const section = document.getElementById(id);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
   return (
     <div
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
@@ -36,7 +44,7 @@ function App() {
             <img src={Logo} alt="Logo Dinas Pariwisata" width={50} />
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuLink className="font-semibold">
+            <NavigationMenuLink className="font-semibold" onClick={() => scrollToSection("home")}>
               <Link to="/">Beranda</Link>
             </NavigationMenuLink>
           </NavigationMenuItem>
@@ -182,8 +190,8 @@ function App() {
             </NavigationMenuContent>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuLink className="font-semibold">
-              <Link to="/docs">Atraksi</Link>
+            <NavigationMenuLink className="font-semibold" onClick={() => scrollToSection("atraksi")}>
+              <Link to="/">Atraksi</Link>
             </NavigationMenuLink>
           </NavigationMenuItem>
         </NavigationMenuList>
@@ -195,4 +203,4 @@ function App() {
   );
 }
 
-export default App;
+export default NavBar;

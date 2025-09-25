@@ -14,6 +14,10 @@ import LabuanBelanda from "../src/Pages/SiDewi/LabuanBelanda";
 import Bente from "../src/Pages/SiDewi/Bente";
 import Ungkea from "../src/Pages/SiDewi/Ungkea";
 import TamanAnggrek from "../src/Pages/SiDewi/TamanAnggrek";
+import FestivalDanauLindu from "./Pages/Atraksi/FestivalDanauLindu";
+import FestivalDanauPoso from "./Pages/Atraksi/FestivalDanauPoso";
+import FestivalTelukTomini from "./Pages/Atraksi/FestivalTelukTomini";
+import FestivalTumbe from "./Pages/Atraksi/FestivalMalabotTumbe";
 
 function App() {
   return (
@@ -34,6 +38,12 @@ function App() {
       <Route path="/bente" element={<Bente />} />
       <Route path="/ungkea" element={<Ungkea />} />
       <Route path="/taman-anggrek" element={<TamanAnggrek />} />
+
+      {/* Halaman Detail Atraksi */}
+      <Route path="/danau-lindu" element={<FestivalDanauLindu />} />
+      <Route path="/danau-poso" element={<FestivalDanauPoso />} />
+      <Route path="/teluk-tomini" element={<FestivalTelukTomini />} />
+      <Route path="/tumbe" element={<FestivalTumbe />} />
     </Routes>
   );
 }

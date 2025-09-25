@@ -4,13 +4,19 @@ import "../index.css";
 import CarouselWisataUnggulan from "../Component/CarouselWisataUnggulan.jsx";
 import CarouselDesaWisata from "../Component/CarouselDesaWisata.jsx";
 import CarouselEvent from "../Component/CarouselEvent.jsx";
+// import { useRef } from "react"  
 
 const Home = () => {
+  //  const atraksiRef = useRef(null)
+
+  // const handleScrollToAtraksi = () => {
+  //   atraksiRef.current?.scrollIntoView({ behavior: "smooth" })
+  // }
   return (
     <>
       <NavBar></NavBar>
 
-      <div className="bg-black min-h-screen font-nunito text-bold">
+      <div className="bg-black min-h-screen font-nunito text-bold" id="home">
         <div className="flex items-center justify-around pt-40">
           <div className="flex flex-col gap-5">
             <div className="text-white text-6xl flex flex-col gap-4">
@@ -32,7 +38,9 @@ const Home = () => {
 
       <CarouselWisataUnggulan></CarouselWisataUnggulan>
       <CarouselDesaWisata></CarouselDesaWisata>
-      <CarouselEvent></CarouselEvent>
+      <div id="atraksi">
+        <CarouselEvent />
+      </div>
 
     </>
   );
