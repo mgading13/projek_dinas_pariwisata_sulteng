@@ -4,6 +4,7 @@ import "../index.css";
 import CarouselWisataUnggulan from "../Component/CarouselWisataUnggulan.jsx";
 import CarouselDesaWisata from "../Component/CarouselDesaWisata.jsx";
 import CarouselEvent from "../Component/CarouselEvent.jsx";
+import Ulasan from "../Component/Ulasan.jsx";
 // import { useRef } from "react"  
 
 const Home = () => {
@@ -41,6 +42,7 @@ const Home = () => {
       <div id="atraksi">
         <CarouselEvent />
       </div>
+      <Ulasan></Ulasan>
 
     </>
   );

@@ -38,7 +38,7 @@ function NavBar() {
           : "bg-transparent"  
       }`}
     >
-      <NavigationMenu className="flex items-center justify-between p-4 text-white">
+      <NavigationMenu className="flex items-center justify-between p-4 left-10 text-white">
         <NavigationMenuList className="gap-10 items-center">
           <NavigationMenuItem>
             <img src={Logo} alt="Logo Dinas Pariwisata" width={50} />
@@ -48,11 +48,11 @@ function NavBar() {
               <Link to="/">Beranda</Link>
             </NavigationMenuLink>
           </NavigationMenuItem>
-          <NavigationMenuItem>
+          <NavigationMenuItem className="relative">
             <NavigationMenuTrigger className="bg-transparent text-white hover:text-gray-300 hover:bg-transparent">
               Wisata Unggulan
             </NavigationMenuTrigger>
-            <NavigationMenuContent>
+            <NavigationMenuContent className="!absolute left-1/2 -translate-x-1/2 p-2 rounded-md shadow-lg bg-white text-black">
               <ul className="grid w-[200px] gap-4 p-2">
                 <li>
                   <NavigationMenuLink
