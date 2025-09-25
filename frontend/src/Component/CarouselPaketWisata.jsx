@@ -69,8 +69,8 @@ export default function DestinasiCarousel() {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
+        <CarouselPrevious className="bg-gray-500-50 text-white hover:text-black rounded-full p-2 transition-colors duration-300" />
+        <CarouselNext className="bg-gray-500-50 text-white hover:text-black rounded-full p-2 transition-colors duration-300" />
       </Carousel>
     </div>
   )
