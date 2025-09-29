@@ -5,22 +5,17 @@ import CarouselWisataUnggulan from "../Component/CarouselWisataUnggulan.jsx";
 import CarouselDesaWisata from "../Component/CarouselDesaWisata.jsx";
 import CarouselEvent from "../Component/CarouselEvent.jsx";
 import Ulasan from "../Component/Ulasan.jsx";
-// import { useRef } from "react"  
+import PetaDesaWisata from "../Component/PetaDesaWisata.jsx";
 
 const Home = () => {
-  //  const atraksiRef = useRef(null)
-
-  // const handleScrollToAtraksi = () => {
-  //   atraksiRef.current?.scrollIntoView({ behavior: "smooth" })
-  // }
   return (
     <>
       <NavBar></NavBar>
 
       <div className="bg-black min-h-screen font-nunito text-bold" id="home">
-        <div className="flex items-center justify-around pt-40">
+        <div className="flex items-center justify-around pt-20">
           <div className="flex flex-col gap-5">
-            <div className="text-white text-6xl flex flex-col gap-4">
+            <div className="text-white text-4xl flex flex-col gap-2">
               <h1>Sulawesi Tengah</h1>
               <h1>Menunggu Petualanganmu</h1>
             </div>
@@ -31,9 +26,7 @@ const Home = () => {
               </p>
             </div>
           </div>
-          <div>
-            <img src={Globe} alt="" width={400} />
-          </div>
+          <div><PetaDesaWisata /></div>
         </div>
       </div>
 
@@ -43,7 +36,6 @@ const Home = () => {
         <CarouselEvent />
       </div>
       <Ulasan></Ulasan>
-
     </>
   );
 };
