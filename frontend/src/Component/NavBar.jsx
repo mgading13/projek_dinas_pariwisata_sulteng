@@ -34,7 +34,7 @@ function NavBar() {
     <div
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
         isScrolled
-          ? "bg-gradient-to-b from-black/40 to-transparent shadow-md"
+          ? "bg-gradient-to-b from-black/70 to-transparent"
           : "bg-transparent"  
       }`}
     >

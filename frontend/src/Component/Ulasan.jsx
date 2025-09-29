@@ -68,45 +68,48 @@ const TestimonialCarousel = () => {
 
         {/* Carousel rapat ke kanan */}
         <div className="flex-1 flex justify-end">
-          <Carousel className="w-full max-w-5xl">
+          <Carousel className="w-full max-w-5xl relative pr-14">
             <CarouselContent>
               {testimonials.map((item, index) => (
-                <CarouselItem
-                  key={index}
-                  className="basis-1/2 md:basis-1/3 lg:basis-1/4"
-                >
-                  <div className="bg-white rounded-lg shadow p-4 h-full flex flex-col justify-between">
-                    <p className="text-sm text-gray-700 mb-4">{item.text}</p>
-                    <div className="flex items-center gap-2 mt-auto">
-                      <img
-                        src={item.avatar}
-                        alt={item.name}
-                        className="w-10 h-10 rounded-full border"
-                      />
-                      <div>
-                        <h3 className="text-sm font-semibold">{item.name}</h3>
-                        <div className="flex">
-                          {Array.from({ length: 5 }).map((_, i) => (
-                            <Star
-                              key={i}
-                              size={16}
-                              className={`${
-                                i < item.rating
-                                  ? "text-yellow-400 fill-yellow-400"
-                                  : "text-gray-300"
-                              }`}
-                            />
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
+              <CarouselItem
+              key={index}
+              className="basis-1/2 md:basis-1/3 lg:basis-1/4"
+              >
+                <div className="bg-white rounded-lg shadow p-4 h-full flex flex-col justify-between ml-7">
+                <p className="text-sm text-gray-700 mb-4">{item.text}</p>
+                <div className="flex items-center gap-2 mt-auto">
+                <img
+                  src={item.avatar}
+                  alt={item.name}
+                  className="w-10 h-10 rounded-full border"
+                />
+            <div>
+              <h3 className="text-sm font-semibold">{item.name}</h3>
+              <div className="flex">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Star
+                    key={i}
+                    size={16}
+                    className={`${
+                      i < item.rating
+                        ? "text-yellow-400 fill-yellow-400"
+                        : "text-gray-300"
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </CarouselItem>
+    ))}
+  </CarouselContent>
+
+  <CarouselPrevious className="absolute -left-3 top-1/2 -translate-y-1/2" />
+  {/* geser panah kanan ke dalam biar sejajar dengan "Tambah Ulasan" */}
+  <CarouselNext className="absolute right-3 top-1/2 -translate-y-1/2" />
+</Carousel>
+
         </div>
       </div>
     </div>
