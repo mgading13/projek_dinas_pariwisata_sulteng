@@ -1,8 +1,8 @@
 import React from "react";
 import NavBar from "../../Component/NavBar.jsx";
-import LukPanentengbg from "../../assets/SiDewi/LukPanenteng.png";
-import LukPanenteng1 from "../../assets/SiDewi/LukPanenteng1.png";
-import LukPanenteng2 from "../../assets/SiDewi/LukPanenteng2.png";
+import LukPanentengbg from "../../assets/SiDewi/Paisupok.jpg";
+import LukPanenteng1 from "../../assets/SiDewi/Paisupok 3.jpeg";
+import LukPanenteng2 from "../../assets/SiDewi/LukPanenteng1.png";
 
 import {
     Card,

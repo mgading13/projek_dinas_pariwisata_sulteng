@@ -1,7 +1,7 @@
 import React from "react";
 import NavBar from "../../Component/NavBar.jsx";
-import Pokekea1 from "../../assets/SiDewi/Pokekea1.jpg";
-import Pokekea2 from "../../assets/SiDewi/Pokekea2.jpg";
+import Pokekea1 from "../../assets/SiDewi/Pokekea.jpg";
+import Pokekea2 from "../../assets/SiDewi/Pokekea 2.jpg";
 import Pokekea3 from "../../assets/SiDewi/Pokekea3.webp";
 
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";

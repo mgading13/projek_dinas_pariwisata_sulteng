@@ -28,11 +28,11 @@ const PetaDesaWisata = () => {
 
   return (
     <div className="bg-white rounded-full" id="peta">
-      <div className="max-w-7xl mx-auto rounded-full shadow-lg border-4 border-green-400">
+      <div className="max-w-7xl mx-auto rounded-full shadow-lg border-4 border-blue-400">
         <MapContainer
           center={[-1.2, 120.5]}
           zoom={8}
-          style={{ height: "600px", width: "600px", borderRadius: "50%" }}
+          style={{ height: "500px", width: "500px", borderRadius: "50%" }}
           className="h-[500px] w-full z-10"
         >
           <TileLayer

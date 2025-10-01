@@ -1,8 +1,8 @@
 import React from "react";
 import NavBar from "../../Component/NavBar.jsx";
-import PuloDua1 from "../../assets/SiDewi/PuloDua1.jpeg";
-import PuloDua2 from "../../assets/SiDewi/PuloDua2.jpeg";
-import PuloDua3 from "../../assets/SiDewi/PuloDua3.jpeg";
+import PuloDua1 from "../../assets/SiDewi/Pulo Dua 3.jpeg";
+import PuloDua2 from "../../assets/SiDewi/Pulo Dua 2.jpeg";
+import PuloDua3 from "../../assets/SiDewi/Pulo Dua.jpeg";
 
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import DestinasiCarousel from "../../Component/CarouselPaketWisata.jsx";

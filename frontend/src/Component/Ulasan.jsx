@@ -7,6 +7,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import ReviewModal from "./ReviewModal";
 
 const testimonials = [
   {
@@ -53,7 +54,8 @@ const TestimonialCarousel = () => {
       {/* Header */}
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg font-bold">Ulasan</h2>
-        <button className="text-blue-500 hover:underline">+ Tambah Ulasan</button>
+        <button className="text-blue-500 hover:underline" onClick={() => setOpen(true)}>+ Tambah Ulasan</button>
+        {/* <ReviewModal isOpen={open} onClose={() => setOpen(false)} /> */}
       </div>
 
       <div className="flex justify-between items-start gap-6">
@@ -64,7 +66,7 @@ const TestimonialCarousel = () => {
             alt="Boat"
             className="w-full h-full object-cover rounded-lg"
           />
-        </div>
+          </div>
 
         {/* Carousel rapat ke kanan */}
         <div className="flex-1 flex justify-end">
@@ -108,7 +110,7 @@ const TestimonialCarousel = () => {
   <CarouselPrevious className="absolute -left-3 top-1/2 -translate-y-1/2" />
   {/* geser panah kanan ke dalam biar sejajar dengan "Tambah Ulasan" */}
   <CarouselNext className="absolute right-3 top-1/2 -translate-y-1/2" />
-</Carousel>
+  </Carousel>
 
         </div>
       </div>
