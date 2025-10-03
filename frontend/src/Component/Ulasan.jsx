@@ -1,4 +1,3 @@
-import React from "react";
 import { Star } from "lucide-react";
 import {
   Carousel,
@@ -8,6 +7,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import ReviewModal from "./ReviewModal";
+import { useState } from "react";
 
 const testimonials = [
   {
@@ -49,14 +49,23 @@ const testimonials = [
 ];
 
 const TestimonialCarousel = () => {
+  const [open, setOpen] = useState(false); // ⬅️ state untuk modal
+
   return (
     <div className="w-full bg-white p-6">
       {/* Header */}
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg font-bold">Ulasan</h2>
-        <button className="text-blue-500 hover:underline" onClick={() => setOpen(true)}>+ Tambah Ulasan</button>
-        {/* <ReviewModal isOpen={open} onClose={() => setOpen(false)} /> */}
+        <button
+          className="text-blue-500 hover:underline"
+          onClick={() => setOpen(true)} // ⬅️ buka modal
+        >
+          + Tambah Ulasan
+        </button>
       </div>
+
+      {/* Modal */}
+      <ReviewModal isOpen={open} onClose={() => setOpen(false)} />
 
       <div className="flex justify-between items-start gap-6">
         {/* Gambar di kiri */}
@@ -66,52 +75,50 @@ const TestimonialCarousel = () => {
             alt="Boat"
             className="w-full h-full object-cover rounded-lg"
           />
-          </div>
+        </div>
 
         {/* Carousel rapat ke kanan */}
         <div className="flex-1 flex justify-end">
           <Carousel className="w-full max-w-5xl relative pr-14">
             <CarouselContent>
               {testimonials.map((item, index) => (
-              <CarouselItem
-              key={index}
-              className="basis-1/2 md:basis-1/3 lg:basis-1/4"
-              >
-                <div className="bg-white rounded-lg shadow p-4 h-full flex flex-col justify-between ml-7">
-                <p className="text-sm text-gray-700 mb-4">{item.text}</p>
-                <div className="flex items-center gap-2 mt-auto">
-                <img
-                  src={item.avatar}
-                  alt={item.name}
-                  className="w-10 h-10 rounded-full border"
-                />
-            <div>
-              <h3 className="text-sm font-semibold">{item.name}</h3>
-              <div className="flex">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star
-                    key={i}
-                    size={16}
-                    className={`${
-                      i < item.rating
-                        ? "text-yellow-400 fill-yellow-400"
-                        : "text-gray-300"
-                    }`}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </CarouselItem>
-    ))}
-  </CarouselContent>
+                <CarouselItem
+                  key={index}
+                  className="basis-1/2 md:basis-1/3 lg:basis-1/4"
+                >
+                  <div className="bg-white rounded-lg shadow p-4 h-full flex flex-col justify-between ml-7">
+                    <p className="text-sm text-gray-700 mb-4">{item.text}</p>
+                    <div className="flex items-center gap-2 mt-auto">
+                      <img
+                        src={item.avatar}
+                        alt={item.name}
+                        className="w-10 h-10 rounded-full border"
+                      />
+                      <div>
+                        <h3 className="text-sm font-semibold">{item.name}</h3>
+                        <div className="flex">
+                          {Array.from({ length: 5 }).map((_, i) => (
+                            <Star
+                              key={i}
+                              size={16}
+                              className={`${
+                                i < item.rating
+                                  ? "text-yellow-400 fill-yellow-400"
+                                  : "text-gray-300"
+                              }`}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
 
-  <CarouselPrevious className="absolute -left-3 top-1/2 -translate-y-1/2" />
-  {/* geser panah kanan ke dalam biar sejajar dengan "Tambah Ulasan" */}
-  <CarouselNext className="absolute right-3 top-1/2 -translate-y-1/2" />
-  </Carousel>
-
+            <CarouselPrevious className="absolute -left-3 top-1/2 -translate-y-1/2" />
+            <CarouselNext className="absolute right-3 top-1/2 -translate-y-1/2" />
+          </Carousel>
         </div>
       </div>
     </div>
