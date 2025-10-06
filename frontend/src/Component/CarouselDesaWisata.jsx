@@ -151,7 +151,7 @@ export default function Carousel() {
                 <div className="absolute inset-0 bg-black/40"></div>
                 {/* Content */}
                 <div className="relative z-10 max-w-2xl text-white p-6">
-                  <h1>Wisata Unggulan</h1>
+                  <h1>Si Dewi (Desa Wisata)</h1>
                   <h2 className="text-4xl font-bold mb-2">{slide.title}</h2>
                   <h3 className="text-lg text-blue-200 mb-4">
                     {slide.location}
