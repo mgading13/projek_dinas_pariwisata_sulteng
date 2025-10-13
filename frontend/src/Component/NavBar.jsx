@@ -194,6 +194,11 @@ function NavBar() {
               <Link to="/">Atraksi</Link>
             </NavigationMenuLink>
           </NavigationMenuItem>
+          <NavigationMenuItem>
+            <NavigationMenuLink className="font-semibold" onClick={() => scrollToSection("atraksi")}>
+              <Link to="/paket-wisata">Paket Wisata</Link>
+            </NavigationMenuLink>
+          </NavigationMenuItem>
         </NavigationMenuList>
 
         <NavigationMenuIndicator />

@@ -18,6 +18,7 @@ import FestivalDanauLindu from "./Pages/Atraksi/FestivalDanauLindu";
 import FestivalDanauPoso from "./Pages/Atraksi/FestivalDanauPoso";
 import FestivalTelukTomini from "./Pages/Atraksi/FestivalTelukTomini";
 import FestivalTumbe from "./Pages/Atraksi/FestivalMalabotTumbe";
+import PaketWisata from "./Pages/PaketWisata";
 
 function App() {
   return (
@@ -44,6 +45,8 @@ function App() {
       <Route path="/danau-poso" element={<FestivalDanauPoso />} />
       <Route path="/teluk-tomini" element={<FestivalTelukTomini />} />
       <Route path="/tumbe" element={<FestivalTumbe />} />
+      {/* Halaman Info Paket Wisata */}
+      <Route path="/paket-wisata" element={<PaketWisata />} />
     </Routes>
   );
 }

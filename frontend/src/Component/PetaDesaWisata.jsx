@@ -200,7 +200,7 @@ const PetaDesaWisata = () => {
                 permanent={false}
               >
                 <div
-                  className="w-[180px] rounded-lg overflow-hidden shadow-md bg-white text-gray-800"
+                  className="w-[180px] overflow-hidden shadow-md bg-white text-gray-800"
                   style={{ cursor: "pointer" }}
                 >
                   <img
