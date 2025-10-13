@@ -18,6 +18,12 @@ import FestivalDanauLindu from "./Pages/Atraksi/FestivalDanauLindu";
 import FestivalDanauPoso from "./Pages/Atraksi/FestivalDanauPoso";
 import FestivalTelukTomini from "./Pages/Atraksi/FestivalTelukTomini";
 import FestivalTumbe from "./Pages/Atraksi/FestivalMalabotTumbe";
+
+// Import semua halaman wisata unggulan
+import PulauTogean from "../src/Pages/WisataUnggulan/PulauTogean";
+import LoreLindu from "../src/Pages/WisataUnggulan/LoreLindu";
+import GeoparkPoso from "../src/Pages/WisataUnggulan/GeoparkPoso";
+
 import PaketWisata from "./Pages/PaketWisata";
 
 function App() {
@@ -40,6 +46,10 @@ function App() {
       <Route path="/ungkea" element={<Ungkea />} />
       <Route path="/taman-anggrek" element={<TamanAnggrek />} />
 
+      {/* Halaman Detail Wisata Unggulan */}
+      <Route path="/pulau-togean" element={<PulauTogean />} />
+      <Route path="/lore-lindu" element={<LoreLindu />} />
+      <Route path="geopark-poso" element={<GeoparkPoso />} />
       {/* Halaman Detail Atraksi */}
       <Route path="/danau-lindu" element={<FestivalDanauLindu />} />
       <Route path="/danau-poso" element={<FestivalDanauPoso />} />

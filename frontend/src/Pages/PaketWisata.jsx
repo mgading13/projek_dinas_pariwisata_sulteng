@@ -98,6 +98,7 @@ const PaketWisata = () => {
       wa: "https://wa.me/628123456789",
     },
   ];
+  
 
   // Filter berdasarkan pencarian
   const filteredPaket = dataPaket.filter((p) =>
@@ -213,8 +214,8 @@ const PaketWisata = () => {
                       ))}
                     </AnimatePresence>
                   </CarouselContent>
-                  <CarouselPrevious />
-                  <CarouselNext />
+                  <CarouselPrevious className="hidden md:flex" />
+                  <CarouselNext className="hidden md:flex" />
                 </Carousel>
               </motion.div>
             ) : (
