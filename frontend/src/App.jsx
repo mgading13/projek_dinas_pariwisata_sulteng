@@ -25,6 +25,7 @@ import LoreLindu from "../src/Pages/WisataUnggulan/LoreLindu";
 import GeoparkPoso from "../src/Pages/WisataUnggulan/GeoparkPoso";
 
 import PaketWisata from "./Pages/PaketWisata";
+import DetailEvent from "./Pages/Atraksi/DetailEvent";
 
 function App() {
   return (
@@ -51,6 +52,8 @@ function App() {
       <Route path="/lore-lindu" element={<LoreLindu />} />
       <Route path="geopark-poso" element={<GeoparkPoso />} />
       {/* Halaman Detail Atraksi */}
+      <Route path="/event/:id" element={<DetailEvent />} />
+
       <Route path="/danau-lindu" element={<FestivalDanauLindu />} />
       <Route path="/danau-poso" element={<FestivalDanauPoso />} />
       <Route path="/teluk-tomini" element={<FestivalTelukTomini />} />

@@ -1,58 +1,90 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Star } from "lucide-react";
 
-const ReviewModal = ({ isOpen, onClose }) => {
+// Shadcn UI
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+
+export default function ReviewModal({ isOpen, onClose, onSubmit }) {
+  const [nama, setNama] = useState("");
+  const [komentar, setKomentar] = useState("");
   const [rating, setRating] = useState(0);
 
-  if (!isOpen) return null;
+  const handleSubmit = () => {
+    if (!nama || !komentar || rating === 0) {
+      alert("Harap isi nama, komentar, dan pilih rating!");
+      return;
+    }
+
+    onSubmit({ nama, komentar, rating }); // kirim data ke parent
+    setNama("");
+    setKomentar("");
+    setRating(0);
+    onClose();
+  };
 
   return (
-    <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 w-[500px] shadow-lg">
-        <h2 className="text-lg font-bold mb-4">Tambah Ulasan</h2>
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="max-w-md w-[90%]">
+        <DialogHeader>
+          <DialogTitle className="text-lg font-bold">Tambah Ulasan</DialogTitle>
+        </DialogHeader>
+
         {/* Input Nama */}
-        <input
-          type="text"
-          placeholder="Nama"
-          className="w-full font-semibold border-2 rounded px-3 py-2 mb-4 text-sm"
-        />
+        <div className="space-y-4 mt-2">
+          <Input
+            placeholder="Nama"
+            value={nama}
+            onChange={(e) => setNama(e.target.value)}
+            className="font-semibold text-sm"
+          />
 
-        {/* Input Ulasan */}
-        <textarea
-          placeholder="Ulasan"
-          className="w-full font-semibold border rounded px-3 py-2 mb-4 text-sm h-35 resize-none"
-        />
+          {/* Input Komentar */}
+          <Textarea
+            placeholder="Ulasan kamu..."
+            value={komentar}
+            onChange={(e) => setKomentar(e.target.value)}
+            className="font-semibold text-sm h-28 resize-none"
+          />
 
-        {/* Rating Bintang */}
-        <div className="flex gap-1 mb-4">
-          {Array.from({ length: 5 }).map((_, i) => (
-            <Star
-              key={i}
-              size={24}
-              onClick={() => setRating(i + 1)}
-              className={`cursor-pointer ${
-                i < rating ? "text-yellow-400 fill-yellow-400" : "text-gray-400"
-              }`}
-            />
-          ))}
+          {/* Rating */}
+          <div className="flex gap-2">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setRating(i + 1)}
+                className="focus:outline-none"
+              >
+                <Star
+                  size={28}
+                  className={`cursor-pointer transition-all ${
+                    i < rating
+                      ? "text-yellow-400 fill-yellow-400"
+                      : "text-gray-300"
+                  }`}
+                />
+              </button>
+            ))}
+          </div>
+
+          {/* Tombol Aksi */}
+          <div className="flex justify-end gap-3 pt-3">
+            <Button variant="outline" onClick={onClose}>
+              Batal
+            </Button>
+
+            <Button onClick={handleSubmit}>Kirim</Button>
+          </div>
         </div>
-
-        {/* Tombol Kirim */}
-        <button
-          className="border-3 font-semibold px-4 py-1 rounded text-sm border-blue-600 text-black hover:bg-blue-600 hover:text-white ml-2 ease-in-out duration-300"
-          onClick={onClose}
-        >
-          Kirim
-        </button>
-        <button
-          className="border-3 font-semibold px-4 py-1 rounded text-sm border-red-600 text-black hover:bg-red-600 hover:text-white ml-2 ease-in-out duration-300"
-          onClick={onClose}
-        >
-          Batal
-        </button>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
-};
-
-export default ReviewModal;
+}

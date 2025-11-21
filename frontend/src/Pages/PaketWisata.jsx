@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import {
   Carousel,
   CarouselContent,
@@ -25,80 +26,35 @@ const PaketWisata = () => {
   const [search, setSearch] = useState("");
   const [showAll, setShowAll] = useState(false);
   const [selectedPaket, setSelectedPaket] = useState(null); // untuk modal detail
+  const [dataPaket, setDataPaket] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [expanded, setExpanded] = useState({});
 
-  const dataPaket = [
-    {
-      id: 1,
-      nama: "Wisata Bahari Pulo Dua",
-      deskripsi: [
-        "Snorkeling di laut jernih",
-        "Menikmati sunset di pantai",
-        "Kuliner seafood lokal",
-      ],
-      detail:
-        "Nikmati keindahan laut Pulo Dua dengan snorkeling, wisata pantai, dan kuliner khas Sulawesi Tengah. Cocok untuk pecinta alam dan laut.",
-      harga: "Rp. 500.000",
-      foto: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=60",
-      wa: "https://wa.me/628123456789",
-    },
-    {
-      id: 2,
-      nama: "Eksplor Danau Lindu",
-      deskripsi: [
-        "Menjelajahi danau dan hutan tropis",
-        "Menginap di rumah adat lokal",
-        "Wisata budaya dan kuliner khas",
-      ],
-      detail:
-        "Petualangan di Danau Lindu dengan panorama hutan tropis dan pengalaman budaya lokal. Termasuk penginapan tradisional.",
-      harga: "Rp. 650.000",
-      foto: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=60",
-      wa: "https://wa.me/628123456789",
-    },
-    {
-      id: 3,
-      nama: "Geopark Poso Adventure",
-      deskripsi: [
-        "Melihat formasi batu unik",
-        "Wisata air terjun dan gua alam",
-        "Camping dan hiking",
-      ],
-      detail:
-        "Paket wisata petualangan di Geopark Poso dengan aktivitas outdoor, pendakian, dan jelajah gua alami.",
-      harga: "Rp. 700.000",
-      foto: "https://images.unsplash.com/photo-1526481280695-3c720685208b?auto=format&fit=crop&w=800&q=60",
-      wa: "https://wa.me/628123456789",
-    },
-    {
-      id: 4,
-      nama: "Pulau Togean Diving Trip",
-      deskripsi: [
-        "Diving di spot kelas dunia",
-        "Menjelajahi pulau eksotis",
-        "Relaksasi dan wisata kuliner",
-      ],
-      detail:
-        "Eksplor keindahan bawah laut Pulau Togean dengan diving, snorkeling, dan kuliner khas laut.",
-      harga: "Rp. 850.000",
-      foto: "https://images.unsplash.com/photo-1519817650390-64a93db511aa?auto=format&fit=crop&w=800&q=60",
-      wa: "https://wa.me/628123456789",
-    },
-    {
-      id: 5,
-      nama: "Pulau Togean Diving Trip",
-      deskripsi: [
-        "Diving di spot kelas dunia",
-        "Menjelajahi pulau eksotis",
-        "Relaksasi dan wisata kuliner",
-      ],
-      detail:
-        "Eksplor keindahan bawah laut Pulau Togean dengan diving, snorkeling, dan kuliner khas laut.",
-      harga: "Rp. 850.000",
-      foto: "https://images.unsplash.com/photo-1519817650390-64a93db511aa?auto=format&fit=crop&w=800&q=60",
-      wa: "https://wa.me/628123456789",
-    },
-  ];
-  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get("http://localhost:3000/api/tourPackage");
+
+        const formatted = res.data.map((item) => ({
+          id: item.id,
+          nama: item.nama_wisata,
+          deskripsi: item.deskripsi,
+          harga: `Rp. ${Number(item.harga).toLocaleString("id-ID")}`,
+          foto: `http://localhost:3000${item.media}`,
+          wa: `https://wa.me/${item.kontak}`,
+        }));
+
+        setDataPaket(formatted);
+      } catch (err) {
+        console.error(err);
+        setError("Gagal memuat data.");
+      }
+      setLoading(false);
+    };
+
+    fetchData();
+  }, []);
 
   // Filter berdasarkan pencarian
   const filteredPaket = dataPaket.filter((p) =>
@@ -108,6 +64,12 @@ const PaketWisata = () => {
   return (
     <>
       <Navbar />
+      {loading && (
+        <div className="w-full flex justify-center py-20 text-white text-2xl font-bold">
+          Loading...
+        </div>
+      )}
+
       <div
         className="min-h-screen bg-cover bg-center bg-no-repeat relative"
         style={{
@@ -185,14 +147,32 @@ const PaketWisata = () => {
                                 <h2 className="text-lg font-semibold mb-2">
                                   {paket.nama}
                                 </h2>
-                                <ul className="text-sm text-gray-200 mb-2 list-disc pl-4 space-y-1">
-                                  {paket.deskripsi.slice(0, 3).map((d, i) => (
-                                    <li key={i}>{d}</li>
-                                  ))}
-                                </ul>
-                                <span className="text-blue-400 text-sm hover:underline mb-3">
-                                  Read More...
-                                </span>
+                                <p className="text-sm text-gray-200 mb-2">
+                                  {expanded[paket.id]
+                                    ? paket.deskripsi
+                                    : paket.deskripsi.slice(0, 120) +
+                                      (paket.deskripsi.length > 120
+                                        ? "..."
+                                        : "")}
+                                </p>
+
+                                {paket.deskripsi.length > 120 && (
+                                  <button
+                                    className="text-blue-400 text-sm hover:underline"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      setExpanded((prev) => ({
+                                        ...prev,
+                                        [paket.id]: !prev[paket.id],
+                                      }));
+                                    }}
+                                  >
+                                    {expanded[paket.id]
+                                      ? "Sembunyikan"
+                                      : "Selengkapnya"}
+                                  </button>
+                                )}
+
                                 <div className="flex justify-between items-center">
                                   <span className="font-semibold">
                                     {paket.harga}
@@ -251,14 +231,30 @@ const PaketWisata = () => {
                           <h2 className="text-lg font-semibold mb-2">
                             {paket.nama}
                           </h2>
-                          <ul className="text-sm text-gray-200 mb-2 list-disc pl-4 space-y-1">
-                            {paket.deskripsi.slice(0, 3).map((d, i) => (
-                              <li key={i}>{d}</li>
-                            ))}
-                          </ul>
-                          <span className="text-blue-400 text-sm hover:underline mb-3">
-                            Read More...
-                          </span>
+                          <p className="text-sm text-gray-200 mb-2">
+                            {expanded[paket.id]
+                              ? paket.deskripsi
+                              : paket.deskripsi.slice(0, 120) +
+                                (paket.deskripsi.length > 120 ? "..." : "")}
+                          </p>
+
+                          {paket.deskripsi.length > 120 && (
+                            <button
+                              className="text-blue-400 text-sm hover:underline"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setExpanded((prev) => ({
+                                  ...prev,
+                                  [paket.id]: !prev[paket.id],
+                                }));
+                              }}
+                            >
+                              {expanded[paket.id]
+                                ? "Sembunyikan"
+                                : "Selengkapnya"}
+                            </button>
+                          )}
+
                           <div className="flex justify-between items-center">
                             <span className="font-semibold">{paket.harga}</span>
                             <a
@@ -323,12 +319,10 @@ const PaketWisata = () => {
                     className="w-full h-64 object-cover rounded-lg"
                   />
                   <div>
-                    <p className="text-gray-700 mb-3">{selectedPaket.detail}</p>
-                    <ul className="list-disc pl-5 mb-3 text-sm text-gray-600">
-                      {selectedPaket.deskripsi.map((d, i) => (
-                        <li key={i}>{d}</li>
-                      ))}
-                    </ul>
+                    <p className="text-gray-700 mb-3">
+                      {selectedPaket.deskripsi}
+                    </p>
+
                     <p className="font-semibold text-lg mb-2">
                       {selectedPaket.harga}
                     </p>
