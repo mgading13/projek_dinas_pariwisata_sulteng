@@ -11,47 +11,78 @@ const Bonebaru = () => {
   return (
     <>
       <NavBar />
-      <div className="relative min-h-screen bg-cover bg-center" style={{ backgroundImage: `url(${Bonebaru1})` }}>
+      <div
+        className="relative min-h-screen bg-cover bg-center"
+        style={{ backgroundImage: `url(${Bonebaru1})` }}
+      >
         <div className="absolute inset-0 bg-black/50"></div>
         <div className="relative flex flex-col items-center justify-center min-h-screen">
           <h1 className="text-3xl font-bold text-white">Desa Wisata</h1>
           <h1 className="text-3xl font-bold text-white">Bonebaru</h1>
-          <p className="mt-4 text-white">Kabupaten Donggala</p>
+          <p className="mt-4 text-xl font-semibold text-white">
+            Kabupaten Banggai Laut
+          </p>
         </div>
       </div>
 
-      <div className="relative w-full h-screen bg-cover bg-center flex items-center justify-center text-white"
-           style={{ backgroundImage: `url(${Bonebaru2})` }}>
-        <div className="absolute inset-0 bg-black/40" />
+      <div
+        className="relative w-full h-screen bg-cover bg-center flex items-center justify-center text-white"
+        style={{ backgroundImage: `url(${Bonebaru2})` }}
+      >
+        <div className="absolute inset-0 bg-black/50" />
         <div className="relative z-10 w-full h-full p-20">
           <div className="md:w-2/3 max-w-2xl">
-            <p className="text-lg leading-relaxed">Deskripsi tentang Desa Wisata Bonebaru...</p>
+            <p className="text-lg font-medium leading-relaxed text-justify">
+              Desa Wisata Bone Baru menawarkan berbagai Destinasi Wisata menarik
+              khususnya Wisata Under Water. Spot Snorkeling dan Diving yang
+              memiliki beranekaragam jenis karang menjadi ekosistem beragam
+              jenis ikan yang sangat indah. salah satunya Ikan Endemik Laut
+              Banggai yaitu Banggai Cardinal Fish (BCF). selain itu, Desa Bone
+              Baru juga memiliki ekosistem Mangrove.
+            </p>
           </div>
 
           <div className="md:w-1/4 flex flex-col justify-center mt-10 md:mt-0 md:ml-auto space-y-3">
             <Card className="bg-white/0 border-0 border-b-2 border-white text-white">
-              <CardHeader><CardTitle className="text-sm uppercase">Lewat Darat</CardTitle></CardHeader>
-              <CardContent><p className="text-gray-300">Palu ➜ Bonebaru</p></CardContent>
+              <CardHeader>
+                <CardTitle className="text-sm uppercase">Lewat Darat</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-300">Palu ➜ Bonebaru</p>
+              </CardContent>
             </Card>
             <Card className="bg-white/0 border-0 border-b-2 border-white text-white">
-              <CardHeader><CardTitle className="text-sm uppercase">Lewat Laut</CardTitle></CardHeader>
-              <CardContent><p className="text-gray-300">Donggala ➜ Bonebaru</p></CardContent>
+              <CardHeader>
+                <CardTitle className="text-sm uppercase">Lewat Laut</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-300">Donggala ➜ Bonebaru</p>
+              </CardContent>
             </Card>
             <Card className="bg-white/0 border-0 border-b-2 border-white text-white">
-              <CardHeader><CardTitle className="text-sm uppercase">Lewat Udara</CardTitle></CardHeader>
-              <CardContent><p className="text-gray-300">Bandara Palu ➜ Bonebaru</p></CardContent>
+              <CardHeader>
+                <CardTitle className="text-sm uppercase">Lewat Udara</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-300">Bandara Palu ➜ Bonebaru</p>
+              </CardContent>
             </Card>
           </div>
         </div>
       </div>
 
-      <div className="min-h-screen bg-cover bg-center" style={{ backgroundImage: `url(${Bonebaru3})` }}>
+      {/* <div
+        className="min-h-screen bg-cover bg-center"
+        style={{ backgroundImage: `url(${Bonebaru3})` }}
+      >
         <div className="p-20 text-white font-semibold text-2xl">
           <h1>Rekomendasi Paket Wisata</h1>
-          <br /><hr /><br />
+          <br />
+          <hr />
+          <br />
           <DestinasiCarousel />
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

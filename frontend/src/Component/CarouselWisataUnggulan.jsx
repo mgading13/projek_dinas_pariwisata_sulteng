@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useKeenSlider } from "keen-slider/react";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -15,6 +16,7 @@ const slides = [
     description:
       "Lore Lindu bukan sekadar destinasi wisata, tetapi pengalaman menelusuri hutan pegunungan, menyaksikan satwa endemik, dan menemukan jejak megalitikum misterius peninggalan peradaban kuno. Di sini, alam liar, sejarah, dan budaya berpadu dalam satu perjalanan yang layak menjadi bagian dari hidupmu, bukan sekadar liburan.",
     image: LoreLindu,
+    route: "/lore-lindu",
   },
 
   {
@@ -24,6 +26,7 @@ const slides = [
     description:
       "Geopark Poso bukan sekadar destinasi wisata, tetapi perjalanan memahami jejak geologi, panorama Danau Poso, dan budaya lokal yang menghormati alam. Menyusuri situs warisan bumi, menikmati keindahan danau, hingga merasakan harmoni antara ilmu pengetahuan, pelestarian, dan kehidupan masyarakat, menjadikannya pengalaman yang layak menjadi bagian dari perjalanan hidupmu, bukan sekadar liburan.",
     image: Geopark,
+    route: "/geopark-poso",
   },
   {
     id: 3,
@@ -32,6 +35,7 @@ const slides = [
     description:
       "Kepulauan Togean adalah kepulauan terpencil di Teluk Tomini, Sulawesi Tengah, Indonesia, yang terkenal sebagai surga tropis dengan keindahan bawah laut kelas dunia dan keanekaragaman hayati yang kaya, menawarkan pantai berpasir putih, perairan biru jernih, hutan hujan, dan kesempatan untuk menyelam serta snorkeling di kawasan Taman Nasional Kepulauan Togean.",
     image: Togean,
+    route: "/pulau-togean",
   },
 ];
 
@@ -42,6 +46,7 @@ export default function Carousel() {
   });
 
   const [expanded, setExpanded] = useState({});
+  const navigate = useNavigate();
 
   // Auto slide setiap 5 detik
   useEffect(() => {
@@ -66,53 +71,55 @@ export default function Carousel() {
           const isExpanded = expanded[slide.id] || false;
           return (
             <>
-            
-            <div
-              key={slide.id}
-              className="keen-slider__slide relative flex items-center justify-end px-25"
-            >
-              {/* Background */}
-              <img
-                src={slide.image}
-                alt={slide.title}
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-              {/* Overlay */}
-              <div className="absolute inset-0 bg-black/40"></div>
-              {/* Content */}
-              <div className="relative z-10 max-w-2xl text-white p-6">
-                <h1>Wisata Unggulan</h1>
-                <h2 className="text-4xl font-bold mb-2">{slide.title}</h2>
-                <h3 className="text-lg text-blue-200 mb-4">{slide.location}</h3>
+              <div
+                key={slide.id}
+                className="keen-slider__slide relative flex items-center justify-end px-25"
+              >
+                {/* Background */}
+                <img
+                  src={slide.image}
+                  alt={slide.title}
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                {/* Overlay */}
+                <div className="absolute inset-0 bg-black/40"></div>
+                {/* Content */}
+                <div className="relative z-10 max-w-2xl text-white p-6">
+                  <h1>Wisata Unggulan</h1>
+                  <h2 className="text-4xl font-bold mb-2">{slide.title}</h2>
+                  <h3 className="text-lg text-blue-200 mb-4">
+                    {slide.location}
+                  </h3>
 
-                <p className="mb-4 text-justify">
-                  {isExpanded
-                    ? slide.description
-                    : truncateText(slide.description)}
-                </p>
+                  <p className="mb-4 text-justify">
+                    {isExpanded
+                      ? slide.description
+                      : truncateText(slide.description)}
+                  </p>
 
-                <button
-                  className="text-blue-300 hover:underline mb-6"
-                  onClick={() =>
-                    setExpanded((prev) => ({
-                      ...prev,
-                      [slide.id]: !isExpanded,
-                    }))
-                  }
-                >
-                  {isExpanded ? "Sembunyikan" : "Selengkapnya"}
-                </button>
-
-                <div>
-                  <Button
-                    variant="outline"
-                    className="bg-gray-50/20 hover:bg-gray-50/30"
+                  <button
+                    className="text-blue-300 hover:underline mb-6"
+                    onClick={() =>
+                      setExpanded((prev) => ({
+                        ...prev,
+                        [slide.id]: !isExpanded,
+                      }))
+                    }
                   >
-                    Info Detail
-                  </Button>
+                    {isExpanded ? "Sembunyikan" : "Selengkapnya"}
+                  </button>
+
+                  <div>
+                    <Button
+                      variant="outline"
+                      className="bg-gray-50/20 hover:bg-gray-50/30"
+                      onClick={() => navigate(slide.route)}
+                    >
+                      Info Detail
+                    </Button>
+                  </div>
                 </div>
               </div>
-            </div>
             </>
           );
         })}

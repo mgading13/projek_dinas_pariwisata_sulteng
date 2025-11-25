@@ -4,86 +4,98 @@ import LukPanentengbg from "../../assets/SiDewi/Paisupok.jpg";
 import LukPanenteng1 from "../../assets/SiDewi/Paisupok 3.jpeg";
 import LukPanenteng2 from "../../assets/SiDewi/LukPanenteng1.png";
 
-import {
-    Card,
-    CardHeader,
-    CardTitle,
-    CardContent,
-  } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import DestinasiCarousel from "../../Component/CarouselPaketWisata.jsx";
 
 const LukPanenteng = () => {
   return (
     <>
-    <NavBar></NavBar>
-    
-    <div  className="relative min-h-screen bg-cover bg-center" 
-        style={{ backgroundImage: `url(${LukPanentengbg})` }}>
-          <div className="absolute inset-0 bg-black/50"></div>
-        <div className="relative flex flex-col items-center justify-center min-h-screen">
-            <h1 className="text-3xl font-bold text-white">Desa Wisata</h1>
-            <h1 className="text-3xl font-bold text-white">Luk Panenteng</h1>
-            <p className="mt-4 text-white">Kabupaten Banggai Kepulauan</p>
-        </div>
-    </div>
-    <div
-      className="relative w-full h-screen bg-cover bg-center flex items-center justify-center text-white"
-      style={{ backgroundImage: `url(${LukPanenteng1})` }}>
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-black/40" />
+      <NavBar></NavBar>
 
-      {/* Konten */}
-      <div className="relative z-10 w-full h-full p-20">
-        {/* Deskripsi */}
-        <div className="md:w-2/3 max-w-2xl">
-          <p className="text-lg leading-relaxed">
-            Kepulauan Togean di Teluk Tomini, Sulawesi Tengah, adalah surga bahari dengan
-            pantai pasir putih, hutan hujan, dan keindahan bawah laut yang memukau.
-            Di sini, wisatawan dapat menyelam, snorkeling, berenang bersama ubur-ubur tak
-            menyengat, menjelajah desa masyarakat Bajo, hingga menikmati ketenangan di
-            jembatan kayu antar pulau. Menjadikannya destinasi yang menyatukan petualangan,
-            alam, dan budaya dalam satu pengalaman yang tak terlupakan.
+      <div
+        className="relative min-h-screen bg-cover bg-center"
+        style={{ backgroundImage: `url(${LukPanentengbg})` }}
+      >
+        <div className="absolute inset-0 bg-black/50"></div>
+        <div className="relative flex flex-col items-center justify-center min-h-screen">
+          <h1 className="text-3xl font-bold text-white">Desa Wisata</h1>
+          <h1 className="text-3xl font-bold text-white">Luk Panenteng</h1>
+          <p className="mt-4 text-white text-xl font-semibold">
+            Kabupaten Banggai Kepulauan
           </p>
         </div>
+      </div>
+      <div
+        className="relative w-full h-screen bg-cover bg-center flex items-center justify-center text-white"
+        style={{ backgroundImage: `url(${LukPanenteng1})` }}
+      >
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-black/50" />
 
-        {/* Transportasi pakai Card */}
-        <div className="md:w-1/4 flex flex-col justify-center mt-10 md:mt-0 md:ml-auto space-y-3">
-          <Card className="bg-white/0 border-0 border-b-2 border-white text-white">
-            <CardHeader>
-              <CardTitle className="text-sm uppercase tracking-wider">
-                Lewat Darat
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
+        {/* Konten */}
+        <div className="relative z-10 w-full h-full p-20">
+          {/* Deskripsi */}
+          <div className="md:w-2/3 max-w-2xl">
+            <p className="text-lg leading-relaxed text-justify font-medium">
+              Desa Wisata Luk Panenteng adalah desa yang terletak di Kecamatan
+              Bulagi Utara, Kabupaten Banggai Kepulauan, Provinsi Sulawesi
+              Tengah. Desa yg terletak di wilayah kepulauan membuat desa ini
+              menjadi suatu destinasi favorit untuk pecinta wisata bahari, tidak
+              hanya pantai, dajg pemandangan bawah laut yang indah, tetapi juga
+              danau yang memiliki air yang begitu jernih sehingga dasar danau yg
+              dalamnya belasan meter dapat terlihat dengan begitu jelas.
+              Begitupun budaya setempat yang masih melekat kuat yang dapat
+              terlihat dari kehidupan sehari hari masyaraktnya, yang masih
+              diterapkan secara tradisional dalam hal, mata lencaharian dan
+              keupacaraan adat lainnya, serta seni musik dan tari-tarian, yang
+              masih sering di gelar pada kegiatan2 perayaan di desa. Wisatawan
+              pun dapat ikut serta menikmati serta berpengalaman melakukan
+              kegiatan keseharian bersama masyarakat, dalam hal bertani,
+              menangkap ikan, dan lain-lain, yg semuanya itu masih dilakukan
+              secara tradisional.
+            </p>
+          </div>
+
+          {/* Transportasi pakai Card */}
+          <div className="md:w-1/4 flex flex-col justify-center mt-10 md:mt-0 md:ml-auto space-y-3">
+            <Card className="bg-white/0 border-0 border-b-2 border-white text-white">
+              <CardHeader>
+                <CardTitle className="text-sm uppercase tracking-wider">
+                  Lewat Darat
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
                 <p className="text-gray-300">100 km dari Palu &#10148; Luwuk</p>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
 
-          <Card className="bg-white/0 border-0 border-b-2 border-white text-white">
-            <CardHeader>
-              <CardTitle className="text-sm uppercase tracking-wider">
-                Lewat Laut
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-                <p className="text-gray-300">100 km dari Luwuk &#10148; Luk Panenteng </p>
-            </CardContent>
-          </Card>
+            <Card className="bg-white/0 border-0 border-b-2 border-white text-white">
+              <CardHeader>
+                <CardTitle className="text-sm uppercase tracking-wider">
+                  Lewat Laut
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-300">
+                  100 km dari Luwuk &#10148; Luk Panenteng{" "}
+                </p>
+              </CardContent>
+            </Card>
 
-          <Card className="bg-white/0 border-0 border-b-2 border-white text-white">
-            <CardHeader>
-              <CardTitle className="text-sm uppercase tracking-wider">
-                Lewat Udara
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
+            <Card className="bg-white/0 border-0 border-b-2 border-white text-white">
+              <CardHeader>
+                <CardTitle className="text-sm uppercase tracking-wider">
+                  Lewat Udara
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
                 <p className="text-gray-300">100 km dari Palu &#10148; Luwuk</p>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
-    </div>
-    <div className="min-h-screen bg-cover bg-center" 
+      {/* <div className="min-h-screen bg-cover bg-center" 
         style={{ backgroundImage: `url(${LukPanenteng2})` }}>
         <div className="p-20">
             <div className="text-white font-semibold text-2xl">
@@ -91,7 +103,7 @@ const LukPanenteng = () => {
                 <DestinasiCarousel></DestinasiCarousel>
             </div>
         </div>
-    </div>
+    </div> */}
     </>
   );
 };

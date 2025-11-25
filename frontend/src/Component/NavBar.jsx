@@ -39,11 +39,14 @@ export default function Navbar() {
   return (
     <nav
       className={`fixed top-0 left-0 w-full z-[999] transition-all duration-500
-        ${isScrolled ? "backdrop-blur-xl bg-black/50 shadow-lg" : "bg-transparent"}
+        ${
+          isScrolled
+            ? "backdrop-blur-xl bg-black/50 shadow-lg"
+            : "bg-transparent"
+        }
       `}
     >
       <div className="container mx-auto flex items-center justify-between h-16 px-4 text-white">
-
         {/* LOGO */}
         <Link to="/" className="flex items-center space-x-2">
           <img src={Logo} alt="Logo" className="h-10 w-auto" />
@@ -53,13 +56,12 @@ export default function Navbar() {
         <div className="hidden md:block">
           <NavigationMenu>
             <NavigationMenuList className="flex items-center space-x-8">
-
               <NavigationMenuItem>
                 <NavigationMenuLink asChild>
                   <Link
                     to="/"
                     onClick={() => scrollToSection("home")}
-                    className="font-semibold hover:text-gray-300"
+                    className="font-semibold !text-lg hover:text-gray-300"
                   >
                     Beranda
                   </Link>
@@ -68,32 +70,49 @@ export default function Navbar() {
 
               {/* Wisata Unggulan */}
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent text-white hover:bg-transparent hover:text-gray-300">
+                <NavigationMenuTrigger className="bg-transparent text-white hover:bg-transparent hover:text-gray-300 text-lg">
                   Wisata Unggulan
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="bg-white text-black p-4 rounded-md shadow-lg">
                   <ul className="space-y-2 w-[200px]">
-                    <li><Link to="/lore-lindu">Lore Lindu</Link></li>
-                    <li><Link to="/geopark-poso">Geopark Poso</Link></li>
-                    <li><Link to="/pulau-togean">Pulau Togean</Link></li>
+                    <li>
+                      <Link to="/lore-lindu">Lore Lindu</Link>
+                    </li>
+                    <li>
+                      <Link to="/geopark-poso">Geopark Poso</Link>
+                    </li>
+                    <li>
+                      <Link to="/pulau-togean">Pulau Togean</Link>
+                    </li>
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
 
               {/* Desa Wisata */}
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent text-white hover:bg-transparent hover:text-gray-300">
+                <NavigationMenuTrigger className="bg-transparent text-white hover:bg-transparent hover:text-gray-300 text-lg">
                   Desa Wisata
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="bg-white text-black p-4 rounded-md shadow-lg">
                   <ul className="grid grid-cols-2 gap-2 w-[350px]">
                     {[
-                      "Luk Panenteng", "Towale", "Karosondaya", "Pulo Dua",
-                      "Bonebaru", "Pokekea", "Malangga", "Mendaan",
-                      "Labuan Belanda", "Bente", "Ungkea", "Taman Anggrek",
+                      "Anggrek Karunia",
+                      "Bente",
+                      "Bonebaru",
+                      "Karosondaya",
+                      "Labuan Belanda",
+                      "Luk Panenteng",
+                      "Malangga",
+                      "Mendaan",
+                      "Pokekea",
+                      "Pulo Dua",
+                      "Towale",
+                      "Ungkea",
                     ].map((nama) => (
                       <li key={nama}>
-                        <Link to={`/${nama.toLowerCase().replace(/\s+/g, "-")}`}>
+                        <Link
+                          to={`/${nama.toLowerCase().replace(/\s+/g, "-")}`}
+                        >
                           {nama}
                         </Link>
                       </li>
@@ -107,7 +126,7 @@ export default function Navbar() {
                   <Link
                     to="/"
                     onClick={() => scrollToSection("atraksi")}
-                    className="font-semibold hover:text-gray-300"
+                    className="font-semibold hover:text-gray-300 !text-lg"
                   >
                     Atraksi
                   </Link>
@@ -116,12 +135,14 @@ export default function Navbar() {
 
               <NavigationMenuItem>
                 <NavigationMenuLink asChild>
-                  <Link to="/paket-wisata" className="font-semibold hover:text-gray-300">
+                  <Link
+                    to="/paket-wisata"
+                    className="font-semibold hover:text-gray-300 !text-lg"
+                  >
                     Paket Wisata
                   </Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
-
             </NavigationMenuList>
           </NavigationMenu>
         </div>
@@ -130,7 +151,11 @@ export default function Navbar() {
         <div className="md:hidden flex items-center">
           <Sheet open={drawerOpen} onOpenChange={setDrawerOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="text-white z-[1000]">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-white z-[1000]"
+              >
                 {drawerOpen ? (
                   <X className="h-6 w-6 transition-all duration-300" />
                 ) : (
@@ -142,10 +167,9 @@ export default function Navbar() {
             <SheetContent
               side="right"
               className="bg-black/40 backdrop-blur-xl text-white p-6
-                w-[75%] max-w-[300px] border-l border-white/10 shadow-2xl"
+                w-[75%] max-w-[300px] border-l border-white/10 shadow-2xl z-[9999]"
             >
               <nav className="mt-8 flex flex-col space-y-4 text-lg font-semibold">
-
                 <Link
                   to="/"
                   onClick={() => {
@@ -162,10 +186,22 @@ export default function Navbar() {
                     Wisata Unggulan
                     <ChevronDown className="h-4 w-4 transition-transform data-[state=open]:rotate-180" />
                   </CollapsibleTrigger>
-                  <CollapsibleContent className="ml-4 mt-2 space-y-1 text-gray-300">
-                    <Link to="/lore-lindu" onClick={() => setDrawerOpen(false)}>Lore Lindu</Link>
-                    <Link to="/geopark-poso" onClick={() => setDrawerOpen(false)}>Geopark Poso</Link>
-                    <Link to="/pulau-togean" onClick={() => setDrawerOpen(false)}>Pulau Togean</Link>
+                  <CollapsibleContent className="ml-4 mt-2 space-y-1 text-gray-300 flex flex-col">
+                    <Link
+                      to="/geopark-poso"
+                      onClick={() => setDrawerOpen(false)}
+                    >
+                      Geopark Poso
+                    </Link>
+                    <Link to="/lore-lindu" onClick={() => setDrawerOpen(false)}>
+                      Lore Lindu
+                    </Link>
+                    <Link
+                      to="/pulau-togean"
+                      onClick={() => setDrawerOpen(false)}
+                    >
+                      Pulau Togean
+                    </Link>
                   </CollapsibleContent>
                 </Collapsible>
 
@@ -175,11 +211,20 @@ export default function Navbar() {
                     Desa Wisata
                     <ChevronDown className="h-4 w-4 transition-transform data-[state=open]:rotate-180" />
                   </CollapsibleTrigger>
-                  <CollapsibleContent className="ml-4 mt-2 space-y-1 text-gray-300">
+                  <CollapsibleContent className="ml-4 mt-2 space-y-1 text-gray-300 flex flex-col">
                     {[
-                      "Luk Panenteng", "Towale", "Karosondaya", "Pulo Dua",
-                      "Bonebaru", "Pokekea", "Malangga", "Mendaan",
-                      "Labuan Belanda", "Bente", "Ungkea", "Taman Anggrek",
+                      "Anggrek Karunia",
+                      "Bente",
+                      "Bonebaru",
+                      "Karosondaya",
+                      "Labuan Belanda",
+                      "Luk Panenteng",
+                      "Malangga",
+                      "Mendaan",
+                      "Pokekea",
+                      "Pulo Dua",
+                      "Towale",
+                      "Ungkea",
                     ].map((nama) => (
                       <Link
                         key={nama}
@@ -202,18 +247,13 @@ export default function Navbar() {
                   Atraksi
                 </Link>
 
-                <Link
-                  to="/paket-wisata"
-                  onClick={() => setDrawerOpen(false)}
-                >
+                <Link to="/paket-wisata" onClick={() => setDrawerOpen(false)}>
                   Paket Wisata
                 </Link>
-
               </nav>
             </SheetContent>
           </Sheet>
         </div>
-
       </div>
     </nav>
   );

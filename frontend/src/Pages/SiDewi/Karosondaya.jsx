@@ -11,47 +11,77 @@ const Karosondaya = () => {
   return (
     <>
       <NavBar />
-      <div className="relative min-h-screen bg-cover bg-center" style={{ backgroundImage: `url(${Karosondaya1})` }}>
+      <div
+        className="relative min-h-screen bg-cover bg-center"
+        style={{ backgroundImage: `url(${Karosondaya1})` }}
+      >
         <div className="absolute inset-0 bg-black/50"></div>
         <div className="relative flex flex-col items-center justify-center min-h-screen">
           <h1 className="text-3xl font-bold text-white">Desa Wisata</h1>
           <h1 className="text-3xl font-bold text-white">Karosondaya</h1>
-          <p className="mt-4 text-white">Kabupaten Banggai</p>
+          <p className="mt-4 text-xl font-semibold text-white">
+            Kabupaten Parigi Moutong
+          </p>
         </div>
       </div>
 
-      <div className="relative w-full h-screen bg-cover bg-center flex items-center justify-center text-white"
-           style={{ backgroundImage: `url(${Karosondaya2})` }}>
-        <div className="absolute inset-0 bg-black/40" />
+      <div
+        className="relative w-full h-screen bg-cover bg-center flex items-center justify-center text-white"
+        style={{ backgroundImage: `url(${Karosondaya2})` }}
+      >
+        <div className="absolute inset-0 bg-black/50" />
         <div className="relative z-10 w-full h-full p-20">
           <div className="md:w-2/3 max-w-2xl">
-            <p className="text-lg leading-relaxed">Deskripsi tentang Desa Wisata Karosondaya...</p>
+            <p className="text-lg leading-relaxed text-justify font-medium">
+              Desa Wisata Karosondaya di Kabupaten Parigi Moutong yang berfokus
+              pada wisata alam pesisir, pantai, laut, dan hutan mangrove,
+              termasuk spot diving Batu Timbul dan jembatan kayu untuk
+              menjelajahi mangrove. Fokus Wisata: Pesisir, pantai, laut, dan
+              hutan mangrove.
+            </p>
           </div>
 
           <div className="md:w-1/4 flex flex-col justify-center mt-10 md:mt-0 md:ml-auto space-y-3">
             <Card className="bg-white/0 border-0 border-b-2 border-white text-white">
-              <CardHeader><CardTitle className="text-sm uppercase">Lewat Darat</CardTitle></CardHeader>
-              <CardContent><p className="text-gray-300">Palu ➜ Luwuk ➜ Karosondaya</p></CardContent>
+              <CardHeader>
+                <CardTitle className="text-sm uppercase">Lewat Darat</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-300">Palu ➜ Luwuk ➜ Karosondaya</p>
+              </CardContent>
             </Card>
             <Card className="bg-white/0 border-0 border-b-2 border-white text-white">
-              <CardHeader><CardTitle className="text-sm uppercase">Lewat Laut</CardTitle></CardHeader>
-              <CardContent><p className="text-gray-300">Pelabuhan Luwuk ➜ Karosondaya</p></CardContent>
+              <CardHeader>
+                <CardTitle className="text-sm uppercase">Lewat Laut</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-300">Pelabuhan Luwuk ➜ Karosondaya</p>
+              </CardContent>
             </Card>
             <Card className="bg-white/0 border-0 border-b-2 border-white text-white">
-              <CardHeader><CardTitle className="text-sm uppercase">Lewat Udara</CardTitle></CardHeader>
-              <CardContent><p className="text-gray-300">Bandara Luwuk ➜ Karosondaya</p></CardContent>
+              <CardHeader>
+                <CardTitle className="text-sm uppercase">Lewat Udara</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-300">Bandara Luwuk ➜ Karosondaya</p>
+              </CardContent>
             </Card>
           </div>
         </div>
       </div>
 
-      <div className="min-h-screen bg-cover bg-center" style={{ backgroundImage: `url(${Karosondaya3})` }}>
+      {/* <div
+        className="min-h-screen bg-cover bg-center"
+        style={{ backgroundImage: `url(${Karosondaya3})` }}
+      >
         <div className="p-20 text-white font-semibold text-2xl">
           <h1>Rekomendasi Paket Wisata</h1>
-          <br /><hr /><br />
+          <br />
+          <hr />
+          <br />
           <DestinasiCarousel />
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

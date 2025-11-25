@@ -19,7 +19,9 @@ const Towale = () => {
         <div className="relative flex flex-col items-center justify-center min-h-screen">
           <h1 className="text-3xl font-bold text-white">Desa Wisata</h1>
           <h1 className="text-3xl font-bold text-white">Towale</h1>
-          <p className="mt-4 text-white">Kabupaten Donggala</p>
+          <p className="mt-4 text-white font-semibold text-xl">
+            Kabupaten Donggala
+          </p>
         </div>
       </div>
 
@@ -27,11 +29,23 @@ const Towale = () => {
         className="relative w-full h-screen bg-cover bg-center flex items-center justify-center text-white"
         style={{ backgroundImage: `url(${Towale2})` }}
       >
-        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0 bg-black/50" />
         <div className="relative z-10 w-full h-full p-20">
           <div className="md:w-2/3 max-w-2xl">
-            <p className="text-lg leading-relaxed">
-              Deskripsi tentang Desa Wisata Towale...
+            <p className="text-lg leading-relaxed text-justify font-medium">
+              Desa Towale atau biasa dikenal dengan Desa Pusat Laut adalah salah
+              satu Desa yang masuk di Kecamatan Banawa Tengah, Kabupaten
+              Donggala, Sulawesi Tengah. Dan Desa ini bisa di tempuh dengan
+              jarak sekitar 45 menit dari Kota Palu, Ibu Kota Provinsi Sulawesi
+              Tengah. Desa ini menawarkan keindahan bawah laut dan keindahan
+              pantai dengan hamparan pasir putih juga menawarkan kearifan lokal
+              masyarakat, dimana mereka hampir sebagian besar bekerja dengan
+              menenun sarung Donggala atau biasa di kenal dengan Buya Sabe atau
+              Batik Bomba. Daya tarik wisatawan mengunjungi Desa Towale adalah
+              keberadaan satu sumur yang di beri nama pusat laut atau dalam
+              bahasa Kaili sebut puse ntasi, sumur ini berdiameter 10 meter
+              dengan kedalaman 7 meter yang merupakan sumur terbesar di dunia.
+              Ini merupakan salah satu keunikan tersendiri dari Desa Towale.
             </p>
           </div>
 
@@ -64,7 +78,7 @@ const Towale = () => {
         </div>
       </div>
 
-      <div
+      {/* <div
         className="min-h-screen bg-cover bg-center"
         style={{ backgroundImage: `url(${Towale3})` }}
       >
@@ -75,7 +89,7 @@ const Towale = () => {
           <br />
           <DestinasiCarousel />
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

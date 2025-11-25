@@ -20,7 +20,9 @@ const PuloDua = () => {
         <div className="relative flex flex-col items-center justify-center min-h-screen">
           <h1 className="text-3xl font-bold text-white">Desa Wisata</h1>
           <h1 className="text-3xl font-bold text-white">Pulo Dua</h1>
-          <p className="mt-4 text-white">Kabupaten Banggai Kepulauan</p>
+          <p className="mt-4 text-white text-xl font-semibold">
+            Kabupaten Banggai
+          </p>
         </div>
       </div>
       <div
@@ -28,20 +30,26 @@ const PuloDua = () => {
         style={{ backgroundImage: `url(${PuloDua2})` }}
       >
         {/* Overlay */}
-        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0 bg-black/50" />
 
         {/* Konten */}
         <div className="relative z-10 w-full h-full p-20">
           {/* Deskripsi */}
-          <div className="md:w-2/3 max-w-2xl">
+          <div className="md:w-2/3 max-w-2xl text-justify font-medium">
             <p className="text-lg leading-relaxed">
-              Kepulauan Togean di Teluk Tomini, Sulawesi Tengah, adalah surga
-              bahari dengan pantai pasir putih, hutan hujan, dan keindahan bawah
-              laut yang memukau. Di sini, wisatawan dapat menyelam, snorkeling,
-              berenang bersama ubur-ubur tak menyengat, menjelajah desa
-              masyarakat Bajo, hingga menikmati ketenangan di jembatan kayu
-              antar pulau. Menjadikannya destinasi yang menyatukan petualangan,
-              alam, dan budaya dalam satu pengalaman yang tak terlupakan.
+              Desa Wisata Pulo Dua adalah sebuah desa pengembang wisata di
+              Kecamatan Balantak, Kabupaten Banggai, Sulawesi Tengah, yang
+              menawarkan pesona alam berupa gugusan dua pulau dengan keindahan
+              bawah laut yang masih alami dan pantai berpasir putih. Destinasi
+              ini dapat diakses melalui darat dari Luwuk selama beberapa jam,
+              atau melalui laut dan udara, dengan waktu tempuh 15 menit dari
+              desa ke pulau utama menggunakan perahu. Wisata Bahari: Menyelam
+              dan snorkeling untuk menikmati terumbu karang dan biota laut yang
+              belum terjamah. Pantai Pasir Putih: Menikmati keindahan pantai
+              dengan pasir putih yang memukau. Pendakian Bukit: Mendaki bukit di
+              Pulau Dua untuk menikmati pemandangan indah desa-desa sekitar dan,
+              jika cuaca cerah, bisa melihat daratan lain. Budaya Lokal:
+              Berinteraksi dengan masyarakat lokal dan menikmati budaya
             </p>
           </div>
 
@@ -84,7 +92,7 @@ const PuloDua = () => {
           </div>
         </div>
       </div>
-      <div
+      {/* <div
         className="min-h-screen bg-cover bg-center"
         style={{ backgroundImage: `url(${PuloDua3})` }}
       >
@@ -97,7 +105,7 @@ const PuloDua = () => {
             <DestinasiCarousel></DestinasiCarousel>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

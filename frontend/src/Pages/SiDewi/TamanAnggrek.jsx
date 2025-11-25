@@ -20,8 +20,8 @@ const TamanAnggrek = () => {
         <div className="absolute inset-0 bg-black/50"></div>
         <div className="relative flex flex-col items-center justify-center min-h-screen bg-black/40">
           <h1 className="text-3xl font-bold text-white">Desa Wisata</h1>
-          <h1 className="text-3xl font-bold text-white">Taman Anggrek</h1>
-          <p className="mt-4 text-white">Kabupaten Sigi</p>
+          <h1 className="text-3xl font-bold text-white">Anggrek Karunia</h1>
+          <p className="mt-4 text-white text-xl font-semibold">Kabupaten Sigi</p>
         </div>
       </div>
 
@@ -30,15 +30,26 @@ const TamanAnggrek = () => {
         className="relative w-full h-screen bg-cover bg-center flex items-center justify-center text-white"
         style={{ backgroundImage: `url(${TamanAnggrek2})` }}
       >
-        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0 bg-black/50" />
 
         <div className="relative z-10 w-full h-full p-20">
           <div className="md:w-2/3 max-w-2xl">
-            <p className="text-lg leading-relaxed">
-              Taman Anggrek adalah destinasi yang menampilkan keindahan bunga
-              tropis, khususnya anggrek khas Sulawesi. Dengan suasana asri dan
-              udara sejuk pegunungan, tempat ini ideal untuk wisata edukasi,
-              fotografi, maupun rekreasi keluarga.
+            <p className="text-lg leading-relaxed text-justify font-medium">
+              DESA KARUNIA merupakan salah satu desa yang berbatasan langsung
+              dengan Taman Nasional Lore Lindu (TNLL). Sebagai salah satu
+              kawasan konservasi di Sulawesi tengah, Taman Nasional Lore Lindu
+              (TNLL) memiliki keanekaragaman hayati yang tinggi. Salah satu
+              potensi sumber daya hutan adalah anggrek alam yang diperkirakaan
+              sekitar 50 genus anggrek menyebar pada ketinggian 600-800 mdpl di
+              wilayah TNLL. Beberapa diantaranya termasuk endemik seperti
+              anggrek bulan merah (Phalaenopsis celebencis), anggrek bulan putih
+              (Phalaenopsis amabilis) dan anggrek bulan kuning (Phalaenopsis
+              amboinensis), Coelogyne sp., Bulbophyllum, Dendrobium, Vanda dan
+              berbagai jenis lainnya. Hal inilah kelompok masyarakat Desa
+              Karunia yang mengembangkan dan membudidayakan tanaman anggrek yang
+              merupakan kekayaan alam Cagar Biosefer Lore Lindu. ini suatu
+              bentuk konservasi yang dilakukan masyarakat di sekitar Cagar
+              Biosfer Lore Lindu.
             </p>
           </div>
 
@@ -65,14 +76,16 @@ const TamanAnggrek = () => {
                 <CardTitle className="text-sm uppercase">Lewat Udara</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-300">Bandara Mutiara SIS Al-Jufrie → jalur darat</p>
+                <p className="text-gray-300">
+                  Bandara Mutiara SIS Al-Jufrie → jalur darat
+                </p>
               </CardContent>
             </Card>
           </div>
         </div>
       </div>
 
-      {/* Rekomendasi Paket Wisata */}
+      {/* Rekomendasi Paket Wisata
       <div
         className="min-h-screen bg-cover bg-center"
         style={{ backgroundImage: `url(${TamanAnggrek3})` }}
@@ -86,7 +99,7 @@ const TamanAnggrek = () => {
             <DestinasiCarousel />
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

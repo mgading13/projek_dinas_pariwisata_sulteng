@@ -20,7 +20,9 @@ const Ungkea = () => {
         <div className="flex flex-col items-center justify-center min-h-screen bg-black/40">
           <h1 className="text-3xl font-bold text-white">Desa Wisata</h1>
           <h1 className="text-3xl font-bold text-white">Ungkea</h1>
-          <p className="mt-4 text-white">Kabupaten Tojo Una-Una</p>
+          <p className="mt-4 text-white text-xl font-semibold">
+            Kabupaten Morowali Utara
+          </p>
         </div>
       </div>
 
@@ -29,16 +31,18 @@ const Ungkea = () => {
         className="relative w-full h-screen bg-cover bg-center flex items-center justify-center text-white"
         style={{ backgroundImage: `url(${Ungkea2})` }}
       >
-        
-        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0 bg-black/50" />
 
         <div className="relative z-10 w-full h-full p-20">
           <div className="md:w-2/3 max-w-2xl">
-            <p className="text-lg leading-relaxed">
-              Desa Ungkea terkenal dengan kekayaan alam lautnya. Pantai-pantai
-              dengan pasir putih dan air laut yang jernih membuatnya cocok untuk
-              snorkeling, diving, atau sekadar menikmati suasana tropis yang
-              menenangkan.
+            <p className="text-lg leading-relaxed text-justify font-medium">
+              Ungkea adalah sebuah desa yang terletak di Kecamatan Petasia
+              Timur, Kabupaten Morowali Utara, Provinsi Sulawesi Tengah,
+              Indonesia. Ungkea Beach, kawasan wisata pantai yang selama ini
+              telah dikenal di Kabupaten Morowali Utara, Sulawesi Tengah. Tempat
+              wisata pantai yang berada di Kecamatan Petasia Timur ini begitu
+              nan eksotis. Kini telah dilengkapi dengan sarana banana boat,
+              villa dan lain sebagainya.
             </p>
           </div>
 
@@ -73,7 +77,7 @@ const Ungkea = () => {
       </div>
 
       {/* Rekomendasi Paket Wisata */}
-      <div
+      {/* <div
         className="min-h-screen bg-cover bg-center"
         style={{ backgroundImage: `url(${Ungkea1})` }}
       >
@@ -86,7 +90,7 @@ const Ungkea = () => {
             <DestinasiCarousel />
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

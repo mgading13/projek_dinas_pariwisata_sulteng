@@ -21,7 +21,9 @@ const LabuanBelanda = () => {
         <div className="relative flex flex-col items-center justify-center min-h-screen bg-black/40">
           <h1 className="text-3xl font-bold text-white">Desa Wisata</h1>
           <h1 className="text-3xl font-bold text-white">Labuan Belanda</h1>
-          <p className="mt-4 text-white">Kabupaten Banggai Kepulauan</p>
+          <p className="mt-4 text-white text-xl font-semibold">
+            Kabupaten Tojo Una-Una
+          </p>
         </div>
       </div>
 
@@ -30,15 +32,25 @@ const LabuanBelanda = () => {
         className="relative w-full h-screen bg-cover bg-center flex items-center justify-center text-white"
         style={{ backgroundImage: `url(${LabuanBelanda2})` }}
       >
-        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0 bg-black/50" />
 
         <div className="relative z-10 w-full h-full p-20">
           <div className="md:w-2/3 max-w-2xl">
-            <p className="text-lg leading-relaxed">
-              Labuan Belanda memiliki pesona bahari dengan hamparan pasir putih
-              yang luas dan laut biru jernih. Tempat ini sangat cocok untuk
-              wisata keluarga, fotografi pantai, hingga aktivitas bahari yang
-              menyegarkan jiwa.
+            <p className="text-lg leading-relaxed text-justify font-medium">
+              Desa labuan adalah salah satu Desa di wilayah kecamatan Ratolindo,
+              Kab. Tojo Una-Una, sulawesi Tengah dengan jarak tempuh yang cukup
+              dekat dari ibukota Kabupaten yaitu sekitar 7 Km dan dapat di akses
+              dengan menggunakan kenderaan Roda 4. Desa labuan dengan luas 4,3
+              Km2 dengan jumlah penduduk 2.677 jiwa dari multi etnis diantaranya
+              adalah suku bajo yang memiliki rumah diatas laut. Selain itu desa
+              labuan juga menawarkan tempat menginap berupa Cottage dan Homestay
+              bagi pengunjung yang berwisata ke desa labuan. Desa Labuan
+              Mempunyai banyak Obyek daya tarik Wisata yang wajib dikunjungi
+              oleh wisatawan seperti : Pantai Marina Cottage dapat Menikmati
+              Sunset yang indah, Perumahan Kampung Bajo yang berdiri diatas
+              laut, Tanjung Lawaka yang mempunyai air laut berwarna Hijau Tosca
+              dan Tanjung Api, gas alam yang keluar secara alami dengan menggali
+              sekitar 5 - 10 cm maka akan keluar Gas alam dan api.
             </p>
           </div>
 
@@ -57,7 +69,9 @@ const LabuanBelanda = () => {
                 <CardTitle className="text-sm uppercase">Lewat Laut</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-300">Pelabuhan terdekat → Labuan Belanda</p>
+                <p className="text-gray-300">
+                  Pelabuhan terdekat → Labuan Belanda
+                </p>
               </CardContent>
             </Card>
             <Card className="bg-white/0 border-0 border-b-2 border-white text-white">
@@ -73,7 +87,7 @@ const LabuanBelanda = () => {
       </div>
 
       {/* Paket Wisata */}
-      <div
+      {/* <div
         className="min-h-screen bg-cover bg-center"
         style={{ backgroundImage: `url(${LabuanBelanda3})` }}
       >
@@ -86,7 +100,7 @@ const LabuanBelanda = () => {
             <DestinasiCarousel />
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

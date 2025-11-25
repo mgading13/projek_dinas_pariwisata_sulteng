@@ -21,7 +21,7 @@ const Bente = () => {
         <div className="relative flex flex-col items-center justify-center min-h-screen bg-black/40">
           <h1 className="text-3xl font-bold text-white">Desa Wisata</h1>
           <h1 className="text-3xl font-bold text-white">Bente</h1>
-          <p className="mt-4 text-white">Kabupaten Morowali Utara</p>
+          <p className="mt-4 text-xl font-semibold text-white">Kabupaten Morowali Utara</p>
         </div>
       </div>
 
@@ -30,11 +30,11 @@ const Bente = () => {
         className="relative w-full h-screen bg-cover bg-center flex items-center justify-center text-white"
         style={{ backgroundImage: `url(${Bente2})` }}
       >
-        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0 bg-black/50" />
 
         <div className="relative z-10 w-full h-full p-20">
           <div className="md:w-2/3 max-w-2xl">
-            <p className="text-lg leading-relaxed">
+            <p className="text-lg leading-relaxed text-justify font-medium">
               Desa Bente memiliki pesona alam yang masih alami dengan panorama
               pegunungan dan hutan tropis. Udara segar dan suasana pedesaan yang
               tenang menjadi daya tarik utama, cocok bagi wisatawan yang ingin
@@ -72,7 +72,7 @@ const Bente = () => {
         </div>
       </div>
 
-      {/* Rekomendasi Paket Wisata */}
+      {/* Rekomendasi Paket Wisata
       <div
         className="min-h-screen bg-cover bg-center"
         style={{ backgroundImage: `url(${Bente3})` }}
@@ -86,7 +86,7 @@ const Bente = () => {
             <DestinasiCarousel />
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };
