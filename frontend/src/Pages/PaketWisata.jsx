@@ -147,32 +147,9 @@ const PaketWisata = () => {
                                 <h2 className="text-lg font-semibold mb-2">
                                   {paket.nama}
                                 </h2>
-                                <p className="text-sm text-gray-200 mb-2">
-                                  {expanded[paket.id]
-                                    ? paket.deskripsi
-                                    : paket.deskripsi.slice(0, 120) +
-                                      (paket.deskripsi.length > 120
-                                        ? "..."
-                                        : "")}
+                                <p className="text-md mt-2 line-clamp-3 text-justify">
+                                  {paket.deskripsi}
                                 </p>
-
-                                {paket.deskripsi.length > 120 && (
-                                  <button
-                                    className="text-blue-400 text-sm hover:underline"
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      setExpanded((prev) => ({
-                                        ...prev,
-                                        [paket.id]: !prev[paket.id],
-                                      }));
-                                    }}
-                                  >
-                                    {expanded[paket.id]
-                                      ? "Sembunyikan"
-                                      : "Selengkapnya"}
-                                  </button>
-                                )}
-
                                 <div className="flex justify-between items-center">
                                   <span className="font-semibold">
                                     {paket.harga}
@@ -231,30 +208,9 @@ const PaketWisata = () => {
                           <h2 className="text-lg font-semibold mb-2">
                             {paket.nama}
                           </h2>
-                          <p className="text-sm text-gray-200 mb-2">
-                            {expanded[paket.id]
-                              ? paket.deskripsi
-                              : paket.deskripsi.slice(0, 120) +
-                                (paket.deskripsi.length > 120 ? "..." : "")}
+                          <p className="text-md mt-2 line-clamp-3 text-justify">
+                            {paket.deskripsi}
                           </p>
-
-                          {paket.deskripsi.length > 120 && (
-                            <button
-                              className="text-blue-400 text-sm hover:underline"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setExpanded((prev) => ({
-                                  ...prev,
-                                  [paket.id]: !prev[paket.id],
-                                }));
-                              }}
-                            >
-                              {expanded[paket.id]
-                                ? "Sembunyikan"
-                                : "Selengkapnya"}
-                            </button>
-                          )}
-
                           <div className="flex justify-between items-center">
                             <span className="font-semibold">{paket.harga}</span>
                             <a

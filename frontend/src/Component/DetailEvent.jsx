@@ -3,12 +3,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import Navbar from "./NavBar";
 
-import Navbar from "../../Component/NavBar";
-import CountDown from "../../Component/CountDown";
+import CountDown from "./CountDown";
 
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function DetailEvent() {
@@ -23,11 +22,11 @@ export default function DetailEvent() {
       .then((res) => {
         setEvent(res.data.event);
         console.log("EVENT DATA:", res.data.event);
-        console.log("Startdate dari API:", res.data.event.startdate);
-        console.log(
-          "Parsed date:",
-          new Date(Date.parse(res.data.event.startdate))
-        );
+        // console.log("Startdate dari API:", res.data.event.startdate);
+        // console.log(
+        //   "Parsed date:",
+        //   new Date(Date.parse(res.data.event.startdate))
+        // );
 
         setLoading(false);
       })

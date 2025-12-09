@@ -80,7 +80,7 @@ export default function CarouselEvent () {
                 {/* Konten */}
                 <div className='relative z-10 max-w-2xl text-white p-6'>
                   <h1 className='text-sm uppercase tracking-wider text-blue-200'>
-                    Wisata Unggulan
+                    Atraksi
                   </h1>
                   <h2 className='text-4xl font-bold mb-2'>{slide.nameEvent}</h2>
                   {slide.location && (

@@ -13,7 +13,7 @@ import {
   CollapsibleTrigger,
   CollapsibleContent,
 } from "@/components/ui/collapsible";
-
+import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Menu, ChevronDown, X } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -24,6 +24,24 @@ import { useState, useEffect } from "react";
 export default function Navbar() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [desaUnggulan, setDesaUnggulan] = useState([]);
+  const [desaWisata, setDesaWisata] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get("http://localhost:3000/api/desaWisata/");
+        const data = res.data;
+
+        setDesaUnggulan(data.filter((d) => d.jenisDesa === "DESA_UNGGULAN"));
+        setDesaWisata(data.filter((d) => d.jenisDesa === "DESA_WISATA"));
+      } catch (error) {
+        console.error("Error fetching desa:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 10);
@@ -75,15 +93,17 @@ export default function Navbar() {
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="bg-white text-black p-4 rounded-md shadow-lg">
                   <ul className="space-y-2 w-[200px]">
-                    <li>
-                      <Link to="/lore-lindu">Lore Lindu</Link>
-                    </li>
-                    <li>
-                      <Link to="/geopark-poso">Geopark Poso</Link>
-                    </li>
-                    <li>
-                      <Link to="/pulau-togean">Pulau Togean</Link>
-                    </li>
+                    {desaUnggulan.map((item) => (
+                      <li key={item.id}>
+                        <Link
+                          to={`/desa/${item.namaDesa
+                            .toLowerCase()
+                            .replace(/\s+/g, "-")}`}
+                        >
+                          {item.namaDesa}
+                        </Link>
+                      </li>
+                    ))}
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
@@ -95,25 +115,13 @@ export default function Navbar() {
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="bg-white text-black p-4 rounded-md shadow-lg">
                   <ul className="grid grid-cols-2 gap-2 w-[350px]">
-                    {[
-                      "Anggrek Karunia",
-                      "Bente",
-                      "Bonebaru",
-                      "Karosondaya",
-                      "Labuan Belanda",
-                      "Luk Panenteng",
-                      "Malangga",
-                      "Mendaan",
-                      "Pokekea",
-                      "Pulo Dua",
-                      "Towale",
-                      "Ungkea",
-                    ].map((nama) => (
-                      <li key={nama}>
+                    {desaWisata.map((item) => (
+                      <li key={item.id}>
                         <Link
-                          to={`/${nama.toLowerCase().replace(/\s+/g, "-")}`}
+                          to={`/desa/${item.namaDesa.toLowerCase().replace(/\s+/g, "-")}`}
+
                         >
-                          {nama}
+                          {item.namaDesa}
                         </Link>
                       </li>
                     ))}
@@ -140,6 +148,16 @@ export default function Navbar() {
                     className="font-semibold hover:text-gray-300 !text-lg"
                   >
                     Paket Wisata
+                  </Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuLink asChild>
+                  <Link
+                    to="/kuliner"
+                    className="font-semibold hover:text-gray-300 !text-lg"
+                  >
+                    Kuliner
                   </Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
@@ -187,21 +205,17 @@ export default function Navbar() {
                     <ChevronDown className="h-4 w-4 transition-transform data-[state=open]:rotate-180" />
                   </CollapsibleTrigger>
                   <CollapsibleContent className="ml-4 mt-2 space-y-1 text-gray-300 flex flex-col">
-                    <Link
-                      to="/geopark-poso"
-                      onClick={() => setDrawerOpen(false)}
-                    >
-                      Geopark Poso
-                    </Link>
-                    <Link to="/lore-lindu" onClick={() => setDrawerOpen(false)}>
-                      Lore Lindu
-                    </Link>
-                    <Link
-                      to="/pulau-togean"
-                      onClick={() => setDrawerOpen(false)}
-                    >
-                      Pulau Togean
-                    </Link>
+                    {desaUnggulan.map((item) => (
+                      <Link
+                        key={item.id}
+                        to={`/${item.namaDesa
+                          .toLowerCase()
+                          .replace(/\s+/g, "-")}`}
+                        onClick={() => setDrawerOpen(false)}
+                      >
+                        {item.namaDesa}
+                      </Link>
+                    ))}
                   </CollapsibleContent>
                 </Collapsible>
 
@@ -212,26 +226,15 @@ export default function Navbar() {
                     <ChevronDown className="h-4 w-4 transition-transform data-[state=open]:rotate-180" />
                   </CollapsibleTrigger>
                   <CollapsibleContent className="ml-4 mt-2 space-y-1 text-gray-300 flex flex-col">
-                    {[
-                      "Anggrek Karunia",
-                      "Bente",
-                      "Bonebaru",
-                      "Karosondaya",
-                      "Labuan Belanda",
-                      "Luk Panenteng",
-                      "Malangga",
-                      "Mendaan",
-                      "Pokekea",
-                      "Pulo Dua",
-                      "Towale",
-                      "Ungkea",
-                    ].map((nama) => (
+                    {desaWisata.map((item) => (
                       <Link
-                        key={nama}
-                        to={`/${nama.toLowerCase().replace(/\s+/g, "-")}`}
+                        key={item.id}
+                        to={`/${item.namaDesa
+                          .toLowerCase()
+                          .replace(/\s+/g, "-")}`}
                         onClick={() => setDrawerOpen(false)}
                       >
-                        {nama}
+                        {item.namaDesa}
                       </Link>
                     ))}
                   </CollapsibleContent>
