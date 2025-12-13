@@ -29,7 +29,6 @@ const PaketWisata = () => {
   const [dataPaket, setDataPaket] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [expanded, setExpanded] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {

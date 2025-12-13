@@ -1,162 +1,137 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from 'react'
-import { useKeenSlider } from 'keen-slider/react'
-import 'keen-slider/keen-slider.min.css'
-import { Button } from '@/components/ui/button'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
-import axios from 'axios'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from "react";
+import "keen-slider/keen-slider.min.css";
+import axios from "axios";
+import * as React from "react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
+import { cn } from "@/lib/utils";
+export default function CarouselEvent() {
+  const [slides, setSlides] = useState([]);
+  const [api, setApi] = React.useState(null);
+  const [current, setCurrent] = React.useState(0);
 
-export default function CarouselEvent () {
-  const [slides, setSlides] = useState([])
-  const [expanded, setExpanded] = useState({})
-  const [sliderRef, slider] = useKeenSlider({
-    loop: true,
-    slides: { perView: 1 }
-  })
+  React.useEffect(() => {
+    if (!api) return;
 
-  // ✅ Ambil data dari backend (sekali)
+    setCurrent(api.selectedScrollSnap());
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap());
+    });
+  }, [api]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get('http://localhost:3000/api/atraksi/get')
-        console.log('📦 Data dari backend:', res.data)
-        // Jika backend return { data: [...] }
-        setSlides(res.data.data || res.data)
+        const res = await axios.get("http://localhost:3000/api/atraksi/get");
+        console.log("📦 Data dari backend:", res.data);
+        setSlides(res.data.data || res.data);
       } catch (err) {
-        console.error('Gagal fetch data event:', err)
+        console.error("Gagal fetch data event:", err);
       }
-    }
-    fetchData()
-  }, [])
-
-  useEffect(() => {
-    if (!slider) return
-    const interval = setInterval(() => {
-      slider.current?.next()
-    }, 7000)
-    return () => clearInterval(interval)
-  }, [slider])
-
-  const truncateText = (text, maxWords = 15) => {
-    if (!text) return ''
-    const words = text.split(' ')
-    return words.length > maxWords
-      ? words.slice(0, maxWords).join(' ') + '...'
-      : text
-  }
-
-  const handleImageError = e => {
-    e.target.src = '/fallback.jpg'
-    console.warn('Gambar gagal dimuat, pakai fallback.')
-  }
+    };
+    fetchData();
+  }, []);
 
   return (
-    <div className='relative w-full h-[100vh] overflow-hidden'>
-      {slides.length > 0 ? (
-        <div ref={sliderRef} className='keen-slider w-full h-full'>
-          {slides.map(slide => {
-            const isExpanded = expanded[slide.id] || false
-            return (
-              <div
-                key={slide.id}
-                className='keen-slider__slide relative flex items-center justify-end px-25'
-              >
-                <img
-                  src={
-                    slide.foto
-                      ? `http://localhost:3000${slide.foto}`
-                      : '/fallback.jpg'
-                  }
-                  onError={handleImageError}
-                  alt={slide.nameEvent}
-                  className='absolute inset-0 w-full h-full object-cover'
-                />
+    <section className="w-full bg-black py-28 overflow-hidden">
+      <div className="mx-auto max-w-6xl px-6">
+        <Carousel
+          setApi={setApi}
+          opts={{ align: "center", loop: true, containScroll: false}}
+          className="relative"
+        >
+          <CarouselContent className="-ml-6">
+            {slides.map((slide, idx) => {
+              const total = slides.length;
 
-                {/* Overlay */}
-                <div className='absolute inset-0 bg-black/40'></div>
+              const prevIndex = (current - 1 + total) % total;
+              const nextIndex = (current + 1) % total;
 
-                {/* Konten */}
-                <div className='relative z-10 max-w-2xl text-white p-6'>
-                  <h1 className='text-sm uppercase tracking-wider text-blue-200'>
-                    Atraksi
-                  </h1>
-                  <h2 className='text-4xl font-bold mb-2'>{slide.nameEvent}</h2>
-                  {slide.location && (
-                    <h3 className='text-lg text-blue-200 mb-4'>
-                      {slide.location}
-                    </h3>
-                  )}
-                  {slide.startdate && slide.enddate && (
-                    <p className='text-sm text-gray-300 mb-2'>
-                      📅{' '}
-                      {new Date(slide.startdate).toLocaleDateString('id-ID', {
-                        day: 'numeric',
-                        month: 'long',
-                        year: 'numeric'
-                      })}{' '}
-                      -{' '}
-                      {new Date(slide.enddate).toLocaleDateString('id-ID', {
-                        day: 'numeric',
-                        month: 'long',
-                        year: 'numeric'
-                      })}
-                    </p>
-                  )}
+              const isActive = idx === current;
+              const isPrev = idx === prevIndex;
+              const isNext = idx === nextIndex;
 
-                  <p className='mb-4 text-justify'>
-                    {isExpanded
-                      ? slide.description
-                      : truncateText(slide.description)}
-                  </p>
+              return (
+                <CarouselItem
+                  key={slide.id}
+                  className="pl-6 basis-[320px] flex justify-center"
+                >
+                  <Card
+                    className={cn(
+                      "relative h-[480px] w-[300px] overflow-hidden rounded-3xl transition-all duration-500",
+                      "bg-black shadow-2xl",
 
-                  <button
-                    className='text-blue-300 hover:underline mb-6'
-                    onClick={() =>
-                      setExpanded(prev => ({
-                        ...prev,
-                        [slide.id]: !isExpanded
-                      }))
-                    }
+                      isActive && "z-30 scale-100 rotate-y-0",
+                      (isPrev || isNext) &&
+                        "z-20 scale-90 blur-[1.5px] rotate-y-12 opacity-70",
+                      !isActive &&
+                        !isPrev &&
+                        !isNext &&
+                        "z-10 scale-75 blur-[3px] opacity-40"
+                    )}
                   >
-                    {isExpanded ? 'Sembunyikan' : 'Selengkapnya'}
-                  </button>
+                    <img
+                      src={`http://localhost:3000${slide.foto}`}
+                      alt={slide.nameEvent}
+                      className="absolute inset-0 h-full w-full object-cover"
+                    />
 
-                  <div>
-                    <Link to={`/event/${slide.id}`}>
-                      <Button
-                        variant='outline'
-                        className='bg-gray-50/20 hover:bg-gray-50/30'
-                      >
-                        Info Detail
-                      </Button>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            )
-          })}
-        </div>
-      ) : (
-        <div className='flex items-center justify-center h-full text-gray-400'>
-          Memuat data wisata...
-        </div>
-      )}
+                    <div className="absolute inset-0 bg-black/40" />
 
-      {/* Tombol navigasi */}
-      <button
-        onClick={() => slider.current?.prev()}
-        className='absolute top-1/2 left-4 -translate-y-1/2 bg-black/40 hover:bg-black/60 p-2 rounded-full text-white'
-      >
-        <ChevronLeft className='w-6 h-6' />
-      </button>
-      <button
-        onClick={() => slider.current?.next()}
-        className='absolute top-1/2 right-4 -translate-y-1/2 bg-black/40 hover:bg-black/60 p-2 rounded-full text-white'
-      >
-        <ChevronRight className='w-6 h-6' />
-      </button>
-    </div>
-  )
+                    <CardContent className="relative z-10 flex h-full flex-col justify-end p-6 text-white">
+                      <h3 className="text-xl font-semibold">
+                        {slide.nameEvent}
+                      </h3>
+
+                      {slide.location && (
+                        <p className="mt-1 text-sm text-gray-300">
+                          {slide.location}
+                        </p>
+                      )}
+
+                      <Link to={`/event/${slide.id}`} className="mt-4">
+                        <Button
+                          size="sm"
+                          className="w-full bg-white/20 text-white hover:bg-white/30"
+                        >
+                          Info Detail
+                        </Button>
+                      </Link>
+                    </CardContent>
+                  </Card>
+                </CarouselItem>
+              );
+            })}
+          </CarouselContent>
+
+          <CarouselPrevious className="left-0 bg-white/10 text-white hover:bg-white/20" />
+          <CarouselNext className="right-0 bg-white/10 text-white hover:bg-white/20" />
+        </Carousel>
+
+        {/* PROGRESS */}
+        <div className="mt-8 flex justify-center gap-2">
+          {slides.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => api?.scrollTo(idx)}
+              className={cn(
+                "h-2 rounded-full transition-all duration-300",
+                idx === current ? "w-8 bg-white" : "w-2 bg-white/40"
+              )}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 }
