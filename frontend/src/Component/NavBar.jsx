@@ -161,6 +161,16 @@ export default function Navbar() {
                   </Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuLink asChild>
+                  <Link
+                    to="/hotel"
+                    className="font-semibold hover:text-gray-300 !text-lg"
+                  >
+                    Hotel
+                  </Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
         </div>
@@ -252,6 +262,12 @@ export default function Navbar() {
 
                 <Link to="/paket-wisata" onClick={() => setDrawerOpen(false)}>
                   Paket Wisata
+                </Link>
+                <Link to="/kuliner" onClick={() => setDrawerOpen(false)}>
+                  Kuliner
+                </Link>
+                <Link to="/hotel" onClick={() => setDrawerOpen(false)}>
+                  Hotel
                 </Link>
               </nav>
             </SheetContent>

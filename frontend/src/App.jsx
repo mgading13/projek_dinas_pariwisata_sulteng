@@ -4,7 +4,8 @@ import Home from "./Pages/Home";
 import PaketWisata from "./Pages/PaketWisata";
 import DetailDesa from "./Component/DetailDesa";
 import DetailEvent from "./Component/DetailEvent";
-import Kuliner from "./Pages/Kuliner"
+import Kuliner from "./Pages/Kuliner";
+import Hotel from "./Pages/Hotel";
 
 function App() {
   return (
@@ -13,10 +14,11 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/desa/:slug" element={<DetailDesa />} />
       {/* Halaman Detail Atraksi */}
-      <Route path="/event/:id" element={<DetailEvent />} />
+      <Route path="/event/:slug" element={<DetailEvent />} />
       {/* Halaman Info Paket Wisata */}
       <Route path="/paket-wisata" element={<PaketWisata />} />
       <Route path="/kuliner" element={<Kuliner />} />
+      <Route path="/hotel" element={<Hotel />} />
     </Routes>
   );
 }

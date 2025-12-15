@@ -129,41 +129,33 @@ const PaketWisata = () => {
                           >
                             <Card
                               onClick={() => setSelectedPaket(paket)}
-                              className="relative overflow-hidden group shadow-lg border-none cursor-pointer transform transition duration-300 hover:scale-105"
+                              className="overflow-hidden rounded-xl border
+             hover:shadow-xl transition duration-300 cursor-pointer"
                             >
-                              {/* Gambar */}
                               <img
                                 src={paket.foto}
-                                alt={paket.nama}
-                                className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300"
+                                className="w-full h-56 object-cover"
                               />
 
-                              {/* Overlay */}
-                              <div className="absolute inset-0 bg-black/60 group-hover:bg-opacity-70 transition duration-300"></div>
-
-                              {/* Konten Card */}
-                              <div className="absolute bottom-0 left-0 w-full p-4 text-white z-10 flex flex-col">
-                                <h2 className="text-lg font-semibold mb-2">
+                              <CardContent className="p-4 space-y-2">
+                                <h2 className="font-semibold text-lg">
                                   {paket.nama}
                                 </h2>
-                                <p className="text-md mt-2 line-clamp-3 text-justify">
+                                <p className="text-sm text-gray-600 line-clamp-3">
                                   {paket.deskripsi}
                                 </p>
-                                <div className="flex justify-between items-center">
-                                  <span className="font-semibold">
-                                    {paket.harga}
-                                  </span>
-                                  <a
-                                    href={paket.wa}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="bg-green-500 hover:bg-green-600 text-white p-2 rounded-full"
-                                    onClick={(e) => e.stopPropagation()}
-                                  >
-                                    <WhatsappLogo size={22} weight="fill" />
-                                  </a>
-                                </div>
-                              </div>
+                              </CardContent>
+
+                              <CardFooter className="flex justify-between items-center px-4 pb-4">
+                                <span className="font-bold text-green-600">
+                                  {paket.harga}
+                                </span>
+                                <WhatsappLogo
+                                  size={22}
+                                  weight="fill"
+                                  className="text-green-500"
+                                />
+                              </CardFooter>
                             </Card>
                           </motion.div>
                         </CarouselItem>
@@ -195,34 +187,33 @@ const PaketWisata = () => {
                     >
                       <Card
                         onClick={() => setSelectedPaket(paket)}
-                        className="relative overflow-hidden group shadow-lg border-none cursor-pointer transform transition duration-300 hover:scale-105"
+                        className="overflow-hidden rounded-xl border
+             hover:shadow-xl transition duration-300 cursor-pointer"
                       >
                         <img
                           src={paket.foto}
-                          alt={paket.nama}
-                          className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300"
+                          className="w-full h-56 object-cover"
                         />
-                        <div className="absolute inset-0 bg-black/60 group-hover:bg-opacity-70 transition duration-300"></div>
-                        <div className="absolute bottom-0 left-0 w-full p-4 text-white z-10 flex flex-col">
-                          <h2 className="text-lg font-semibold mb-2">
+
+                        <CardContent className="p-4 space-y-2">
+                          <h2 className="font-semibold text-lg">
                             {paket.nama}
                           </h2>
-                          <p className="text-md mt-2 line-clamp-3 text-justify">
+                          <p className="text-sm text-gray-600 line-clamp-3">
                             {paket.deskripsi}
                           </p>
-                          <div className="flex justify-between items-center">
-                            <span className="font-semibold">{paket.harga}</span>
-                            <a
-                              href={paket.wa}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="bg-green-500 hover:bg-green-600 text-white p-2 rounded-full"
-                              onClick={(e) => e.stopPropagation()}
-                            >
-                              <WhatsappLogo size={22} weight="fill" />
-                            </a>
-                          </div>
-                        </div>
+                        </CardContent>
+
+                        <CardFooter className="flex justify-between items-center px-4 pb-4">
+                          <span className="font-bold text-green-600">
+                            {paket.harga}
+                          </span>
+                          <WhatsappLogo
+                            size={22}
+                            weight="fill"
+                            className="text-green-500"
+                          />
+                        </CardFooter>
                       </Card>
                     </motion.div>
                   ))}
@@ -254,48 +245,62 @@ const PaketWisata = () => {
         </div>
 
         {/* MODAL DETAIL */}
-        <Dialog
-          open={!!selectedPaket}
-          onOpenChange={() => setSelectedPaket(null)}
-        >
-          <DialogContent className="max-w-3xl">
-            {selectedPaket && (
-              <>
-                <DialogHeader>
-                  <DialogTitle className="text-2xl font-semibold">
-                    {selectedPaket.nama}
-                  </DialogTitle>
-                </DialogHeader>
+        <AnimatePresence>
+          <Dialog
+            open={!!selectedPaket}
+            onOpenChange={() => setSelectedPaket(null)}
+          >
+            <DialogContent className="max-w-4xl p-0 overflow-hidden rounded-2xl">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.35, ease: "easeOut" }}
+              >
+                {selectedPaket && (
+                  <div className="grid grid-cols-1 md:grid-cols-2">
+                    {/* IMAGE */}
+                    <img
+                      src={selectedPaket.foto}
+                      className="w-full h-full object-cover"
+                    />
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-                  <img
-                    src={selectedPaket.foto}
-                    alt={selectedPaket.nama}
-                    className="w-full h-64 object-cover rounded-lg"
-                  />
-                  <div>
-                    <p className="text-gray-700 mb-3">
-                      {selectedPaket.deskripsi}
-                    </p>
-
-                    <p className="font-semibold text-lg mb-2">
-                      {selectedPaket.harga}
-                    </p>
-                    <a
-                      href={selectedPaket.wa}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full text-sm font-medium"
+                    {/* CONTENT */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 30 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.15 }}
+                      className="p-6 space-y-4"
                     >
-                      <WhatsappLogo size={20} weight="fill" /> Hubungi via
-                      WhatsApp
-                    </a>
+                      <div className="p-6 space-y-8">
+                        <h2 className="text-2xl font-bold">
+                          {selectedPaket.nama}
+                        </h2>
+                        <p className="text-gray-600 text-justify">
+                          {selectedPaket.deskripsi}
+                        </p>
+
+                        <p className="text-xl font-semibold text-green-600">
+                          {selectedPaket.harga}
+                        </p>
+
+                        <a
+                          href={selectedPaket.wa}
+                          target="_blank"
+                          className="inline-flex items-center gap-2 bg-green-500
+                     hover:bg-green-600 text-white px-5 py-2 rounded-full"
+                        >
+                          <WhatsappLogo size={20} weight="fill" />
+                          Hubungi via WhatsApp
+                        </a>
+                      </div>
+                    </motion.div>
                   </div>
-                </div>
-              </>
-            )}
-          </DialogContent>
-        </Dialog>
+                )}
+              </motion.div>
+            </DialogContent>
+          </Dialog>
+        </AnimatePresence>
       </div>
     </>
   );

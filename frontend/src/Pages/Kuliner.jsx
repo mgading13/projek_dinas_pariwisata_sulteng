@@ -28,6 +28,11 @@ const Kuliner = () => {
   const [selectedKuliner, setSelectedKuliner] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const [dataKuliner, setDataKuliner] = useState([]);
   const [dataRumahMakan, setDataRumahMakan] = useState([]);
@@ -44,6 +49,7 @@ const Kuliner = () => {
           id: item.id,
           nama: item.nama_makanan,
           deskripsi: item.deskripsi,
+          lokasi: item.lokasi,
           foto: `http://localhost:3000${item.foto}`,
         }));
 
@@ -62,7 +68,6 @@ const Kuliner = () => {
           id: item.id,
           kulinerId: item.kulinerId,
           nama: item.resto,
-          lokasi: item.lokasi,
           link_gmaps: item.link_gmaps,
         }));
 
@@ -157,27 +162,26 @@ const Kuliner = () => {
                         ></motion.div>
                         <Card
                           onClick={() => setSelectedKuliner(kuliner)}
-                          className="relative overflow-hidden shadow-lg cursor-pointer hover:scale-105 transition"
+                          className="rounded-xl overflow-hidden shadow-md hover:shadow-xl transition cursor-pointer"
                         >
                           <img
                             src={kuliner.foto}
-                            alt={kuliner.nama}
-                            className="w-full h-64 object-cover"
+                            className="h-48 w-full object-cover"
                           />
-                          {/* Overlay */}
-                          <div className="absolute inset-0 bg-black/60 group-hover:bg-opacity-70 transition duration-300"></div>
-                          <div className="absolute bottom-0 p-4 text-white">
-                            <Badge
-                              variant="outline"
-                              className="bg-green-600 text-white dark:bg-green-600 text-md"
-                            >
-                              {kuliner.nama}
-                            </Badge>
 
-                            {/* ⭐ DESKRIPSI DI LIST MODE (bisa panjang) */}
-                            <p className="text-md mt-2 line-clamp-3 text-justify">
+                          <div className="p-4 space-y-2">
+                            <h2 className="text-lg font-semibold">
+                              {kuliner.nama}
+                            </h2>
+                            <p className="text-sm text-muted-foreground">
+                              {kuliner.lokasi}
+                            </p>
+
+                            <p className="text-sm line-clamp-3 text-justify">
                               {kuliner.deskripsi}
                             </p>
+
+                            <Badge variant="secondary">Lihat Rumah Makan</Badge>
                           </div>
                         </Card>
                       </CarouselItem>
@@ -210,29 +214,27 @@ const Kuliner = () => {
                       transition={{ duration: 0.4, ease: "easeInOut" }}
                     >
                       <Card
-                        key={kuliner.id}
                         onClick={() => setSelectedKuliner(kuliner)}
-                        className="relative overflow-hidden shadow-lg cursor-pointer hover:scale-105 transition"
+                        className="rounded-xl overflow-hidden shadow-md hover:shadow-xl transition cursor-pointer"
                       >
                         <img
                           src={kuliner.foto}
-                          alt={kuliner.nama}
-                          className="w-full h-64 object-cover"
+                          className="h-48 w-full object-cover"
                         />
-                        {/* Overlay */}
-                        <div className="absolute inset-0 bg-black/60 group-hover:bg-opacity-70 transition duration-300"></div>
-                        <div className="absolute bottom-0 p-4 text-white">
-                          <Badge
-                            variant="outline"
-                            className="bg-green-600 text-white dark:bg-green-600 text-md"
-                          >
-                            {kuliner.nama}
-                          </Badge>
 
-                          {/* ⭐ DESKRIPSI DI LIST MODE (bisa panjang) */}
-                          <p className="text-md mt-2 line-clamp-3 text-justify">
+                        <div className="p-4 space-y-2">
+                          <h2 className="text-lg font-semibold">
+                            {kuliner.nama}
+                          </h2>
+                          <p className="text-sm text-muted-foreground">
+                            {kuliner.lokasi}
+                          </p>
+
+                          <p className="text-sm line-clamp-3 text-justify">
                             {kuliner.deskripsi}
                           </p>
+
+                          <Badge variant="secondary">Lihat Rumah Makan</Badge>
                         </div>
                       </Card>
                     </motion.div>
@@ -259,60 +261,56 @@ const Kuliner = () => {
         </div>
 
         {/* ⭐ MODAL DETAIL */}
+        <AnimatePresence>
         <Dialog
           open={!!selectedKuliner}
           onOpenChange={() => setSelectedKuliner(null)}
         >
-          <DialogContent className="max-w-8xl">
-            {selectedKuliner && (
-              <>
-                <DialogHeader>
-                  <DialogTitle className="text-2xl font-bold">
-                    <p>List Rumah Makan {selectedKuliner.nama}</p>
-                  </DialogTitle>
-                </DialogHeader>
-                <p className="text-justify font-semibold">
-                  {selectedKuliner.deskripsi}
-                </p>
-                {/* WRAPPER SCROLL */}
-                <div className="mt-4 max-h-[450px] overflow-y-auto pr-2">
-                  {rumahMakanTerkait.length === 0 ? (
-                    <p className="text-gray-500">Tidak ada rumah makan.</p>
-                  ) : (
-                    <ul className="space-y-3">
-                      {rumahMakanTerkait.map((rm) => (
-                        <li
-                          key={rm.id}
-                          className="p-4 bg-gray-100 rounded-lg grid grid-cols-1 md:grid-cols-3 gap-4 items-center"
-                        >
-                          {/* Nama */}
-                          <div>
-                            <p className="font-semibold text-lg">{rm.nama}</p>
-                          </div>
-
-                          {/* Lokasi */}
-                          <p className="text-gray-600 text-sm md:text-base">
-                            {rm.lokasi}
-                          </p>
-
-                          {/* Tombol */}
-                          <a
-                            href={rm.link_gmaps}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="bg-green-600 hover:bg-green-700 text-white text-center px-4 py-2 rounded-lg w-full"
-                          >
-                            Buka Maps
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
+          {selectedKuliner && (
+            <DialogContent className="max-w-4xl p-0 overflow-hidden">
+              {/* HEADER IMAGE */}
+              <div className="relative h-64">
+                <img
+                  src={selectedKuliner.foto}
+                  className="h-full w-full object-cover"
+                  alt={selectedKuliner.nama}
+                />
+                <div className="absolute inset-0 bg-black/50" />
+                <div className="absolute bottom-4 left-4 text-white">
+                  <h2 className="text-2xl font-bold">{selectedKuliner.nama}</h2>
+                  <p className="text-sm">{selectedKuliner.lokasi}</p>
                 </div>
-              </>
-            )}
-          </DialogContent>
+              </div>
+
+              {/* CONTENT */}
+              <div className="p-6 space-y-4">
+                <p className="text-justify">{selectedKuliner.deskripsi}</p>
+
+                <h3 className="font-semibold text-lg">Rumah Makan</h3>
+
+                <div className="max-h-[300px] overflow-y-auto space-y-3">
+                  {rumahMakanTerkait.map((rm) => (
+                    <div
+                      key={rm.id}
+                      className="flex justify-between items-center bg-gray-100 p-4 rounded-lg"
+                    >
+                      <p className="font-medium">{rm.nama}</p>
+                      <a
+                        href={rm.link_gmaps}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-green-600 text-white px-4 py-2 rounded-md"
+                      >
+                        Maps
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </DialogContent>
+          )}
         </Dialog>
+        </AnimatePresence>
       </div>
     </>
   );
