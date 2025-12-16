@@ -118,8 +118,9 @@ export default function Navbar() {
                     {desaWisata.map((item) => (
                       <li key={item.id}>
                         <Link
-                          to={`/desa/${item.namaDesa.toLowerCase().replace(/\s+/g, "-")}`}
-
+                          to={`/desa/${item.namaDesa
+                            .toLowerCase()
+                            .replace(/\s+/g, "-")}`}
                         >
                           {item.namaDesa}
                         </Link>
@@ -217,11 +218,9 @@ export default function Navbar() {
                   <CollapsibleContent className="ml-4 mt-2 space-y-1 text-gray-300 flex flex-col">
                     {desaUnggulan.map((item) => (
                       <Link
-                        key={item.id}
-                        to={`/${item.namaDesa
+                        to={`/desa/${item.namaDesa
                           .toLowerCase()
                           .replace(/\s+/g, "-")}`}
-                        onClick={() => setDrawerOpen(false)}
                       >
                         {item.namaDesa}
                       </Link>
@@ -238,11 +237,9 @@ export default function Navbar() {
                   <CollapsibleContent className="ml-4 mt-2 space-y-1 text-gray-300 flex flex-col">
                     {desaWisata.map((item) => (
                       <Link
-                        key={item.id}
-                        to={`/${item.namaDesa
+                        to={`/desa/${item.namaDesa
                           .toLowerCase()
                           .replace(/\s+/g, "-")}`}
-                        onClick={() => setDrawerOpen(false)}
                       >
                         {item.namaDesa}
                       </Link>
