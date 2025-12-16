@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Star, ChevronDown, ChevronUp } from "lucide-react";
+import { Star } from "lucide-react";
 import {
   Carousel,
   CarouselContent,
@@ -8,19 +8,18 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import ReviewModal from "./ReviewModal";
 
 const Ulasan = () => {
   const [open, setOpen] = useState(false);
   const [reviews, setReviews] = useState([]);
-  const [expanded, setExpanded] = useState(false);
 
   useEffect(() => {
     axios
       .get("http://localhost:3000/api/ulasan")
       .then((res) => setReviews(res.data))
-      .catch((err) => console.error("❌ Error:", err));
+      .catch((err) => console.error(err));
   }, []);
 
   const handleAddReview = async (newReview) => {
@@ -32,11 +31,10 @@ const Ulasan = () => {
       setReviews((prev) => [...prev, res.data]);
       setOpen(false);
     } catch (err) {
-      console.error("❌ Error:", err);
+      console.error(err);
     }
   };
 
-  // 🍀 generate initial nama
   const getInitials = (name) => {
     if (!name) return "?";
     const parts = name.trim().split(" ");
@@ -45,136 +43,97 @@ const Ulasan = () => {
   };
 
   return (
-    <div className="w-full bg-white px-4 py-8">
-      {/* Header */}
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-lg font-bold">Ulasan</h2>
+    <section className="w-full py-20 bg-transparent">
+      <div className="max-w-7xl mx-auto px-4">
+        {/* HEADER */}
+        <div className="flex justify-between items-center mb-10">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
+            Apa Kata Mereka
+          </h2>
 
-        <button
-          className="text-blue-500 hover:underline font-bold"
-          onClick={() => setOpen(true)}
-        >
-          + Tambah Ulasan
-        </button>
-      </div>
-
-      {/* Modal */}
-      <ReviewModal
-        isOpen={open}
-        onClose={() => setOpen(false)}
-        onSubmit={handleAddReview}
-      />
-
-      {/* LIST MODE */}
-      <AnimatePresence mode="wait">
-        {expanded && (
-          <motion.div
-            key="list"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            transition={{ duration: 0.35 }}
-            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
+          <button
+            onClick={() => setOpen(true)}
+            className="px-4 py-2 rounded-full
+              bg-blue-600 text-white text-sm
+              hover:bg-blue-700 transition"
           >
+            + Tambah Ulasan
+          </button>
+        </div>
+
+        <ReviewModal
+          isOpen={open}
+          onClose={() => setOpen(false)}
+          onSubmit={handleAddReview}
+        />
+
+        {/* CAROUSEL */}
+        <Carousel className="relative">
+          <CarouselContent className="py-6">
             {reviews.map((item, i) => (
-              <div key={i} className="bg-white border rounded-xl shadow p-4">
-                {/* Avatar + Nama */}
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold">
-                    {getInitials(item.nama)}
-                  </div>
-                  <h3 className="font-semibold">{item.nama}</h3>
-                </div>
-
-                <p className="text-sm text-gray-700 mb-4">{item.komentar}</p>
-
-                <div className="flex">
-                  {Array.from({ length: 5 }).map((_, idx) => (
-                    <Star
-                      key={idx}
-                      size={16}
-                      className={
-                        idx < item.rating
-                          ? "text-yellow-400 fill-yellow-400"
-                          : "text-gray-300"
-                      }
-                    />
-                  ))}
-                </div>
-              </div>
-            ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* CAROUSEL MODE */}
-      <AnimatePresence mode="wait">
-        {!expanded && (
-          <motion.div
-            key="carousel"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            transition={{ duration: 0.35 }}
-            className="mt-4"
-          >
-            <Carousel className="w-full">
-              <CarouselContent className="gap-x-4">
-                {reviews.map((item, i) => (
-                  <CarouselItem
-                    key={i}
-                    className="sm:basis-1/2 md:basis-1/4 lg:basis-1/5 xl:basis-1/6"
-                  >
-                    <div className="bg-white border rounded-xl shadow-sm p-4 flex flex-col h-full">
-                      {/* Avatar + Nama */}
-                      <div className="flex items-center gap-3 mb-3">
-                        <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold">
-                          {getInitials(item.nama)}
-                        </div>
-                        <h3 className="text-sm font-semibold">{item.nama}</h3>
-                      </div>
-
-                      <p className="text-sm text-gray-700 mb-4">
-                        {item.komentar}
-                      </p>
-
-                      <div className="flex mt-auto">
-                        {Array.from({ length: 5 }).map((_, idx) => (
-                          <Star
-                            key={idx}
-                            size={16}
-                            className={
-                              idx < item.rating
-                                ? "text-yellow-400 fill-yellow-400"
-                                : "text-gray-300"
-                            }
-                          />
-                        ))}
-                      </div>
+              <CarouselItem
+                key={i}
+                className="basis-full sm:basis-1/2 lg:basis-1/3"
+              >
+                <motion.div
+                  whileHover={{ y: -6 }}
+                  transition={{ duration: 0.3 }}
+                  className="
+                    h-full
+                    bg-white/60 backdrop-blur-md
+                    border border-white/70
+                    rounded-2xl
+                    shadow-lg
+                    p-6
+                    flex flex-col
+                  "
+                >
+                  {/* HEADER */}
+                  <div className="flex items-center gap-4 mb-4">
+                    <div
+                      className="
+                        w-12 h-12 rounded-full
+                        bg-gradient-to-br from-blue-500 to-cyan-400
+                        text-white font-bold
+                        flex items-center justify-center
+                      "
+                    >
+                      {getInitials(item.nama)}
                     </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
 
-              <CarouselPrevious className="left-0 -translate-y-1/2" />
-              <CarouselNext className="right-0 -translate-y-1/2" />
-            </Carousel>
-          </motion.div>
-        )}
-      </AnimatePresence>
+                    <h3 className="font-semibold text-gray-800">{item.nama}</h3>
+                  </div>
 
-      {/* =======================
-          CHEVRON DI BAGIAN BAWAH
-      =========================*/}
-      <div className="flex justify-center mt-6">
-        <button
-          onClick={() => setExpanded(!expanded)}
-          className="p-1 rounded-full bg-gray-200 hover:bg-gray-300 transition"
-        >
-          {expanded ? <ChevronUp size={28} /> : <ChevronDown size={28} />}
-        </button>
+                  {/* KOMENTAR */}
+                  <p className="text-gray-700 text-sm leading-relaxed mb-6 line-clamp-4">
+                    “{item.komentar}”
+                  </p>
+
+                  {/* RATING */}
+                  <div className="flex mt-auto">
+                    {Array.from({ length: 5 }).map((_, idx) => (
+                      <Star
+                        key={idx}
+                        size={16}
+                        className={
+                          idx < item.rating
+                            ? "text-yellow-400 fill-yellow-400"
+                            : "text-gray-300"
+                        }
+                      />
+                    ))}
+                  </div>
+                </motion.div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+
+          {/* NAVIGATION */}
+          <CarouselPrevious className="left-0 top-1/2 -translate-y-1/2" />
+          <CarouselNext className="right-0 top-1/2 -translate-y-1/2" />
+        </Carousel>
       </div>
-    </div>
+    </section>
   );
 };
 

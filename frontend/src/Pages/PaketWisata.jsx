@@ -20,7 +20,7 @@ import { Search, ChevronDown, ChevronUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { WhatsappLogo } from "@phosphor-icons/react";
 import Navbar from "../Component/NavBar";
-import Paisupok from "../assets/SiDewi/LukPanenteng1.png";
+import Paisupok from "../assets/LukPanenteng.png"
 
 const PaketWisata = () => {
   const [search, setSearch] = useState("");

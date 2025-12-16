@@ -16,13 +16,20 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
+import LoadingCard from "@/components/ui/LoadingCard";
+import EmptyCard from "@/components/ui/EmptyCard";
+import ErrorCard from "@/components/ui/ErrorCard";
 
 export default function CarouselEvent() {
   const [slides, setSlides] = useState([]);
-  const [api, setApi] = React.useState(null);
-  const [current, setCurrent] = React.useState(0);
+  const [api, setApi] = useState(null);
+  const [current, setCurrent] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  React.useEffect(() => {
+  const isEmpty = !loading && !error && slides.length === 0;
+
+  useEffect(() => {
     if (!api) return;
 
     setCurrent(api.selectedScrollSnap());
@@ -34,26 +41,21 @@ export default function CarouselEvent() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
+        setError(null);
+
         const res = await axios.get("http://localhost:3000/api/atraksi/get");
-        console.log("📦 Data dari backend:", res.data);
         setSlides(res.data.data || res.data);
       } catch (err) {
-        console.error("Gagal fetch data event:", err);
+        console.error("Gagal fetch event:", err);
+        setError("Gagal memuat data event");
+      } finally {
+        setLoading(false);
       }
     };
+
     fetchData();
   }, []);
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.12,
-        delayChildren: 0.2,
-      },
-    },
-  };
 
   const cardVariants = {
     hidden: { opacity: 0, y: 40, scale: 0.95 },
@@ -89,27 +91,83 @@ export default function CarouselEvent() {
   px-4 sm:px-6
 "
       >
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="relative z-10 mb-12 text-center"
+        >
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
+            Atraksi
+          </h2>
+          <p className="mt-3 text-white/80 max-w-xl mx-auto text-sm sm:text-base">
+            Destinasi terbaik pilihan untuk pengalaman tak terlupakan
+          </p>
+        </motion.div>
+
         <Carousel
           setApi={setApi}
           opts={{ align: "center", loop: true, containScroll: false }}
           className="relative"
         >
           <CarouselContent className="-ml-3 sm:-ml-4">
-            {slides.map((slide, idx) => {
-              const isSingle = slides.length === 1;
-              const total = slides.length;
-
-              const prevIndex = (current - 1 + total) % total;
-              const nextIndex = (current + 1) % total;
-
-              const isActive = idx === current;
-              const isPrev = idx === prevIndex;
-              const isNext = idx === nextIndex;
-
-              return (
+            {/* LOADING */}
+            {loading &&
+              Array.from({ length: 3 }).map((_, idx) => (
                 <CarouselItem
-                  key={slide.id}
-                  className="
+                  key={idx}
+                  className="pl-3 sm:pl-4 flex justify-center"
+                >
+                  <LoadingCard
+                    title="Memuat Atraksi..."
+                    description="Sedang mengambil data Atraksi, mohon tunggu"
+                  />
+                </CarouselItem>
+              ))}
+
+            {/* EMPTY */}
+            {isEmpty &&
+              Array.from({ length: 3 }).map((_, idx) => (
+                <CarouselItem
+                  key={idx}
+                  className="pl-3 sm:pl-4 flex justify-center"
+                >
+                  <EmptyCard
+                    title="Belum ada Atraksi"
+                    description="Atraksi akan ditampilkan jika sudah tersedia"
+                  />
+                </CarouselItem>
+              ))}
+
+            {/* ERROR */}
+            {error && (
+              <CarouselItem className="pl-3 sm:pl-4 flex justify-center">
+                <ErrorCard
+                  title="Gagal memuat Atraksi"
+                  message={error}
+                  onRetry={() => window.location.reload()}
+                />
+              </CarouselItem>
+            )}
+
+            {/* SUCCESS */}
+            {!loading &&
+              !error &&
+              slides.map((slide, idx) => {
+                const isSingle = slides.length === 1;
+                const total = slides.length;
+
+                const prevIndex = (current - 1 + total) % total;
+                const nextIndex = (current + 1) % total;
+
+                const isActive = idx === current;
+                const isPrev = idx === prevIndex;
+                const isNext = idx === nextIndex;
+
+                return (
+                  <CarouselItem
+                    key={slide.id}
+                    className="
     pl-3 sm:pl-4
     basis-[300px]
     sm:basis-[360px]
@@ -117,16 +175,16 @@ export default function CarouselEvent() {
     xl:basis-[500px]
     flex justify-center
   "
-                >
-                  <motion.div
-                    variants={cardVariants}
-                    initial="hidden"
-                    animate="show"
                   >
-                    <motion.div variants={cardVariants}>
-                      <Card
-                        className={cn(
-                          `
+                    <motion.div
+                      variants={cardVariants}
+                      initial="hidden"
+                      animate="show"
+                    >
+                      <motion.div variants={cardVariants}>
+                        <Card
+                          className={cn(
+                            `
     relative overflow-hidden rounded-3xl
     transition-all duration-500 bg-black shadow-2xl
 
@@ -136,65 +194,65 @@ export default function CarouselEvent() {
     xl:h-[500px] xl:w-[450px]
     `,
 
-                          isSingle && "z-30 scale-100 blur-0 opacity-100",
+                            isSingle && "z-30 scale-100 blur-0 opacity-100",
 
-                          !isSingle && isActive && "z-30 scale-100",
+                            !isSingle && isActive && "z-30 scale-100",
 
-                          !isSingle &&
-                            (isPrev || isNext) &&
-                            "z-20 scale-90 blur-[1.5px] opacity-70",
+                            !isSingle &&
+                              (isPrev || isNext) &&
+                              "z-20 scale-90 blur-[1.5px] opacity-70",
 
-                          !isSingle &&
-                            !isActive &&
-                            !isPrev &&
-                            !isNext &&
-                            "z-10 scale-75 blur-[3px] opacity-40"
-                        )}
-                      >
-                        <img
-                          src={`http://localhost:3000${slide.foto}`}
-                          alt={slide.nameEvent}
-                          className="absolute inset-0 h-full w-full object-cover"
-                        />
+                            !isSingle &&
+                              !isActive &&
+                              !isPrev &&
+                              !isNext &&
+                              "z-10 scale-75 blur-[3px] opacity-40"
+                          )}
+                        >
+                          <img
+                            src={`http://localhost:3000${slide.foto}`}
+                            alt={slide.nameEvent}
+                            className="absolute inset-0 h-full w-full object-cover"
+                          />
 
-                        <div className="absolute inset-0 bg-black/40" />
+                          <div className="absolute inset-0 bg-black/40" />
 
-                        <CardContent
-                          className="
+                          <CardContent
+                            className="
   relative z-10 flex h-full flex-col justify-end
   p-4 sm:p-5 lg:p-6 text-white
 "
-                        >
-                          <h3 className="text-base sm:text-lg lg:text-xl font-semibold">
-                            {slide.nameEvent}
-                          </h3>
-
-                          {slide.location && (
-                            <p className="mt-1 text-xs sm:text-sm text-gray-300">
-                              {slide.location}
-                            </p>
-                          )}
-
-                          <Link
-                            to={`/event/${slide.nameEvent
-                            .toLowerCase()
-                            .replace(/\s+/g, "-")}`}
-                            className="mt-3 sm:mt-4"
                           >
-                            <Button
-                              size="sm"
-                              className="w-full bg-white/20 text-white hover:bg-white/30"
+                            <h3 className="text-base sm:text-lg lg:text-xl font-semibold">
+                              {slide.nameEvent}
+                            </h3>
+
+                            {slide.location && (
+                              <p className="mt-1 text-xs sm:text-sm text-gray-300">
+                                {slide.location}
+                              </p>
+                            )}
+
+                            <Link
+                              to={`/event/${slide.nameEvent
+                                .toLowerCase()
+                                .replace(/\s+/g, "-")}`}
+                              className="mt-3 sm:mt-4"
                             >
-                              Info Detail
-                            </Button>
-                          </Link>
-                        </CardContent>
-                      </Card>
+                              <Button
+                                size="sm"
+                                className="w-full bg-white/20 text-white hover:bg-white/30"
+                              >
+                                Info Detail
+                              </Button>
+                            </Link>
+                          </CardContent>
+                        </Card>
+                      </motion.div>
                     </motion.div>
-                  </motion.div>
-                </CarouselItem>
-              );
-            })}
+                  </CarouselItem>
+                );
+              })}
           </CarouselContent>
 
           {slides.length > 1 && (

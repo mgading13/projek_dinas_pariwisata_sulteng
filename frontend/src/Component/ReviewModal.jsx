@@ -8,6 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {toast} from "sonner"
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,11 +21,11 @@ export default function ReviewModal({ isOpen, onClose, onSubmit }) {
 
   const handleSubmit = () => {
     if (!nama || !komentar || rating === 0) {
-      alert("Harap isi nama, komentar, dan pilih rating!");
+      toast.info("Harap isi nama, komentar, dan pilih rating!");
       return;
     }
 
-    onSubmit({ nama, komentar, rating }); // kirim data ke parent
+    onSubmit({ nama, komentar, rating });
     setNama("");
     setKomentar("");
     setRating(0);
@@ -33,55 +34,101 @@ export default function ReviewModal({ isOpen, onClose, onSubmit }) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-md w-[90%]">
+      <DialogContent
+        className="
+          max-w-md w-[92%]
+          bg-white/70 backdrop-blur-xl
+          border border-white/60
+          rounded-2xl
+          shadow-xl
+        "
+      >
         <DialogHeader>
-          <DialogTitle className="text-lg font-bold">Tambah Ulasan</DialogTitle>
+          <DialogTitle className="text-xl font-bold text-gray-800">
+            Tambah Ulasan
+          </DialogTitle>
+          <p className="text-sm text-gray-500 mt-1">Bagikan pengalamanmu ✨</p>
         </DialogHeader>
 
-        {/* Input Nama */}
-        <div className="space-y-4 mt-2">
+        {/* FORM */}
+        <div className="space-y-5 mt-4">
+          {/* Nama */}
           <Input
-            placeholder="Nama"
+            placeholder="Nama kamu"
             value={nama}
             onChange={(e) => setNama(e.target.value)}
-            className="font-semibold text-sm"
+            className="
+              bg-white/60
+              border-gray-200
+              focus:ring-2 focus:ring-blue-500
+              rounded-lg
+            "
           />
 
-          {/* Input Komentar */}
+          {/* Komentar */}
           <Textarea
-            placeholder="Ulasan kamu..."
+            placeholder="Ceritakan pengalamanmu..."
             value={komentar}
             onChange={(e) => setKomentar(e.target.value)}
-            className="font-semibold text-sm h-28 resize-none"
+            className="
+              h-28 resize-none
+              bg-white/60
+              border-gray-200
+              focus:ring-2 focus:ring-blue-500
+              rounded-lg
+            "
           />
 
           {/* Rating */}
-          <div className="flex gap-2">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setRating(i + 1)}
-                className="focus:outline-none"
-              >
-                <Star
-                  size={28}
-                  className={`cursor-pointer transition-all ${
-                    i < rating
-                      ? "text-yellow-400 fill-yellow-400"
-                      : "text-gray-300"
-                  }`}
-                />
-              </button>
-            ))}
+          <div>
+            <p className="text-sm font-medium text-gray-700 mb-2">Penilaian</p>
+            <div className="flex gap-2">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => setRating(i + 1)}
+                  className="group"
+                >
+                  <Star
+                    size={30}
+                    strokeWidth={2}
+                    className={`
+    transition-all duration-200
+    cursor-pointer
+    ${
+      i < rating
+        ? "text-yellow-400 fill-yellow-400 scale-110"
+        : "text-gray-400 fill-transparent hover:text-yellow-400"
+    }
+  `}
+                  />
+                </button>
+              ))}
+            </div>
           </div>
 
-          {/* Tombol Aksi */}
-          <div className="flex justify-end gap-3 pt-3">
-            <Button variant="outline" onClick={onClose}>
+          {/* ACTIONS */}
+          <div className="flex justify-end gap-3 pt-4">
+            <Button
+              variant="outline"
+              onClick={onClose}
+              className="rounded-full"
+            >
               Batal
             </Button>
 
-            <Button onClick={handleSubmit}>Kirim</Button>
+            <Button
+              onClick={handleSubmit}
+              className="
+                rounded-full
+                bg-blue-600
+                hover:bg-blue-700
+                transition
+              "
+            >
+              Kirim Ulasan
+            </Button>
           </div>
         </div>
       </DialogContent>

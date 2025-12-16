@@ -1,50 +1,85 @@
 import NavBar from "../Component/NavBar.jsx";
-import Globe from "../assets/globe.png";
 import "../index.css";
+import LukPanenteng from "../assets/LukPanenteng.png"
+
 import CarouselWisataUnggulan from "../Component/CarouselWisataUnggulan.jsx";
 import CarouselDesaWisata from "../Component/CarouselDesaWisata.jsx";
 import CarouselEvent from "../Component/CarouselEvent.jsx";
-import Ulasan from "../Component/Ulasan.jsx";
 import PetaDesaWisata from "../Component/PetaDesaWisata.jsx";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import Footer from "../Component/Footer.jsx";
+import ScrollToTopButton from "../Component/ScrollToTopButton.jsx";
 import { motion } from "framer-motion";
+
+const title = "Sulawesi Tengah";
+
+const container = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.05,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const letter = {
+  hidden: {
+    y: "120%",
+    opacity: 0,
+  },
+  show: {
+    y: "0%",
+    opacity: 1,
+    transition: {
+      duration: 0.7,
+      ease: [0.25, 0.1, 0.25, 1], // Apple easing
+    },
+  },
+};
 
 const Home = () => {
   return (
     <>
       <NavBar />
 
+      {/* ===== HERO ===== */}
       <section
         id="home"
-        className="bg-black min-h-screen font-nunito text-bold flex flex-col justify-center"
+        style={{ backgroundImage: `url(${LukPanenteng})` }}
+        className="relative min-h-screen flex items-center justify-center bg-cover bg-center"
       >
-        <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 items-center gap-10 py-24">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="flex flex-col gap-5"
-          >
-            <div className="text-white text-3xl md:text-5xl font-bold leading-tight space-y-2">
-              <h1>Sulawesi Tengah</h1>
-              <h1>Menunggu Petualanganmu</h1>
-            </div>
-            <p className="text-white text-lg md:text-xl max-w-md">
-              Dari pantai, danau, hingga budaya — temukan surga tersembunyi di
-              jantung Indonesia.
-            </p>
-          </motion.div>
+        {/* OVERLAY */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black/90" />
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6 }}
-            className="flex justify-center"
+        {/* CONTENT */}
+        <div className="relative z-10 text-center px-4">
+          <motion.h1
+            variants={container}
+            initial="hidden"
+            animate="show"
+            className="text-white text-4xl md:text-6xl font-bold flex flex-wrap justify-center overflow-hidden"
           >
-            <PetaDesaWisata />
-          </motion.div>
+            {title.split("").map((char, i) => (
+              <motion.span key={i} variants={letter} className="inline-block">
+                {char === " " ? "\u00A0" : char}
+              </motion.span>
+            ))}
+          </motion.h1>
+
+          <motion.p
+            className="text-white/90 text-lg md:text-xl mt-6 max-w-xl mx-auto"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 1 }}
+          >
+            Menunggu petualanganmu di jantung Indonesia
+          </motion.p>
         </div>
+      </section>
+
+      {/* ===== SECTION NORMAL ===== */}
+      <section className="mx-auto">
+        <PetaDesaWisata />
       </section>
 
       <section>
@@ -58,10 +93,10 @@ const Home = () => {
       <section id="atraksi">
         <CarouselEvent />
       </section>
-
       <section>
-        <Ulasan />
+        <Footer />
       </section>
+      <ScrollToTopButton />
     </>
   );
 };

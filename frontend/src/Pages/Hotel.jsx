@@ -15,8 +15,7 @@ import { Search, ChevronDown, ChevronUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MapPin, Phone, Globe } from "lucide-react";
 import Navbar from "../Component/NavBar";
-import Paisupok from "../assets/SiDewi/LukPanenteng1.png";
-
+import Paisupok from "../assets/LukPanenteng.png"
 const Hotel = () => {
   const [search, setSearch] = useState("");
   const [showAll, setShowAll] = useState(false);

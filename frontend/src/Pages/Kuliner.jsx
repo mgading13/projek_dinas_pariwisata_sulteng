@@ -19,7 +19,7 @@ import {
 import { Search, ChevronDown, ChevronUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "../Component/NavBar";
-import Paisupok from "../assets/SiDewi/LukPanenteng1.png";
+import Paisupok from "../assets/LukPanenteng.png"
 import { Badge } from "@/components/ui/badge";
 
 const Kuliner = () => {

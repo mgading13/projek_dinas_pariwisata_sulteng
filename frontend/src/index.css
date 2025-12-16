@@ -127,6 +127,16 @@
   --font-sans: 'Nunito', sans-serif;
 } */
 
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+
 .font-nunito {
   font-family: "Nunito", sans-serif;
 }
@@ -209,3 +219,120 @@
   transform: rotateY(0deg);
 }
 
+/* style peta desa wisata */
+/* ===== MAP FADE ===== */
+.animate-mapFade {
+  animation: fadeMap 1s ease forwards;
+}
+
+@keyframes fadeMap {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ===== MARKER DOT ===== */
+.marker-dot {
+  width: 14px;
+  height: 14px;
+  background: #2563eb;
+  border-radius: 50%;
+  box-shadow: 0 0 0 rgba(37, 99, 235, 0.5);
+  transition: transform 0.3s ease;
+}
+
+.leaflet-marker-icon:hover .marker-dot {
+  transform: scale(1.5);
+}
+
+.leaflet-marker-icon:hover .marker-pulse {
+  transform: scale(1.6);
+}
+
+/* ===== MARKER PULSE ===== */
+.marker-pulse {
+  width: 16px;
+  height: 16px;
+  background: #facc15;
+  border-radius: 50%;
+  position: relative;
+}
+
+.leaflet-marker-icon:hover .marker-pulse {
+  transform: scale(1.6);
+}
+
+.marker-pulse::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(250, 204, 21, 0.5);
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2.8);
+    opacity: 0;
+  }
+}
+
+@keyframes pulse {
+  100% {
+    transform: scale(3.2);
+    opacity: 0;
+  }
+}
+
+
+/* ===== TOOLTIP CARD ===== */
+.tooltip-card {
+  width: 260px;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.tooltip-card img {
+  height: 140px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.tooltip-card h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 6px;
+}
+
+.tooltip-card p {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+/* ===== BADGE ===== */
+.badge {
+  display: inline-block;
+  background: #dbeafe;
+  color: #1d4ed8;
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.badge-unggulan {
+  background: #fef3c7;
+  color: #92400e;
+}
