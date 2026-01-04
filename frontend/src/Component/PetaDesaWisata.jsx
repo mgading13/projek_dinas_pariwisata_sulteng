@@ -12,6 +12,7 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 /* =======================
    MARKER STYLE (DIV ICON)
@@ -65,6 +66,10 @@ function AutoFitBounds({ data }) {
 export default function PetaDesaWisata() {
   const [desaWisata, setDesaWisata] = useState([]);
   const [wisataUnggulan, setWisataUnggulan] = useState([]);
+  const { t, i18n } = useTranslation();
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
   const navigate = useNavigate();
   useEffect(() => {
     const fetchData = async () => {
@@ -92,10 +97,10 @@ export default function PetaDesaWisata() {
     >
       <div className="mb-8 text-center">
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
-          Peta Desa Wisata Sulawesi Tengah
+          {t('peta_desa_wisata_sulawesi_tengah')}
         </h2>
         <p className="mt-2 text-sm sm:text-base text-white/80 max-w-xl mx-auto">
-          Jelajahi persebaran desa wisata dan wisata unggulan di Sulawesi Tengah
+          {t('desc_peta_desa_wisata')}
         </p>
       </div>
 
@@ -159,7 +164,7 @@ export default function PetaDesaWisata() {
                   />
                   <div className="p-3">
                     <span className="badge badge-unggulan">
-                      Wisata Unggulan
+                      {t('wisata_unggulan')}
                     </span>
                     <h3>{desa.namaDesa}</h3>
                     <p>{desa.deskripsi}</p>

@@ -1,8 +1,12 @@
+import { useTranslation } from 'react-i18next';
+
 export default function ErrorCard({
   title = "Terjadi kesalahan",
   message,
   onRetry,
 }) {
+  const { t } = useTranslation();
+
   return (
     <div className="h-[380px] w-[260px] rounded-3xl 
                     flex flex-col items-center justify-center
@@ -15,7 +19,7 @@ export default function ErrorCard({
           onClick={onRetry}
           className="mt-4 px-4 py-2 bg-white/20 rounded-lg"
         >
-          Coba lagi
+          {t('btn_retry')}
         </button>
       )}
     </div>

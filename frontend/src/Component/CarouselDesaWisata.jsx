@@ -20,6 +20,7 @@ import { motion } from "framer-motion";
 import LoadingCard from "@/components/ui/LoadingCard";
 import EmptyCard from "@/components/ui/EmptyCard";
 import ErrorCard from "@/components/ui/ErrorCard";
+import { useTranslation } from 'react-i18next';
 
 export default function CarouselDesaWisata() {
   const [slides, setSlides] = useState([]);
@@ -28,6 +29,10 @@ export default function CarouselDesaWisata() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const isEmpty = !loading && !error && slides.length === 0;
+  const { t, i18n } = useTranslation();
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
 
   useEffect(() => {
     if (!api) return;
@@ -54,7 +59,7 @@ export default function CarouselDesaWisata() {
         setSlides(desaWisata);
       } catch (err) {
         console.error("Gagal fetch desa wisata:", err);
-        setError("Gagal memuat data desa wisata");
+        setError(" ");
       } finally {
         setLoading(false);
       }
@@ -78,10 +83,10 @@ export default function CarouselDesaWisata() {
           className="relative z-10 mb-12 text-center"
         >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
-            Desa Wisata
+            {t('desa_wisata')}
           </h2>
           <p className="mt-3 text-white/80 max-w-xl mx-auto text-sm sm:text-base">
-            Destinasi terbaik pilihan untuk pengalaman tak terlupakan
+            {t('desc_desa_wisata')}
           </p>
         </motion.div>
 
@@ -123,7 +128,7 @@ export default function CarouselDesaWisata() {
             {error && (
               <CarouselItem className="pl-3 sm:pl-4 flex justify-center">
                 <ErrorCard
-                  title="Gagal memuat Desa Wisata"
+                  title={t('error_desa_wisata')}
                   message={error}
                   onRetry={() => window.location.reload()}
                 />

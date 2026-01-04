@@ -9,8 +9,12 @@ import PetaDesaWisata from '../Component/PetaDesaWisata.jsx'
 import Footer from '../Component/Footer.jsx'
 import ScrollToTopButton from '../Component/ScrollToTopButton.jsx'
 import { motion } from 'framer-motion'
+import { useTranslation } from 'react-i18next';
 
-const title = 'Sulawesi Tengah'
+
+const changeLanguage = (lng) => {
+  i18n.changeLanguage(lng);
+};
 
 const container = {
   hidden: {},
@@ -38,7 +42,11 @@ const letter = {
 }
 
 const Home = () => {
-  usePageView('Home')
+  usePageView('Home');
+  const { t } = useTranslation();
+
+  const translatedTitle = t('sulawesi_tengah');
+
   return (
     <>
       <NavBar />
@@ -58,9 +66,10 @@ const Home = () => {
             variants={container}
             initial='hidden'
             animate='show'
+            key={translatedTitle}
             className='text-white text-4xl md:text-6xl font-bold flex flex-wrap justify-center overflow-hidden'
           >
-            {title.split('').map((char, i) => (
+            {translatedTitle.split('').map((char, i) => (
               <motion.span key={i} variants={letter} className='inline-block'>
                 {char === ' ' ? '\u00A0' : char}
               </motion.span>
@@ -73,7 +82,7 @@ const Home = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 1 }}
           >
-            Menunggu petualanganmu di jantung Indonesia
+            {t('main_desc')}
           </motion.p>
         </div>
       </section>

@@ -1,8 +1,13 @@
 import { motion } from "framer-motion";
 import { Instagram, Youtube, Facebook, Twitter } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 const Footer = () => {
+  const { t, i18n } = useTranslation();
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
   return (
     <footer className="relative bg-gradient-to-br from-[#f5f7fa] to-[#e4ecf5]">
       <motion.div
@@ -39,11 +44,10 @@ const Footer = () => {
             {/* LEFT */}
             <div className="space-y-4">
               <h2 className="text-xl sm:text-2xl font-bold text-gray-900">
-                Dinas Pariwisata Provinsi Sulawesi Tengah
+                {t('foot_heading')}
               </h2>
               <p className="text-gray-700 text-sm sm:text-base leading-relaxed max-w-md mx-auto lg:mx-0">
-                Sebagai pedoman wisata, Dinas Pariwisata Provinsi Sulawesi Tengah menawarkan panduan
-                lengkap untuk menjelajahi destinasi unggulan di Sulawesi Tengah.
+                {t('foot_desc')}
               </p>
             </div>
 
@@ -101,7 +105,7 @@ const Footer = () => {
                     href="mailto:info@wonderfulindonesia.id"
                     className="hover:underline hover:text-blue-600 transition"
                   >
-                    Kontak Kami
+                    {t('foot_kontak_kami')}
                   </a>
                 </li>
 
@@ -110,7 +114,7 @@ const Footer = () => {
                     to="/hotel"
                     className="hover:underline hover:text-blue-600 transition"
                   >
-                    Hotel
+                    {t('nav_hotel')}
                   </Link>
                 </li>
 
@@ -119,7 +123,7 @@ const Footer = () => {
                     to="/kuliner"
                     className="hover:underline hover:text-blue-600 transition"
                   >
-                    Kuliner
+                    {t('nav_kuliner')}
                   </Link>
                 </li>
 
@@ -128,7 +132,7 @@ const Footer = () => {
                     to="/paket-wisata"
                     className="hover:underline hover:text-blue-600 transition"
                   >
-                    Paket Wisata
+                    {t('nav_paket_wisata')}
                   </Link>
                 </li>
               </ul>
