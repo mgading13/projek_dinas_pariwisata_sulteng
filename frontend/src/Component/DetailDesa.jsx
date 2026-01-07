@@ -6,6 +6,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import Ulasan from "./Ulasan.jsx";
 import { MapPin, Car, Ship, Plane } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { useTranslation } from 'react-i18next';
 
 const DetailDesa = () => {
   const { slug } = useParams();
@@ -13,6 +14,10 @@ const DetailDesa = () => {
   const [loading, setLoading] = useState(true);
   const [palujalur, setPaluJalur] = useState(null);
   const [luwukjalur, setLuwukJalur] = useState(null);
+  const { t, i18n } = useTranslation();
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
   const { scrollY } = useScroll();
   const bgY = useTransform(scrollY, [0, 500], ["0%", "25%"]);
   const contentY = useTransform(scrollY, [0, 300], ["0%", "-10%"]);
@@ -147,21 +152,21 @@ const DetailDesa = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {/* PALU */}
                 <div>
-                  <h3 className="font-semibold mb-4 text-center">Dari Palu</h3>
+                  <h3 className="font-semibold mb-4 text-center">{t('dari_palu')}</h3>
                   <div className="grid gap-4">
                     <TransportCard
                       icon={<Car />}
-                      title="Lewat Darat"
+                      title={t('jalur_darat')}
                       text={palujalur?.jalur_darat}
                     />
                     <TransportCard
                       icon={<Ship />}
-                      title="Lewat Laut"
+                      title={t('jalur_laut')}
                       text={palujalur?.jalur_laut}
                     />
                     <TransportCard
                       icon={<Plane />}
-                      title="Lewat Udara"
+                      title={t('jalur_udara')}
                       text={palujalur?.jalur_udara}
                     />
                   </div>
@@ -169,21 +174,21 @@ const DetailDesa = () => {
 
                 {/* LUWUK */}
                 <div>
-                  <h3 className="font-semibold mb-4 text-center">Dari Luwuk</h3>
+                  <h3 className="font-semibold mb-4 text-center">{t('dari_luwuk')}</h3>
                   <div className="grid gap-4">
                     <TransportCard
                       icon={<Car />}
-                      title="Lewat Darat"
+                      title={t('jalur_darat')}
                       text={luwukjalur?.jalur_darat}
                     />
                     <TransportCard
                       icon={<Ship />}
-                      title="Lewat Laut"
+                      title={t('jalur_laut')}
                       text={luwukjalur?.jalur_laut}
                     />
                     <TransportCard
                       icon={<Plane />}
-                      title="Lewat Udara"
+                      title={t('jalur_udara')}
                       text={luwukjalur?.jalur_udara}
                     />
                   </div>
@@ -200,7 +205,7 @@ const DetailDesa = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-center text-xl font-bold mb-8">
-              Ulasan Pengunjung
+              {t('ulasan_pengunjung')}
             </h2>
             <Ulasan />
           </motion.section>

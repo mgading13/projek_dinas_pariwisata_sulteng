@@ -21,6 +21,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "../Component/NavBar";
 import Paisupok from "../assets/LukPanenteng.png"
 import { Badge } from "@/components/ui/badge";
+import { useTranslation } from 'react-i18next';
 
 const Kuliner = () => {
   const [search, setSearch] = useState("");
@@ -29,6 +30,11 @@ const Kuliner = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [mounted, setMounted] = useState(false);
+  const { t, i18n } = useTranslation();
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
+
 
   useEffect(() => {
     setMounted(true);
@@ -117,7 +123,7 @@ const Kuliner = () => {
 
         <div className="relative z-10 flex flex-col items-center py-24 px-6">
           <h1 className="text-white text-4xl font-bold mb-6 text-center">
-            Kuliner
+            {t('nav_kuliner')}
           </h1>
 
           {/* Search Bar */}

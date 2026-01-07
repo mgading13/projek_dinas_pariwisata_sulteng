@@ -13,11 +13,17 @@ import {toast} from "sonner"
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { useTranslation } from 'react-i18next';
 
 export default function ReviewModal({ isOpen, onClose, onSubmit }) {
   const [nama, setNama] = useState("");
   const [komentar, setKomentar] = useState("");
   const [rating, setRating] = useState(0);
+  const { t, i18n } = useTranslation();
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
+
 
   const handleSubmit = () => {
     if (!nama || !komentar || rating === 0) {
@@ -45,16 +51,16 @@ export default function ReviewModal({ isOpen, onClose, onSubmit }) {
       >
         <DialogHeader>
           <DialogTitle className="text-xl font-bold text-gray-800">
-            Tambah Ulasan
+            {t('head_tambah_ulasan')}
           </DialogTitle>
-          <p className="text-sm text-gray-500 mt-1">Bagikan pengalamanmu ✨</p>
+          <p className="text-sm text-gray-500 mt-1">{t('bagikan_pengalamanmu')}</p>
         </DialogHeader>
 
         {/* FORM */}
         <div className="space-y-5 mt-4">
           {/* Nama */}
           <Input
-            placeholder="Nama kamu"
+            placeholder="Your Name"
             value={nama}
             onChange={(e) => setNama(e.target.value)}
             className="
@@ -67,7 +73,7 @@ export default function ReviewModal({ isOpen, onClose, onSubmit }) {
 
           {/* Komentar */}
           <Textarea
-            placeholder="Ceritakan pengalamanmu..."
+            placeholder=""
             value={komentar}
             onChange={(e) => setKomentar(e.target.value)}
             className="
@@ -81,7 +87,7 @@ export default function ReviewModal({ isOpen, onClose, onSubmit }) {
 
           {/* Rating */}
           <div>
-            <p className="text-sm font-medium text-gray-700 mb-2">Penilaian</p>
+            <p className="text-sm font-medium text-gray-700 mb-2">{t('penilaian')}</p>
             <div className="flex gap-2">
               {Array.from({ length: 5 }).map((_, i) => (
                 <button

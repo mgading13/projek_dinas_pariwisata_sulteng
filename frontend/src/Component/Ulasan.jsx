@@ -10,10 +10,15 @@ import {
 } from "@/components/ui/carousel";
 import { motion } from "framer-motion";
 import ReviewModal from "./ReviewModal";
+import { useTranslation } from 'react-i18next';
 
 const Ulasan = () => {
   const [open, setOpen] = useState(false);
   const [reviews, setReviews] = useState([]);
+  const { t, i18n } = useTranslation();
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
 
   useEffect(() => {
     axios
@@ -48,7 +53,7 @@ const Ulasan = () => {
         {/* HEADER */}
         <div className="flex justify-between items-center mb-10">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
-            Apa Kata Mereka
+            {t('apa_kata_mereka')}
           </h2>
 
           <button
@@ -57,7 +62,7 @@ const Ulasan = () => {
               bg-blue-600 text-white text-sm
               hover:bg-blue-700 transition"
           >
-            + Tambah Ulasan
+            {t('tambah_ulasan')}
           </button>
         </div>
 

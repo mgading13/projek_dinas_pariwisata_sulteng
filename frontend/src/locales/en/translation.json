@@ -22,5 +22,18 @@
     "error_wisata_unggulan": "Unable to Load Top Tourist Attractions",
     "error_desa_wisata": "Unable to Load Tourist Villages",
     "error_atraksi": "Unable to Load Attractions",
-    "btn_retry": "Retry"
+    "btn_retry": "Retry",
+    "dari_palu": "From Palu",
+    "dari_luwuk": "From Luwuk",
+    "jalur_darat": "Distance By Land",
+    "jalur_laut": "Distance By Sea",
+    "jalur_udara": "Distance By Air",
+    "ulasan_pengunjung": "Visitors Reviews",
+    "apa_kata_mereka": "What They Say",
+    "tambah_ulasan": "+ Add Reviews",
+    "paket_wisata": "Tour Packages",
+    "list_hotel": "List of Hotels in Central Sulawesi",
+    "head_tambah_ulasan": "Add Reviews",
+    "bagikan_pengalamanmu": "Share your experience ✨",
+    "penilaian": "Rating"
 }

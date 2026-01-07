@@ -16,6 +16,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { MapPin, Phone, Globe } from "lucide-react";
 import Navbar from "../Component/NavBar";
 import Paisupok from "../assets/LukPanenteng.png"
+import { useTranslation } from 'react-i18next';
 const Hotel = () => {
   const [search, setSearch] = useState("");
   const [showAll, setShowAll] = useState(false);
@@ -24,6 +25,10 @@ const Hotel = () => {
   const [error, setError] = useState(null);
   const [mounted, setMounted] = useState(false);
   const [dataHotel, setDataHotel] = useState([]);
+  const { t, i18n } = useTranslation();
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
 
   useEffect(() => {
     setMounted(true);
@@ -77,7 +82,7 @@ const Hotel = () => {
         <div className="absolute inset-0 bg-black/50"></div>
         <div className="relative z-10 flex flex-col items-center py-24 px-6">
           <h1 className="text-white text-4xl font-bold mb-6 text-center">
-            List Hotel di Sulawesi Tengah
+            {t('list_hotel')}
           </h1>
 
           {/* Search Bar */}

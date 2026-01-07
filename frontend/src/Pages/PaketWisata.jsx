@@ -21,6 +21,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { WhatsappLogo } from "@phosphor-icons/react";
 import Navbar from "../Component/NavBar";
 import Paisupok from "../assets/LukPanenteng.png"
+import { useTranslation } from 'react-i18next';
 
 const PaketWisata = () => {
   const [search, setSearch] = useState("");
@@ -29,6 +30,11 @@ const PaketWisata = () => {
   const [dataPaket, setDataPaket] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { t, i18n } = useTranslation();
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -79,7 +85,7 @@ const PaketWisata = () => {
 
         <div className="relative z-10 flex flex-col items-center py-24 px-6">
           <h1 className="text-white text-4xl font-bold mb-6 text-center">
-            Paket Wisata
+            {t('nav_paket_wisata')}
           </h1>
 
           {/* Search Bar */}

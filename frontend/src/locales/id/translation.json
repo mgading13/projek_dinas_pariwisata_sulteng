@@ -22,5 +22,18 @@
     "error_wisata_unggulan": "Gagal memuat Wisata Unggulan",
     "error_desa_wisata": "Gagal memuat Desa Wisata",
     "error_atraksi": "Gagal memuat Atraksi",
-    "btn_retry": "Coba lagi"
+    "btn_retry": "Coba lagi",
+    "dari_palu": "Dari Palu",
+    "dari_luwuk": "Dari Luwuk",
+    "jalur_darat": "Lewat Darat",
+    "jalur_laut": "Lewat Laut",
+    "jalur_udara": "Lewat Udara",
+    "ulasan_pengunjung": "Ulasan Pengunjung",
+    "apa_kata_mereka": "Apa Kata Mereka",
+    "tambah_ulasan": "+ Tambah Ulasan",
+    "paket_wisata": "Paket Wisata",
+    "list_hotel": "List Hotel di Sulawesi Tengah",
+    "head_tambah_ulasan": "Tambah Ulasan",
+    "bagikan_pengalamanmu": "Bagikan pengalamanmu ✨",
+    "penilaian": "penilaian"
 }
