@@ -31,6 +31,7 @@ export default function Navbar() {
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
   };
+  const langSuffix = i18n.language === 'en' ? 'en' : 'id';
 
   useEffect(() => {
     const fetchData = async () => {
@@ -123,11 +124,11 @@ export default function Navbar() {
                     {desaWisata.map((item) => (
                       <li key={item.id}>
                         <Link
-                          to={`/desa/${item.namaDesa
+                          to={`/desa/${item.namaDesa_id
                             .toLowerCase()
                             .replace(/\s+/g, "-")}`}
                         >
-                          {item.namaDesa}
+                          {item[`namaDesa_${langSuffix}`]}
                         </Link>
                       </li>
                     ))}
@@ -267,11 +268,11 @@ export default function Navbar() {
                   <CollapsibleContent className="ml-4 mt-2 space-y-1 text-gray-300 flex flex-col">
                     {desaWisata.map((item) => (
                       <Link
-                        to={`/desa/${item.namaDesa
+                        to={`/desa/${item.namaDesa_id
                           .toLowerCase()
                           .replace(/\s+/g, "-")}`}
                       >
-                        {item.namaDesa}
+                        {item[`namaDesa_${langSuffix}`]}
                       </Link>
                     ))}
                   </CollapsibleContent>

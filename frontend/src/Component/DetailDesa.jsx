@@ -18,6 +18,7 @@ const DetailDesa = () => {
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
   };
+
   const { scrollY } = useScroll();
   const bgY = useTransform(scrollY, [0, 500], ["0%", "25%"]);
   const contentY = useTransform(scrollY, [0, 300], ["0%", "-10%"]);
@@ -26,11 +27,10 @@ const DetailDesa = () => {
     const fetchDetail = async () => {
       try {
         setLoading(true);
-
         // ambil desa
         const desaRes = await axios.get("http://localhost:3000/api/desaWisata");
         const found = desaRes.data.find(
-          (d) => d.namaDesa.toLowerCase().replace(/\s+/g, "-") === slug
+          (d) => d.namaDesa_id.toLowerCase().replace(/\s+/g, "-") === slug
         );
 
         setDesa(found || null);
@@ -64,6 +64,22 @@ const DetailDesa = () => {
   if (!desa) return <p className="p-10 text-center">Desa tidak ditemukan.</p>;
 
   const bgImage = `http://localhost:3000${desa.foto}`;
+
+  // --- DISINI TEMPATNYA (Poin 2) ---
+  if (loading) {
+    return <p className="p-10 text-center">Sedang memuat data...</p>;
+  }
+
+  // Tambahkan proteksi tambahan ini untuk memastikan objek 'desa' tidak null
+  if (!desa) {
+    return <p className="p-10 text-center">Desa tidak ditemukan.</p>;
+  }
+  // Di dalam komponen, sebelum return, tentukan suffix bahasa
+  const langSuffix = i18n.language === 'en' ? 'en' : 'id';
+  // Gunakan suffix untuk mengambil data secara dinamis
+  const namaDisplay = desa[`namaDesa_${langSuffix}`];
+  const lokasiDisplay = desa[`lokasi_${langSuffix}`];
+  const deskripsiDisplay = desa[`deskripsi_${langSuffix}`];
 
   return (
     <>
@@ -100,7 +116,7 @@ const DetailDesa = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
               >
-                {desa.namaDesa}
+                {namaDisplay}
               </motion.h1>
 
               {/* LOKASI */}
@@ -111,7 +127,7 @@ const DetailDesa = () => {
                 transition={{ delay: 0.35 }}
               >
                 <MapPin size={18} />
-                {desa.lokasi}
+                {lokasiDisplay}
               </motion.p>
 
               {/* DIVIDER */}
@@ -124,7 +140,7 @@ const DetailDesa = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
               >
-                {desa.deskripsi}
+                {deskripsiDisplay}
               </motion.p>
             </CardContent>
           </Card>

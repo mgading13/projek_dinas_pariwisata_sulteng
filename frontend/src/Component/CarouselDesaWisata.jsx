@@ -33,6 +33,7 @@ export default function CarouselDesaWisata() {
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
   };
+  const langSuffix = i18n.language === 'en' ? 'en' : 'id';
 
   useEffect(() => {
     if (!api) return;
@@ -206,7 +207,7 @@ export default function CarouselDesaWisata() {
                           </p>
 
                           <Link
-                            to={`/desa/${desa.namaDesa
+                            to={`/desa/${desa.namaDesa_id
                               .toLowerCase()
                               .replace(/\s+/g, "-")}`}
                             className="mt-3 sm:mt-4"
