@@ -54,7 +54,7 @@ const Kuliner = () => {
         const formatted = res.data.map((item) => ({
           id: item.id,
           nama: item.nama_makanan,
-          deskripsi: item.deskripsi,
+          deskripsi: i18n.language === 'en' ? item.deskripsi_en : item.deskripsi_id,
           lokasi: item.lokasi,
           foto: `http://localhost:3000${item.foto}`,
         }));
@@ -87,7 +87,7 @@ const Kuliner = () => {
     fetchDataKuliner();
     fetchDataRumahMakan();
     setLoading(false);
-  }, []);
+  },[i18n.language]);
 
   // ⭐ Ketika pilih kuliner → tampilkan rumah makan berdasarkan nama
   useEffect(() => {
