@@ -34,7 +34,7 @@ const PaketWisata = () => {
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
   };
-
+  const langSuffix = i18n.language === 'en' ? 'en' : 'id';
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,8 +43,9 @@ const PaketWisata = () => {
 
         const formatted = res.data.map((item) => ({
           id: item.id,
-          nama: item.nama_wisata,
-          deskripsi: item.deskripsi,
+          nama: item[`nama_wisata_${langSuffix}`] || item.nama_wisata,
+          deskripsi: item[`deskripsi_${langSuffix}`] || item.deskripsi_id,
+          lokasi: item[`lokasi_${langSuffix}`] || item.lokasi_id,
           harga: `Rp. ${Number(item.harga).toLocaleString("id-ID")}`,
           foto: `http://localhost:3000${item.media}`,
           wa: `https://wa.me/${item.kontak}`,
@@ -59,7 +60,7 @@ const PaketWisata = () => {
     };
 
     fetchData();
-  }, []);
+  },[langSuffix]);
 
   // Filter berdasarkan pencarian
   const filteredPaket = dataPaket.filter((p) =>
@@ -136,7 +137,7 @@ const PaketWisata = () => {
                             <Card
                               onClick={() => setSelectedPaket(paket)}
                               className="overflow-hidden rounded-xl border
-             hover:shadow-xl transition duration-300 cursor-pointer"
+                              hover:shadow-xl transition duration-300 cursor-pointer"
                             >
                               <img
                                 src={paket.foto}
@@ -194,7 +195,7 @@ const PaketWisata = () => {
                       <Card
                         onClick={() => setSelectedPaket(paket)}
                         className="overflow-hidden rounded-xl border
-             hover:shadow-xl transition duration-300 cursor-pointer"
+                        hover:shadow-xl transition duration-300 cursor-pointer"
                       >
                         <img
                           src={paket.foto}
@@ -282,6 +283,9 @@ const PaketWisata = () => {
                         <h2 className="text-2xl font-bold">
                           {selectedPaket.nama}
                         </h2>
+                        <p className="text-sm text-gray-500 font-medium -mt-6">
+                          📍 {selectedPaket.lokasi}
+                        </p>
                         <p className="text-gray-600 text-justify">
                           {selectedPaket.deskripsi}
                         </p>
@@ -294,10 +298,10 @@ const PaketWisata = () => {
                           href={selectedPaket.wa}
                           target="_blank"
                           className="inline-flex items-center gap-2 bg-green-500
-                     hover:bg-green-600 text-white px-5 py-2 rounded-full"
+                          hover:bg-green-600 text-white px-5 py-2 rounded-full"
                         >
                           <WhatsappLogo size={20} weight="fill" />
-                          Hubungi via WhatsApp
+                          {t("contact_via_wa")}
                         </a>
                       </div>
                     </motion.div>

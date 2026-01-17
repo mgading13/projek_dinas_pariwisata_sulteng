@@ -248,7 +248,7 @@ export default function CarouselEvent() {
                                 size="sm"
                                 className="w-full bg-white/20 text-white hover:bg-white/30"
                               >
-                                Info Detail
+                                {t("info_detail")}
                               </Button>
                             </Link>
                           </CardContent>

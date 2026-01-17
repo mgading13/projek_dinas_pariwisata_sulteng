@@ -33,6 +33,7 @@ export default function CarouselWisataUnggulan() {
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
   };
+  const langSuffix = i18n.language === 'en' ? 'en' : 'id';
 
   useEffect(() => {
     if (!api) return;
@@ -221,7 +222,7 @@ export default function CarouselWisataUnggulan() {
                           </p>
 
                           <Link
-                            to={`/desa/${desa.namaDesa
+                            to={`/desa/${(desa.namaDesa_id || desa.namaDesa || "" )
                               .toLowerCase()
                               .replace(/\s+/g, "-")}`}
                             className="mt-3 sm:mt-4"
@@ -230,7 +231,7 @@ export default function CarouselWisataUnggulan() {
                               size="sm"
                               className="w-full bg-white/20 text-white hover:bg-white/30"
                             >
-                              Info Detail
+                              {t("info_detail")}
                             </Button>
                           </Link>
                         </CardContent>

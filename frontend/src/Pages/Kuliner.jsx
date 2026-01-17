@@ -187,7 +187,7 @@ const Kuliner = () => {
                               {kuliner.deskripsi}
                             </p>
 
-                            <Badge variant="secondary">Lihat Rumah Makan</Badge>
+                            <Badge variant="secondary">{t("lihat_rumah_makan")}</Badge>
                           </div>
                         </Card>
                       </CarouselItem>
@@ -240,7 +240,7 @@ const Kuliner = () => {
                             {kuliner.deskripsi}
                           </p>
 
-                          <Badge variant="secondary">Lihat Rumah Makan</Badge>
+                          <Badge variant="secondary">{t("lihat_rumah_makan")}</Badge>
                         </div>
                       </Card>
                     </motion.div>
@@ -292,7 +292,7 @@ const Kuliner = () => {
               <div className="p-6 space-y-4">
                 <p className="text-justify">{selectedKuliner.deskripsi}</p>
 
-                <h3 className="font-semibold text-lg">Rumah Makan</h3>
+                <h3 className="font-semibold text-lg">{t("rumah_makan")}</h3>
 
                 <div className="max-h-[300px] overflow-y-auto space-y-3">
                   {rumahMakanTerkait.map((rm) => (

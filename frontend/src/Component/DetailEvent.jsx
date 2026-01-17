@@ -10,11 +10,16 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 
 import { motion, useScroll, useTransform } from "framer-motion";
+import { useTranslation } from 'react-i18next';
 
 export default function DetailEvent() {
   const { slug } = useParams();
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { t, i18n } = useTranslation();
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
 
   /* 🔥 PARALLAX */
   const { scrollY } = useScroll();
@@ -65,14 +70,15 @@ export default function DetailEvent() {
   }
 
   const bgImage = `http://localhost:3000${event.foto}`;
+  const locale = i18n.language === 'en' ? 'en-US' : 'id-ID';
 
-  const startDate = new Date(event.startdate).toLocaleDateString("id-ID", {
+  const startDate = new Date(event.startdate).toLocaleDateString(locale, {
     day: "numeric",
     month: "long",
     year: "numeric",
   });
 
-  const endDate = new Date(event.enddate).toLocaleDateString("id-ID", {
+  const endDate = new Date(event.enddate).toLocaleDateString(locale, {
     day: "numeric",
     month: "long",
     year: "numeric",
@@ -134,7 +140,7 @@ export default function DetailEvent() {
                     transition={{ delay: 0.45 }}
                     className="text-center text-gray-300 text-sm sm:text-base"
                   >
-                    {event.location}
+                    {i18n.language === 'en' ? event.location_en : event.location_id}
                   </motion.p>
 
                   {/* COUNTDOWN */}
@@ -167,7 +173,7 @@ export default function DetailEvent() {
                     transition={{ delay: 0.9 }}
                     className="text-gray-200 leading-relaxed text-justify text-sm sm:text-base"
                   >
-                    {event.description}
+                    {i18n.language === 'en' ? event.description_en : event.description_id}
                   </motion.p>
                 </CardContent>
               </Card>

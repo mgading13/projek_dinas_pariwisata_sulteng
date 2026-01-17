@@ -102,7 +102,7 @@ export default function Navbar() {
                     {desaUnggulan.map((item) => (
                       <li key={item.id}>
                         <Link
-                          to={`/desa/${item.namaDesa
+                          to={`/desa/${item.namaDesa_id
                             .toLowerCase()
                             .replace(/\s+/g, "-")}`}
                         >
@@ -249,7 +249,7 @@ export default function Navbar() {
                   <CollapsibleContent className="ml-4 mt-2 space-y-1 text-gray-300 flex flex-col">
                     {desaUnggulan.map((item) => (
                       <Link
-                        to={`/desa/${item.namaDesa
+                        to={`/desa/${item.namaDesa_id
                           .toLowerCase()
                           .replace(/\s+/g, "-")}`}
                       >
