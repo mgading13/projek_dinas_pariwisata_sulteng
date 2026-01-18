@@ -67,7 +67,7 @@ const Home = () => {
             initial='hidden'
             animate='show'
             key={translatedTitle}
-            className='text-white text-4xl md:text-6xl font-bold flex flex-wrap justify-center overflow-hidden'
+            className='text-white text-4xl md:text-6xl font-bold flex flex-wrap justify-center overflow-visible leading-[1.2] pb-2'
           >
             {translatedTitle.split('').map((char, i) => (
               <motion.span key={i} variants={letter} className='inline-block'>
@@ -92,11 +92,11 @@ const Home = () => {
         <PetaDesaWisata />
       </section>
 
-      <section>
+      <section id='wisata-unggulan'>
         <CarouselWisataUnggulan />
       </section>
 
-      <section>
+      <section id='desa-wisata'>
         <CarouselDesaWisata />
       </section>
 

@@ -12,7 +12,10 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
+
+const DEFAULT_CENTER = [-1.43, 121.4456]; // Sulawesi Tengah
+const DEFAULT_ZOOM = 6;
 
 /* =======================
    MARKER STYLE (DIV ICON)
@@ -45,14 +48,18 @@ function AutoFitBounds({ data }) {
     if (!data || data.length === 0) return;
 
     const bounds = L.latLngBounds(
-      data.map((d) => [Number(d.latitude), Number(d.longitude)])
+      data
+        .filter((d) => d.latitude && d.longitude)
+        .map((d) => [Number(d.latitude), Number(d.longitude)]),
     );
+
+    if (!bounds.isValid()) return;
 
     const isMobile = window.innerWidth < 640;
 
     map.fitBounds(bounds, {
       padding: isMobile ? [30, 30] : [80, 80],
-      maxZoom: isMobile ? 4.5 : 4.5,
+      maxZoom: 8,
       animate: true,
     });
   }, [data, map]);
@@ -78,7 +85,7 @@ export default function PetaDesaWisata() {
 
         setDesaWisata(res.data.filter((d) => d.jenisDesa === "DESA_WISATA"));
         setWisataUnggulan(
-          res.data.filter((d) => d.jenisDesa === "DESA_UNGGULAN")
+          res.data.filter((d) => d.jenisDesa === "DESA_UNGGULAN"),
         );
       } catch (err) {
         console.error(err);
@@ -97,10 +104,10 @@ export default function PetaDesaWisata() {
     >
       <div className="mb-8 text-center">
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
-          {t('peta_desa_wisata_sulawesi_tengah')}
+          {t("peta_desa_wisata_sulawesi_tengah")}
         </h2>
         <p className="mt-2 text-sm sm:text-base text-white/80 max-w-xl mx-auto">
-          {t('desc_peta_desa_wisata')}
+          {t("desc_peta_desa_wisata")}
         </p>
       </div>
 
@@ -109,6 +116,8 @@ export default function PetaDesaWisata() {
         className="max-w-6xl w-full mx-auto rounded-3xl overflow-hidden shadow-2xl"
       >
         <MapContainer
+          center={DEFAULT_CENTER}
+          zoom={DEFAULT_ZOOM}
           className="w-full h-full animate-mapFade"
           zoomControl={false}
         >
@@ -124,7 +133,7 @@ export default function PetaDesaWisata() {
               eventHandlers={{
                 click: () =>
                   navigate(
-                    `/desa/${desa.namaDesa.toLowerCase().replace(/\s+/g, "-")}`
+                    `/desa/${desa.namaDesa.toLowerCase().replace(/\s+/g, "-")}`,
                   ),
               }}
             >
@@ -152,7 +161,7 @@ export default function PetaDesaWisata() {
               eventHandlers={{
                 click: () =>
                   navigate(
-                    `/desa/${desa.namaDesa.toLowerCase().replace(/\s+/g, "-")}`
+                    `/desa/${desa.namaDesa.toLowerCase().replace(/\s+/g, "-")}`,
                   ),
               }}
             >
@@ -164,7 +173,7 @@ export default function PetaDesaWisata() {
                   />
                   <div className="p-3">
                     <span className="badge badge-unggulan">
-                      {t('wisata_unggulan')}
+                      {t("wisata_unggulan")}
                     </span>
                     <h3>{desa.namaDesa}</h3>
                     <p>{desa.deskripsi}</p>

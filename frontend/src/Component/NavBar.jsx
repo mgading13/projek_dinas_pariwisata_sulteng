@@ -5,7 +5,14 @@ import {
   NavigationMenuTrigger,
   NavigationMenuContent,
   NavigationMenuLink,
+  NavigationMenuViewport,
 } from "@/components/ui/navigation-menu";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
 
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
@@ -17,7 +24,7 @@ import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Menu, ChevronDown, X } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 import Logo from "../assets/Logo-Sulteng.png";
 import { useState, useEffect } from "react";
@@ -31,7 +38,7 @@ export default function Navbar() {
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
   };
-  const langSuffix = i18n.language === 'en' ? 'en' : 'id';
+  const langSuffix = i18n.language === "en" ? "en" : "id";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -87,53 +94,35 @@ export default function Navbar() {
                     onClick={() => scrollToSection("home")}
                     className="font-semibold !text-lg hover:text-gray-300"
                   >
-                    {t('nav_beranda')}
+                    {t("nav_beranda")}
                   </Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
 
               {/* Wisata Unggulan */}
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent text-white hover:bg-transparent hover:text-gray-300 text-lg">
-                {t('nav_wisata_unggulan')}
-                </NavigationMenuTrigger>
-                <NavigationMenuContent className="bg-white text-black p-4 rounded-md shadow-lg">
-                  <ul className="space-y-2 w-[200px]">
-                    {desaUnggulan.map((item) => (
-                      <li key={item.id}>
-                        <Link
-                          to={`/desa/${item.namaDesa_id
-                            .toLowerCase()
-                            .replace(/\s+/g, "-")}`}
-                        >
-                          {item.namaDesa}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </NavigationMenuContent>
+                <NavigationMenuLink asChild>
+                  <Link
+                    to="/"
+                    onClick={() => scrollToSection("wisata-unggulan")}
+                    className="font-semibold hover:text-gray-300 !text-lg"
+                  >
+                    {t("nav_wisata_unggulan")}
+                  </Link>
+                </NavigationMenuLink>
               </NavigationMenuItem>
 
               {/* Desa Wisata */}
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent text-white hover:bg-transparent hover:text-gray-300 text-lg">
-                {t('nav_desa_wisata')}
-                </NavigationMenuTrigger>
-                <NavigationMenuContent className="bg-white text-black p-4 rounded-md shadow-lg">
-                  <ul className="grid grid-cols-2 gap-2 w-[350px]">
-                    {desaWisata.map((item) => (
-                      <li key={item.id}>
-                        <Link
-                          to={`/desa/${item.namaDesa_id
-                            .toLowerCase()
-                            .replace(/\s+/g, "-")}`}
-                        >
-                          {item[`namaDesa_${langSuffix}`]}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </NavigationMenuContent>
+                <NavigationMenuLink asChild>
+                  <Link
+                    to="/"
+                    onClick={() => scrollToSection("desa-wisata")}
+                    className="font-semibold hover:text-gray-300 !text-lg"
+                  >
+                    {t("nav_desa_wisata")}
+                  </Link>
+                </NavigationMenuLink>
               </NavigationMenuItem>
 
               <NavigationMenuItem>
@@ -143,7 +132,7 @@ export default function Navbar() {
                     onClick={() => scrollToSection("atraksi")}
                     className="font-semibold hover:text-gray-300 !text-lg"
                   >
-                    {t('nav_atraksi')}
+                    {t("nav_atraksi")}
                   </Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
@@ -154,7 +143,7 @@ export default function Navbar() {
                     to="/paket-wisata"
                     className="font-semibold hover:text-gray-300 !text-lg"
                   >
-                    {t('nav_paket_wisata')}
+                    {t("nav_paket_wisata")}
                   </Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
@@ -164,7 +153,7 @@ export default function Navbar() {
                     to="/kuliner"
                     className="font-semibold hover:text-gray-300 !text-lg"
                   >
-                    {t('nav_kuliner')}
+                    {t("nav_kuliner")}
                   </Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
@@ -174,35 +163,52 @@ export default function Navbar() {
                     to="/hotel"
                     className="font-semibold hover:text-gray-300 !text-lg"
                   >
-                    {t('nav_hotel')}
+                    {t("nav_hotel")}
                   </Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent text-white hover:bg-transparent hover:text-gray-300 text-lg border border-white/20 ml-4 rounded-full px-4">
-                  {i18n.language.toUpperCase()}
-                </NavigationMenuTrigger>
-                <NavigationMenuContent className="bg-white text-black p-2 rounded-md shadow-lg">
-                  <ul className="flex flex-col w-[120px]">
-                    <li>
-                      <button 
-                        onClick={() => changeLanguage('id')}
-                        className="w-full text-left px-4 py-2 hover:bg-gray-100 rounded-md transition-colors flex items-center gap-2"
-                      >
-                        🇮🇩 Indonesia
-                      </button>
-                    </li>
-                    <li>
-                      <button 
-                        onClick={() => changeLanguage('en')}
-                      className="w-full text-left px-4 py-2 hover:bg-gray-100 rounded-md transition-colors flex items-center gap-2"
-                      >
-                        🇺🇸 English
-                      </button>
-                    </li>
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button
+                    className="
+        flex items-center gap-2
+        px-4 py-2
+        rounded-full
+        border border-white/20
+        text-white text-lg font-semibold
+        hover:text-gray-300
+        focus:outline-none
+      "
+                  >
+                    {i18n.language.toUpperCase()}
+                    <ChevronDown className="h-4 w-4" />
+                  </button>
+                </DropdownMenuTrigger>
+
+                <DropdownMenuContent
+                  align="end"
+                  side="bottom"
+                  className="w-[140px] bg-white text-black rounded-md shadow-lg"
+                >
+                  <DropdownMenuItem
+                    onClick={() => changeLanguage("id")}
+                    className={`flex gap-2 cursor-pointer ${
+                      i18n.language === "id" ? "bg-gray-100 font-semibold" : ""
+                    }`}
+                  >
+                    🇮🇩 Indonesia
+                  </DropdownMenuItem>
+
+                  <DropdownMenuItem
+                    onClick={() => changeLanguage("en")}
+                    className={`flex gap-2 cursor-pointer ${
+                      i18n.language === "en" ? "bg-gray-100 font-semibold" : ""
+                    }`}
+                  >
+                    🇮🇩 English
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </NavigationMenuList>
           </NavigationMenu>
         </div>
@@ -237,13 +243,13 @@ export default function Navbar() {
                     setDrawerOpen(false);
                   }}
                 >
-                  {t('nav_beranda')}
+                  {t("nav_beranda")}
                 </Link>
 
                 {/* WISATA UNGGULAN */}
                 <Collapsible>
                   <CollapsibleTrigger className="flex justify-between w-full">
-                  {t('nav_wisata_unggulan')}
+                    {t("nav_wisata_unggulan")}
                     <ChevronDown className="h-4 w-4 transition-transform data-[state=open]:rotate-180" />
                   </CollapsibleTrigger>
                   <CollapsibleContent className="ml-4 mt-2 space-y-1 text-gray-300 flex flex-col">
@@ -262,7 +268,7 @@ export default function Navbar() {
                 {/* DESA WISATA */}
                 <Collapsible>
                   <CollapsibleTrigger className="flex justify-between w-full">
-                  {t('nav_desa_wisata')}
+                    {t("nav_desa_wisata")}
                     <ChevronDown className="h-4 w-4 transition-transform data-[state=open]:rotate-180" />
                   </CollapsibleTrigger>
                   <CollapsibleContent className="ml-4 mt-2 space-y-1 text-gray-300 flex flex-col">
@@ -285,35 +291,37 @@ export default function Navbar() {
                     setDrawerOpen(false);
                   }}
                 >
-                  {t('nav_atraksi')}
+                  {t("nav_atraksi")}
                 </Link>
 
                 <Link to="/paket-wisata" onClick={() => setDrawerOpen(false)}>
-                {t('nav_paket_wisata')}
+                  {t("nav_paket_wisata")}
                 </Link>
                 <Link to="/kuliner" onClick={() => setDrawerOpen(false)}>
-                {t('nav_kuliner')}
+                  {t("nav_kuliner")}
                 </Link>
                 <Link to="/hotel" onClick={() => setDrawerOpen(false)}>
-                {t('nav_hotel')}
+                  {t("nav_hotel")}
                 </Link>
               </nav>
               {/* Cari di bagian bawah nav di dalam SheetContent */}
               <div className="pt-4 mt-4 border-t border-white/10">
-                <p className="text-xs text-gray-400 mb-2">{i18n.language === 'id' ? 'Pilih Bahasa' : 'Select Language'}</p>
+                <p className="text-xs text-gray-400 mb-2">
+                  {i18n.language === "id" ? "Pilih Bahasa" : "Select Language"}
+                </p>
                 <div className="flex gap-2">
-                  <Button 
-                    variant={i18n.language === 'id' ? 'default' : 'outline'} 
-                    size="sm" 
-                    onClick={() => changeLanguage('id')}
+                  <Button
+                    variant={i18n.language === "id" ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => changeLanguage("id")}
                     className="flex-1 text-black"
                   >
                     <span>🇮🇩</span> ID
                   </Button>
-                  <Button 
-                    variant={i18n.language === 'en' ? 'default' : 'outline'} 
-                    size="sm" 
-                    onClick={() => changeLanguage('en')}
+                  <Button
+                    variant={i18n.language === "en" ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => changeLanguage("en")}
                     className="flex-1 text-black"
                   >
                     <span>🇺🇸</span> EN

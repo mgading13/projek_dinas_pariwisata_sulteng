@@ -136,6 +136,25 @@ body,
   padding: 0;
 }
 
+/* ===============================
+   HIDE SCROLLBAR BUT KEEP SCROLL
+================================ */
+
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+/* Firefox */
+html {
+  scrollbar-width: none;
+}
+
+/* IE & old Edge */
+body {
+  -ms-overflow-style: none;
+}
 
 .font-nunito {
   font-family: "Nunito", sans-serif;
@@ -176,7 +195,10 @@ body,
   width: 300px;
   height: 480px;
   transform-style: preserve-3d;
-  transition: transform 0.6s ease, opacity 0.6s ease, filter 0.6s ease;
+  transition:
+    transform 0.6s ease,
+    opacity 0.6s ease,
+    filter 0.6s ease;
 }
 
 /* CARD AKTIF */
@@ -293,7 +315,6 @@ body,
     opacity: 0;
   }
 }
-
 
 /* ===== TOOLTIP CARD ===== */
 .tooltip-card {
