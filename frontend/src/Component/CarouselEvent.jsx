@@ -49,7 +49,7 @@ export default function CarouselEvent() {
         setLoading(true);
         setError(null);
 
-        const res = await axios.get("http://localhost:3000/api/atraksi/get");
+        const res = await axios.get("http://localhost:3000/api/atraksi");
         setSlides(res.data.data || res.data);
       } catch (err) {
         console.error("Gagal fetch event:", err);

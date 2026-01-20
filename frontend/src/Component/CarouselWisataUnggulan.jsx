@@ -214,11 +214,11 @@ export default function CarouselWisataUnggulan() {
 
                         <CardContent className="relative z-10 flex h-full flex-col justify-end p-4 sm:p-5 lg:p-6 text-white">
                           <h3 className="text-base sm:text-lg lg:text-xl font-semibold">
-                            {desa.namaDesa}
+                            {desa.namaDesa_id}
                           </h3>
 
                           <p className="mt-1 text-xs sm:text-sm text-gray-300">
-                            {desa.lokasi}
+                            {desa.lokasi_id}
                           </p>
 
                           <Link

@@ -30,7 +30,7 @@ export default function DetailEvent() {
   const getAtraksi = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:3000/api/atraksi/get"
+        "http://localhost:3000/api/atraksi"
       );
 
       // ✅ ambil array event
