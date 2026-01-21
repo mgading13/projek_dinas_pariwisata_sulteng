@@ -20,7 +20,7 @@ import { motion } from "framer-motion";
 import LoadingCard from "@/components/ui/LoadingCard";
 import EmptyCard from "@/components/ui/EmptyCard";
 import ErrorCard from "@/components/ui/ErrorCard";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 export default function CarouselWisataUnggulan() {
   const [slides, setSlides] = useState([]);
@@ -33,7 +33,7 @@ export default function CarouselWisataUnggulan() {
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
   };
-  const langSuffix = i18n.language === 'en' ? 'en' : 'id';
+  const langSuffix = i18n.language === "en" ? "en" : "id";
 
   useEffect(() => {
     if (!api) return;
@@ -54,7 +54,7 @@ export default function CarouselWisataUnggulan() {
         const data = res.data.data || res.data;
 
         const desaWisata = data.filter(
-          (item) => item.jenisDesa === "DESA_UNGGULAN"
+          (item) => item.jenisDesa === "DESA_UNGGULAN",
         );
 
         setSlides(desaWisata);
@@ -95,10 +95,10 @@ export default function CarouselWisataUnggulan() {
           className="relative z-10 mb-12 text-center"
         >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
-            {t('wisata_unggulan')}
+            {t("wisata_unggulan")}
           </h2>
           <p className="mt-3 text-white/80 max-w-xl mx-auto text-sm sm:text-base">
-            {t('desc_wisata_unggulan')}
+            {t("desc_wisata_unggulan")}
           </p>
         </motion.div>
 
@@ -140,7 +140,7 @@ export default function CarouselWisataUnggulan() {
             {error && (
               <CarouselItem className="pl-3 sm:pl-4 flex justify-center">
                 <ErrorCard
-                  title={t('error_wisata_unggulan')}
+                  title={t("error_wisata_unggulan")}
                   message={error}
                   onRetry={() => window.location.reload()}
                 />
@@ -201,14 +201,27 @@ export default function CarouselWisataUnggulan() {
                             !isActive &&
                             !isPrev &&
                             !isNext &&
-                            "z-10 scale-75 blur-[3px] opacity-40"
+                            "z-10 scale-75 blur-[3px] opacity-40",
                         )}
                       >
-                        <img
-                          src={`http://localhost:3000${desa.foto}`}
-                          alt={desa.namaDesa}
-                          className="absolute inset-0 h-full w-full object-cover"
-                        />
+                        {desa?.foto &&
+                          (desa.foto.match(/\.(mp4|webm|ogg)$/i) ? (
+                            <video
+                              src={`http://localhost:3000${desa.foto}`}
+                              className="absolute inset-0 h-full w-full object-cover"
+                              autoPlay
+                              muted
+                              loop
+                              playsInline
+                              poster="/fallback.jpg"
+                            />
+                          ) : (
+                            <img
+                              src={`http://localhost:3000${desa.foto}`}
+                              alt={desa.namaDesa}
+                              className="absolute inset-0 h-full w-full object-cover"
+                            />
+                          ))}
 
                         <div className="absolute inset-0 bg-black/40" />
 
@@ -222,7 +235,11 @@ export default function CarouselWisataUnggulan() {
                           </p>
 
                           <Link
-                            to={`/desa/${(desa.namaDesa_id || desa.namaDesa || "" )
+                            to={`/desa/${(
+                              desa.namaDesa_id ||
+                              desa.namaDesa ||
+                              ""
+                            )
                               .toLowerCase()
                               .replace(/\s+/g, "-")}`}
                             className="mt-3 sm:mt-4"
@@ -260,7 +277,7 @@ export default function CarouselWisataUnggulan() {
               onClick={() => api?.scrollTo(idx)}
               className={cn(
                 "h-2 rounded-full transition-all duration-300",
-                idx === current ? "w-8 bg-white" : "w-2 bg-white/40"
+                idx === current ? "w-8 bg-white" : "w-2 bg-white/40",
               )}
             />
           ))}

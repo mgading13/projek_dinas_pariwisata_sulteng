@@ -20,8 +20,8 @@ import { Search, ChevronDown, ChevronUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { WhatsappLogo } from "@phosphor-icons/react";
 import Navbar from "../Component/NavBar";
-import Paisupok from "../assets/LukPanenteng.png"
-import { useTranslation } from 'react-i18next';
+import Paisupok from "../assets/LukPanenteng.png";
+import { useTranslation } from "react-i18next";
 
 const PaketWisata = () => {
   const [search, setSearch] = useState("");
@@ -34,7 +34,7 @@ const PaketWisata = () => {
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
   };
-  const langSuffix = i18n.language === 'en' ? 'en' : 'id';
+  const langSuffix = i18n.language === "en" ? "en" : "id";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,12 +60,15 @@ const PaketWisata = () => {
     };
 
     fetchData();
-  },[langSuffix]);
+  }, [langSuffix]);
 
   // Filter berdasarkan pencarian
   const filteredPaket = dataPaket.filter((p) =>
-    p.nama.toLowerCase().includes(search.toLowerCase())
+    p.nama.toLowerCase().includes(search.toLowerCase()),
   );
+  const isVideo = (url) => {
+    return /\.(mp4|webm|ogg)$/i.test(url);
+  };
 
   return (
     <>
@@ -86,7 +89,7 @@ const PaketWisata = () => {
 
         <div className="relative z-10 flex flex-col items-center py-24 px-6">
           <h1 className="text-white text-4xl font-bold mb-6 text-center">
-            {t('nav_paket_wisata')}
+            {t("nav_paket_wisata")}
           </h1>
 
           {/* Search Bar */}
@@ -136,13 +139,29 @@ const PaketWisata = () => {
                           >
                             <Card
                               onClick={() => setSelectedPaket(paket)}
-                              className="overflow-hidden rounded-xl border
-                              hover:shadow-xl transition duration-300 cursor-pointer"
+                              className="
+    overflow-hidden rounded-xl border
+    hover:shadow-xl transition duration-300 cursor-pointer
+    w-full max-w-[360px] mx-auto
+  "
                             >
-                              <img
-                                src={paket.foto}
-                                className="w-full h-56 object-cover"
-                              />
+                              {isVideo(paket.foto) ? (
+                                <video
+                                  src={paket.foto}
+                                  className="w-full h-56 object-cover"
+                                  muted
+                                  loop
+                                  autoPlay
+                                  playsInline
+                                  poster="/fallback.jpg"
+                                />
+                              ) : (
+                                <img
+                                  src={paket.foto}
+                                  className="w-full h-56 object-cover"
+                                  alt={paket.nama}
+                                />
+                              )}
 
                               <CardContent className="p-4 space-y-2">
                                 <h2 className="font-semibold text-lg">
@@ -158,7 +177,7 @@ const PaketWisata = () => {
                                   {paket.harga}
                                 </span>
                                 <WhatsappLogo
-                                  size={22}
+                                  size={28}
                                   weight="fill"
                                   className="text-green-500"
                                 />
@@ -180,7 +199,11 @@ const PaketWisata = () => {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -50, scale: 0.95 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
-                className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full max-w-6xl"
+                className="
+  grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4
+  gap-6 place-items-center
+  w-full max-w-10xl
+"
               >
                 <AnimatePresence mode="popLayout">
                   {filteredPaket.map((paket) => (
@@ -194,13 +217,29 @@ const PaketWisata = () => {
                     >
                       <Card
                         onClick={() => setSelectedPaket(paket)}
-                        className="overflow-hidden rounded-xl border
-                        hover:shadow-xl transition duration-300 cursor-pointer"
+                        className="
+    overflow-hidden rounded-xl border
+    hover:shadow-xl transition duration-300 cursor-pointer
+    w-full max-w-[360px] mx-auto
+  "
                       >
-                        <img
-                          src={paket.foto}
-                          className="w-full h-56 object-cover"
-                        />
+                        {isVideo(paket.foto) ? (
+                          <video
+                            src={paket.foto}
+                            className="w-full h-56 object-cover"
+                            muted
+                            loop
+                            autoPlay
+                            playsInline
+                            poster="/fallback.jpg"
+                          />
+                        ) : (
+                          <img
+                            src={paket.foto}
+                            className="w-full h-56 object-cover"
+                            alt={paket.nama}
+                          />
+                        )}
 
                         <CardContent className="p-4 space-y-2">
                           <h2 className="font-semibold text-lg">
@@ -257,7 +296,7 @@ const PaketWisata = () => {
             open={!!selectedPaket}
             onOpenChange={() => setSelectedPaket(null)}
           >
-            <DialogContent className="max-w-4xl p-0 overflow-hidden rounded-2xl">
+            <DialogContent className="max-w-6xl w-full p-0 overflow-hidden rounded-2xl">
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -267,10 +306,22 @@ const PaketWisata = () => {
                 {selectedPaket && (
                   <div className="grid grid-cols-1 md:grid-cols-2">
                     {/* IMAGE */}
-                    <img
-                      src={selectedPaket.foto}
-                      className="w-full h-full object-cover"
-                    />
+                    {isVideo(selectedPaket.foto) ? (
+                      <video
+                        src={selectedPaket.foto}
+                        className="w-full h-full object-cover"
+                        autoPlay
+                        muted
+                        playsInline
+                        poster="/fallback.jpg"
+                      />
+                    ) : (
+                      <img
+                        src={selectedPaket.foto}
+                        className="w-full h-full object-cover"
+                        alt={selectedPaket.nama}
+                      />
+                    )}
 
                     {/* CONTENT */}
                     <motion.div
@@ -279,7 +330,7 @@ const PaketWisata = () => {
                       transition={{ delay: 0.15 }}
                       className="p-6 space-y-4"
                     >
-                      <div className="p-6 space-y-8">
+                      <div className="p-2 space-y-8">
                         <h2 className="text-2xl font-bold">
                           {selectedPaket.nama}
                         </h2>
@@ -300,7 +351,7 @@ const PaketWisata = () => {
                           className="inline-flex items-center gap-2 bg-green-500
                           hover:bg-green-600 text-white px-5 py-2 rounded-full"
                         >
-                          <WhatsappLogo size={20} weight="fill" />
+                          <WhatsappLogo size={28} weight="fill" />
                           {t("contact_via_wa")}
                         </a>
                       </div>

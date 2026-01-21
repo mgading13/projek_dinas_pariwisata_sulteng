@@ -4,36 +4,34 @@ import {
   Marker,
   Tooltip,
   useMap,
-  Popup,
 } from "react-leaflet";
+import { Link, useNavigate } from "react-router-dom";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-const DEFAULT_CENTER = [-1.43, 121.4456]; // Sulawesi Tengah
+/* =======================
+   DEFAULT MAP
+======================= */
+const DEFAULT_CENTER = [-1.43, 121.4456];
 const DEFAULT_ZOOM = 6;
 
 /* =======================
-   MARKER STYLE (DIV ICON)
+   MARKER ICON
 ======================= */
 const desaIcon = L.divIcon({
   className: "",
-  html: `
-    <div class="marker-dot"></div>
-  `,
+  html: `<div class="marker-dot"></div>`,
   iconSize: [16, 16],
   iconAnchor: [8, 8],
 });
 
 const unggulanIcon = L.divIcon({
   className: "",
-  html: `
-    <div class="marker-pulse"></div>
-  `,
+  html: `<div class="marker-pulse"></div>`,
   iconSize: [20, 20],
   iconAnchor: [10, 10],
 });
@@ -68,16 +66,32 @@ function AutoFitBounds({ data }) {
 }
 
 /* =======================
+   HELPERS
+======================= */
+const getNamaDesa = (desa, lang) =>
+  lang === "en" ? desa.namaDesa_en : desa.namaDesa_id;
+
+const getLokasi = (desa, lang) =>
+  lang === "en" ? desa.lokasi_en : desa.lokasi_id;
+
+const isVideo = (url) => /\.(mp4|webm|ogg)$/i.test(url);
+
+const createSlug = (text) =>
+  text
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/[^\w-]/g, "");
+
+/* =======================
    MAIN COMPONENT
 ======================= */
 export default function PetaDesaWisata() {
   const [desaWisata, setDesaWisata] = useState([]);
   const [wisataUnggulan, setWisataUnggulan] = useState([]);
   const { t, i18n } = useTranslation();
-  const changeLanguage = (lng) => {
-    i18n.changeLanguage(lng);
-  };
   const navigate = useNavigate();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -97,11 +111,12 @@ export default function PetaDesaWisata() {
 
   return (
     <section
-      className="w-full py-20 px-6  items-center mx-auto"
+      className="w-full py-20 px-6"
       style={{
         background: "linear-gradient(135deg, #6BB42C, #ffffff)",
       }}
     >
+      {/* ===== HEADER ===== */}
       <div className="mb-8 text-center">
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
           {t("peta_desa_wisata_sulawesi_tengah")}
@@ -111,6 +126,7 @@ export default function PetaDesaWisata() {
         </p>
       </div>
 
+      {/* ===== MAP ===== */}
       <AspectRatio
         ratio={21 / 9}
         className="max-w-6xl w-full mx-auto rounded-3xl overflow-hidden shadow-2xl"
@@ -118,7 +134,7 @@ export default function PetaDesaWisata() {
         <MapContainer
           center={DEFAULT_CENTER}
           zoom={DEFAULT_ZOOM}
-          className="w-full h-full animate-mapFade"
+          className="w-full h-full"
           zoomControl={false}
         >
           <AutoFitBounds data={[...desaWisata, ...wisataUnggulan]} />
@@ -128,27 +144,52 @@ export default function PetaDesaWisata() {
           {/* ===== DESA WISATA ===== */}
           {desaWisata.map((desa) => (
             <Marker
+              key={desa.id}
               position={[Number(desa.latitude), Number(desa.longitude)]}
               icon={desaIcon}
               eventHandlers={{
-                click: () =>
+                click: () => {
                   navigate(
-                    `/desa/${desa.namaDesa.toLowerCase().replace(/\s+/g, "-")}`,
-                  ),
+                    `/desa/${createSlug(getNamaDesa(desa, i18n.language))}`,
+                  );
+                },
               }}
             >
-              <Tooltip direction="top" offset={[0, -12]} opacity={1}>
-                <div className="tooltip-card">
-                  <img
-                    src={`http://localhost:3000${desa.foto}`}
-                    alt={desa.namaDesa}
-                  />
+              <Tooltip
+                direction="top"
+                offset={[0, -12]}
+                opacity={1}
+                interactive
+              >
+                {/* <Link
+                  to={`/desa/${createSlug(getNamaDesa(desa, i18n.language))}`}
+                  className="block"
+                > */}
+                <div className="tooltip-card cursor-pointer">
+                  {isVideo(desa.foto) ? (
+                    <video
+                      src={`http://localhost:3000${desa.foto}`}
+                      className="tooltip-media"
+                      muted
+                      autoPlay
+                      loop
+                      playsInline
+                    />
+                  ) : (
+                    <img
+                      src={`http://localhost:3000${desa.foto}`}
+                      alt={getNamaDesa(desa, i18n.language)}
+                      className="tooltip-media"
+                    />
+                  )}
+
                   <div className="p-3">
-                    <span className="badge">Desa Wisata</span>
-                    <h3>{desa.namaDesa}</h3>
-                    <p>{desa.deskripsi}</p>
+                    <span className="badge">{t("desa_wisata")}</span>
+                    <h3>{getNamaDesa(desa, i18n.language)}</h3>
+                    <p>{getLokasi(desa, i18n.language)}</p>
                   </div>
                 </div>
+                {/* </Link> */}
               </Tooltip>
             </Marker>
           ))}
@@ -156,27 +197,47 @@ export default function PetaDesaWisata() {
           {/* ===== WISATA UNGGULAN ===== */}
           {wisataUnggulan.map((desa) => (
             <Marker
+              key={desa.id}
               position={[Number(desa.latitude), Number(desa.longitude)]}
               icon={unggulanIcon}
               eventHandlers={{
-                click: () =>
+                click: () => {
                   navigate(
-                    `/desa/${desa.namaDesa.toLowerCase().replace(/\s+/g, "-")}`,
-                  ),
+                    `/desa/${createSlug(getNamaDesa(desa, i18n.language))}`,
+                  );
+                },
               }}
             >
-              <Tooltip direction="top" offset={[0, -14]} opacity={1}>
-                <div className="tooltip-card">
-                  <img
-                    src={`http://localhost:3000${desa.foto}`}
-                    alt={desa.namaDesa}
-                  />
+              <Tooltip
+                direction="top"
+                offset={[0, -12]}
+                opacity={1}
+                interactive
+              >
+                <div className="tooltip-card cursor-pointer">
+                  {isVideo(desa.foto) ? (
+                    <video
+                      src={`http://localhost:3000${desa.foto}`}
+                      className="tooltip-media"
+                      muted
+                      autoPlay
+                      loop
+                      playsInline
+                    />
+                  ) : (
+                    <img
+                      src={`http://localhost:3000${desa.foto}`}
+                      alt={getNamaDesa(desa, i18n.language)}
+                      className="tooltip-media"
+                    />
+                  )}
+
                   <div className="p-3">
                     <span className="badge badge-unggulan">
                       {t("wisata_unggulan")}
                     </span>
-                    <h3>{desa.namaDesa}</h3>
-                    <p>{desa.deskripsi}</p>
+                    <h3>{getNamaDesa(desa, i18n.language)}</h3>
+                    <p>{getLokasi(desa, i18n.language)}</p>
                   </div>
                 </div>
               </Tooltip>

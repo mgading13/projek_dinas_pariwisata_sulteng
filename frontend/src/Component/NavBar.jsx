@@ -247,42 +247,26 @@ export default function Navbar() {
                 </Link>
 
                 {/* WISATA UNGGULAN */}
-                <Collapsible>
-                  <CollapsibleTrigger className="flex justify-between w-full">
-                    {t("nav_wisata_unggulan")}
-                    <ChevronDown className="h-4 w-4 transition-transform data-[state=open]:rotate-180" />
-                  </CollapsibleTrigger>
-                  <CollapsibleContent className="ml-4 mt-2 space-y-1 text-gray-300 flex flex-col">
-                    {desaUnggulan.map((item) => (
-                      <Link
-                        to={`/desa/${item.namaDesa_id
-                          .toLowerCase()
-                          .replace(/\s+/g, "-")}`}
-                      >
-                        {item.namaDesa}
-                      </Link>
-                    ))}
-                  </CollapsibleContent>
-                </Collapsible>
+                <Link
+                  to="/"
+                  onClick={() => {
+                    scrollToSection("wisata-unggulan");
+                    setDrawerOpen(false);
+                  }}
+                >
+                  {t("nav_wisata_unggulan")}
+                </Link>
 
                 {/* DESA WISATA */}
-                <Collapsible>
-                  <CollapsibleTrigger className="flex justify-between w-full">
-                    {t("nav_desa_wisata")}
-                    <ChevronDown className="h-4 w-4 transition-transform data-[state=open]:rotate-180" />
-                  </CollapsibleTrigger>
-                  <CollapsibleContent className="ml-4 mt-2 space-y-1 text-gray-300 flex flex-col">
-                    {desaWisata.map((item) => (
-                      <Link
-                        to={`/desa/${item.namaDesa_id
-                          .toLowerCase()
-                          .replace(/\s+/g, "-")}`}
-                      >
-                        {item[`namaDesa_${langSuffix}`]}
-                      </Link>
-                    ))}
-                  </CollapsibleContent>
-                </Collapsible>
+                <Link
+                  to="/"
+                  onClick={() => {
+                    scrollToSection("desa-wisata");
+                    setDrawerOpen(false);
+                  }}
+                >
+                  {t("nav_desa_wisata")}
+                </Link>
 
                 <Link
                   to="/"

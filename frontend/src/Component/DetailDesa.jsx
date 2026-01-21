@@ -6,7 +6,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import Ulasan from "./Ulasan.jsx";
 import { MapPin, Car, Ship, Plane } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 const DetailDesa = () => {
   const { slug } = useParams();
@@ -30,7 +30,7 @@ const DetailDesa = () => {
         // ambil desa
         const desaRes = await axios.get("http://localhost:3000/api/desaWisata");
         const found = desaRes.data.find(
-          (d) => d.namaDesa_id.toLowerCase().replace(/\s+/g, "-") === slug
+          (d) => d.namaDesa_id.toLowerCase().replace(/\s+/g, "-") === slug,
         );
 
         setDesa(found || null);
@@ -40,11 +40,11 @@ const DetailDesa = () => {
           const jarakRes = await axios.get("http://localhost:3000/api/jarak");
 
           const palu = jarakRes.data.find(
-            (j) => j.desaId === found.id && j.titikKota === "PALU"
+            (j) => j.desaId === found.id && j.titikKota === "PALU",
           );
 
           const luwuk = jarakRes.data.find(
-            (j) => j.desaId === found.id && j.titikKota === "LUWUK"
+            (j) => j.desaId === found.id && j.titikKota === "LUWUK",
           );
 
           setPaluJalur(palu || null);
@@ -75,7 +75,7 @@ const DetailDesa = () => {
     return <p className="p-10 text-center">Desa tidak ditemukan.</p>;
   }
   // Di dalam komponen, sebelum return, tentukan suffix bahasa
-  const langSuffix = i18n.language === 'en' ? 'en' : 'id';
+  const langSuffix = i18n.language === "en" ? "en" : "id";
   // Gunakan suffix untuk mengambil data secara dinamis
   const namaDisplay = desa[`namaDesa_${langSuffix}`];
   const lokasiDisplay = desa[`lokasi_${langSuffix}`];
@@ -88,16 +88,35 @@ const DetailDesa = () => {
       {/* ===== HERO ===== */}
       <section className="relative min-h-screen overflow-hidden">
         {/* PARALLAX BACKGROUND */}
-        <motion.div
-          style={{ y: bgY, backgroundImage: `url(${bgImage})` }}
-          className="absolute inset-0 bg-cover bg-center"
-          initial={{ opacity: 0, scale: 1.05 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
-        />
+        {bgImage?.match(/\.(mp4|webm|ogg)$/i) ? (
+          <motion.video
+            src={bgImage}
+            style={{ y: bgY }}
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster="/fallback.jpg"
+            className="absolute inset-0 w-full h-full object-cover"
+            initial={{ opacity: 0, scale: 1.05 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
+          />
+        ) : (
+          <motion.div
+            style={{
+              y: bgY,
+              backgroundImage: `url(${bgImage})`,
+            }}
+            className="absolute inset-0 bg-cover bg-center"
+            initial={{ opacity: 0, scale: 1.05 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
+          />
+        )}
 
         {/* OVERLAY */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black/90" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/60 to-black/50" />
 
         {/* CONTENT */}
         <motion.div
@@ -168,21 +187,23 @@ const DetailDesa = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {/* PALU */}
                 <div>
-                  <h3 className="font-semibold mb-4 text-center">{t('dari_palu')}</h3>
+                  <h3 className="font-semibold mb-4 text-center">
+                    {t("dari_palu")}
+                  </h3>
                   <div className="grid gap-4">
                     <TransportCard
                       icon={<Car />}
-                      title={t('jalur_darat')}
+                      title={t("jalur_darat")}
                       text={palujalur?.jalur_darat}
                     />
                     <TransportCard
                       icon={<Ship />}
-                      title={t('jalur_laut')}
+                      title={t("jalur_laut")}
                       text={palujalur?.jalur_laut}
                     />
                     <TransportCard
                       icon={<Plane />}
-                      title={t('jalur_udara')}
+                      title={t("jalur_udara")}
                       text={palujalur?.jalur_udara}
                     />
                   </div>
@@ -190,21 +211,23 @@ const DetailDesa = () => {
 
                 {/* LUWUK */}
                 <div>
-                  <h3 className="font-semibold mb-4 text-center">{t('dari_luwuk')}</h3>
+                  <h3 className="font-semibold mb-4 text-center">
+                    {t("dari_luwuk")}
+                  </h3>
                   <div className="grid gap-4">
                     <TransportCard
                       icon={<Car />}
-                      title={t('jalur_darat')}
+                      title={t("jalur_darat")}
                       text={luwukjalur?.jalur_darat}
                     />
                     <TransportCard
                       icon={<Ship />}
-                      title={t('jalur_laut')}
+                      title={t("jalur_laut")}
                       text={luwukjalur?.jalur_laut}
                     />
                     <TransportCard
                       icon={<Plane />}
-                      title={t('jalur_udara')}
+                      title={t("jalur_udara")}
                       text={luwukjalur?.jalur_udara}
                     />
                   </div>
@@ -221,7 +244,7 @@ const DetailDesa = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-center text-xl font-bold mb-8">
-              {t('ulasan_pengunjung')}
+              {t("ulasan_pengunjung")}
             </h2>
             <Ulasan />
           </motion.section>

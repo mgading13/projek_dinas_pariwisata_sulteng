@@ -19,9 +19,9 @@ import {
 import { Search, ChevronDown, ChevronUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "../Component/NavBar";
-import Paisupok from "../assets/LukPanenteng.png"
+import Paisupok from "../assets/LukPanenteng.png";
 import { Badge } from "@/components/ui/badge";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 const Kuliner = () => {
   const [search, setSearch] = useState("");
@@ -34,7 +34,6 @@ const Kuliner = () => {
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
   };
-
 
   useEffect(() => {
     setMounted(true);
@@ -54,7 +53,8 @@ const Kuliner = () => {
         const formatted = res.data.map((item) => ({
           id: item.id,
           nama: item.nama_makanan,
-          deskripsi: i18n.language === 'en' ? item.deskripsi_en : item.deskripsi_id,
+          deskripsi:
+            i18n.language === "en" ? item.deskripsi_en : item.deskripsi_id,
           lokasi: item.lokasi,
           foto: `http://localhost:3000${item.foto}`,
         }));
@@ -87,14 +87,14 @@ const Kuliner = () => {
     fetchDataKuliner();
     fetchDataRumahMakan();
     setLoading(false);
-  },[i18n.language]);
+  }, [i18n.language]);
 
   // ⭐ Ketika pilih kuliner → tampilkan rumah makan berdasarkan nama
   useEffect(() => {
     if (!selectedKuliner) return;
 
     const filtered = dataRumahMakan.filter(
-      (rm) => rm.kulinerId === selectedKuliner.id
+      (rm) => rm.kulinerId === selectedKuliner.id,
     );
 
     setRumahMakanTerkait(filtered);
@@ -102,8 +102,13 @@ const Kuliner = () => {
 
   // Search filter
   const filteredKuliner = dataKuliner.filter((p) =>
-    p.nama.toLowerCase().includes(search.toLowerCase())
+    p.nama.toLowerCase().includes(search.toLowerCase()),
   );
+
+  const isVideo = (url) => {
+    if (!url) return false;
+    return url.match(/\.(mp4|webm|ogg|mov)$/i);
+  };
 
   return (
     <>
@@ -123,7 +128,7 @@ const Kuliner = () => {
 
         <div className="relative z-10 flex flex-col items-center py-24 px-6">
           <h1 className="text-white text-4xl font-bold mb-6 text-center">
-            {t('nav_kuliner')}
+            {t("title_kuliner")}
           </h1>
 
           {/* Search Bar */}
@@ -170,24 +175,35 @@ const Kuliner = () => {
                           onClick={() => setSelectedKuliner(kuliner)}
                           className="rounded-xl overflow-hidden shadow-md hover:shadow-xl transition cursor-pointer"
                         >
-                          <img
-                            src={kuliner.foto}
-                            className="h-48 w-full object-cover"
-                          />
+                          {isVideo(kuliner.foto) ? (
+                            <video
+                              src={kuliner.foto}
+                              className="h-48 w-full object-cover"
+                              muted
+                              autoPlay
+                              loop
+                              playsInline
+                              poster="/fallback.jpg"
+                            />
+                          ) : (
+                            <img
+                              src={kuliner.foto}
+                              className="h-48 w-full object-cover"
+                              alt="Kuliner"
+                            />
+                          )}
 
                           <div className="p-4 space-y-2">
                             <h2 className="text-lg font-semibold">
                               {kuliner.nama}
                             </h2>
-                            <p className="text-sm text-muted-foreground">
+                            <p className="text-sm text-muted-foreground font-semibold">
                               {kuliner.lokasi}
                             </p>
 
-                            <p className="text-sm line-clamp-3 text-justify">
-                              {kuliner.deskripsi}
-                            </p>
-
-                            <Badge variant="secondary">{t("lihat_rumah_makan")}</Badge>
+                            <Badge className="bg-green-200 text-green-700 dark:bg-green-950 dark:text-green-300 text-sm" variant="secondary">
+                              {t("lihat_rumah_makan")}
+                            </Badge>
                           </div>
                         </Card>
                       </CarouselItem>
@@ -223,24 +239,35 @@ const Kuliner = () => {
                         onClick={() => setSelectedKuliner(kuliner)}
                         className="rounded-xl overflow-hidden shadow-md hover:shadow-xl transition cursor-pointer"
                       >
-                        <img
-                          src={kuliner.foto}
-                          className="h-48 w-full object-cover"
-                        />
+                        {isVideo(kuliner.foto) ? (
+                          <video
+                            src={kuliner.foto}
+                            className="h-48 w-full object-cover"
+                            muted
+                            autoPlay
+                            loop
+                            playsInline
+                            poster="/fallback.jpg"
+                          />
+                        ) : (
+                          <img
+                            src={kuliner.foto}
+                            className="h-48 w-full object-cover"
+                            alt="Kuliner"
+                          />
+                        )}
 
                         <div className="p-4 space-y-2">
                           <h2 className="text-lg font-semibold">
                             {kuliner.nama}
                           </h2>
-                          <p className="text-sm text-muted-foreground">
+                          <p className="text-sm text-muted-foreground font-semibold">
                             {kuliner.lokasi}
                           </p>
 
-                          <p className="text-sm line-clamp-3 text-justify">
-                            {kuliner.deskripsi}
-                          </p>
-
-                          <Badge variant="secondary">{t("lihat_rumah_makan")}</Badge>
+                          <Badge className="bg-green-200 text-green-700 dark:bg-green-950 dark:text-green-900 text-sm" variant="secondary">
+                            {t("lihat_rumah_makan")}
+                          </Badge>
                         </div>
                       </Card>
                     </motion.div>
@@ -268,54 +295,68 @@ const Kuliner = () => {
 
         {/* ⭐ MODAL DETAIL */}
         <AnimatePresence>
-        <Dialog
-          open={!!selectedKuliner}
-          onOpenChange={() => setSelectedKuliner(null)}
-        >
-          {selectedKuliner && (
-            <DialogContent className="max-w-4xl p-0 overflow-hidden">
-              {/* HEADER IMAGE */}
-              <div className="relative h-64">
-                <img
-                  src={selectedKuliner.foto}
-                  className="h-full w-full object-cover"
-                  alt={selectedKuliner.nama}
-                />
-                <div className="absolute inset-0 bg-black/50" />
-                <div className="absolute bottom-4 left-4 text-white">
-                  <h2 className="text-2xl font-bold">{selectedKuliner.nama}</h2>
-                  <p className="text-sm">{selectedKuliner.lokasi}</p>
+          <Dialog
+            open={!!selectedKuliner}
+            onOpenChange={() => setSelectedKuliner(null)}
+          >
+            {selectedKuliner && (
+              <DialogContent className="max-w-4xl p-0 overflow-hidden">
+                {/* HEADER IMAGE */}
+                <div className="relative h-64">
+                  {isVideo(selectedKuliner.foto) ? (
+                    <video
+                      src={selectedKuliner.foto}
+                      className="h-full w-full object-cover"
+                      muted
+                      autoPlay
+                      loop
+                      playsInline
+                      poster="/fallback.jpg"
+                    />
+                  ) : (
+                    <img
+                      src={selectedKuliner.foto}
+                      className="h-full w-full object-cover"
+                      alt={selectedKuliner.nama}
+                    />
+                  )}
+                  <div className="absolute inset-0 bg-black/50" />
+                  <div className="absolute bottom-4 left-4 text-white">
+                    <h2 className="text-2xl font-bold">
+                      {selectedKuliner.nama}
+                    </h2>
+                    <p className="text-sm">{selectedKuliner.lokasi}</p>
+                  </div>
                 </div>
-              </div>
 
-              {/* CONTENT */}
-              <div className="p-6 space-y-4">
-                <p className="text-justify">{selectedKuliner.deskripsi}</p>
+                {/* CONTENT */}
+                <div className="p-6 space-y-4">
+                  <p className="text-justify">{selectedKuliner.deskripsi}</p>
 
-                <h3 className="font-semibold text-lg">{t("rumah_makan")}</h3>
+                  <h3 className="font-semibold text-lg">{t("rumah_makan")}</h3>
 
-                <div className="max-h-[300px] overflow-y-auto space-y-3">
-                  {rumahMakanTerkait.map((rm) => (
-                    <div
-                      key={rm.id}
-                      className="flex justify-between items-center bg-gray-100 p-4 rounded-lg"
-                    >
-                      <p className="font-medium">{rm.nama}</p>
-                      <a
-                        href={rm.link_gmaps}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="bg-green-600 text-white px-4 py-2 rounded-md"
+                  <div className="max-h-[300px] overflow-y-auto space-y-3">
+                    {rumahMakanTerkait.map((rm) => (
+                      <div
+                        key={rm.id}
+                        className="flex justify-between items-center bg-gray-100 p-4 rounded-lg"
                       >
-                        Maps
-                      </a>
-                    </div>
-                  ))}
+                        <p className="font-medium">{rm.nama}</p>
+                        <a
+                          href={rm.link_gmaps}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="bg-green-600 text-white px-4 py-2 rounded-md"
+                        >
+                          Maps
+                        </a>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            </DialogContent>
-          )}
-        </Dialog>
+              </DialogContent>
+            )}
+          </Dialog>
         </AnimatePresence>
       </div>
     </>

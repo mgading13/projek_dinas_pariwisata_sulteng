@@ -19,7 +19,7 @@ import { motion } from "framer-motion";
 import LoadingCard from "@/components/ui/LoadingCard";
 import EmptyCard from "@/components/ui/EmptyCard";
 import ErrorCard from "@/components/ui/ErrorCard";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 export default function CarouselEvent() {
   const [slides, setSlides] = useState([]);
@@ -103,10 +103,10 @@ export default function CarouselEvent() {
           className="relative z-10 mb-12 text-center"
         >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
-            {t('atraksi')}
+            {t("atraksi")}
           </h2>
           <p className="mt-3 text-white/80 max-w-xl mx-auto text-sm sm:text-base">
-            {t('desc_atraksi')}
+            {t("desc_atraksi")}
           </p>
         </motion.div>
 
@@ -148,7 +148,7 @@ export default function CarouselEvent() {
             {error && (
               <CarouselItem className="pl-3 sm:pl-4 flex justify-center">
                 <ErrorCard
-                  title={t('error_atraksi')}
+                  title={t("error_atraksi")}
                   message={error}
                   onRetry={() => window.location.reload()}
                 />
@@ -211,14 +211,27 @@ export default function CarouselEvent() {
                               !isActive &&
                               !isPrev &&
                               !isNext &&
-                              "z-10 scale-75 blur-[3px] opacity-40"
+                              "z-10 scale-75 blur-[3px] opacity-40",
                           )}
                         >
-                          <img
-                            src={`http://localhost:3000${slide.foto}`}
-                            alt={slide.nameEvent}
-                            className="absolute inset-0 h-full w-full object-cover"
-                          />
+                          {slide?.foto &&
+                            (slide.foto.match(/\.(mp4|webm|ogg)$/i) ? (
+                              <video
+                                src={`http://localhost:3000${slide.foto}`}
+                                className="absolute inset-0 h-full w-full object-cover"
+                                autoPlay
+                                muted
+                                loop
+                                playsInline
+                                poster="/fallback.jpg"
+                              />
+                            ) : (
+                              <img
+                                src={`http://localhost:3000${slide.foto}`}
+                                alt={slide.nameEvent}
+                                className="absolute inset-0 h-full w-full object-cover"
+                              />
+                            ))}
 
                           <div className="absolute inset-0 bg-black/40" />
 
@@ -278,7 +291,7 @@ export default function CarouselEvent() {
               onClick={() => api?.scrollTo(idx)}
               className={cn(
                 "h-2 rounded-full transition-all duration-300",
-                idx === current ? "w-8 bg-white" : "w-2 bg-white/40"
+                idx === current ? "w-8 bg-white" : "w-2 bg-white/40",
               )}
             />
           ))}

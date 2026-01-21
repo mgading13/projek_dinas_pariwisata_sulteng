@@ -15,8 +15,8 @@ import { Search, ChevronDown, ChevronUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MapPin, Phone, Globe } from "lucide-react";
 import Navbar from "../Component/NavBar";
-import Paisupok from "../assets/LukPanenteng.png"
-import { useTranslation } from 'react-i18next';
+import Paisupok from "../assets/LukPanenteng.png";
+import { useTranslation } from "react-i18next";
 const Hotel = () => {
   const [search, setSearch] = useState("");
   const [showAll, setShowAll] = useState(false);
@@ -33,6 +33,7 @@ const Hotel = () => {
   useEffect(() => {
     setMounted(true);
   }, []);
+
   useEffect(() => {
     const fetchDataHotel = async () => {
       try {
@@ -43,7 +44,7 @@ const Hotel = () => {
           namaHotel: item.nama_hotel,
           lokasi: item.lokasi,
           jumlahKamar: item.jumlah_kamar,
-          jumlahTempatTidur: item.jumlah_tempat_tidur,
+          jumlahTempatTidur: item.jumlah_tempatTidur,
           harga: item.harga,
           telepon: item.telepon,
           linkWebsite: item.website,
@@ -62,9 +63,11 @@ const Hotel = () => {
   }, []);
 
   const filteredHotel = dataHotel.filter((p) =>
-    p.namaHotel.toLowerCase().includes(search.toLowerCase())
+    p.namaHotel.toLowerCase().includes(search.toLowerCase()),
   );
-
+  const isVideo = (url) => {
+    return /\.(mp4|webm|ogg)$/i.test(url);
+  };
   return (
     <>
       <Navbar />
@@ -82,7 +85,7 @@ const Hotel = () => {
         <div className="absolute inset-0 bg-black/50"></div>
         <div className="relative z-10 flex flex-col items-center py-24 px-6">
           <h1 className="text-white text-4xl font-bold mb-6 text-center">
-            {t('list_hotel')}
+            {t("list_hotel")}
           </h1>
 
           {/* Search Bar */}
@@ -128,11 +131,23 @@ const Hotel = () => {
                           className="overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition cursor-pointer"
                           onClick={() => setSelectedHotel(hotel)}
                         >
-                          <img
-                            src={hotel.foto}
-                            alt={hotel.namaHotel}
-                            className="h-56 w-full object-cover"
-                          />
+                          {isVideo(hotel.foto) ? (
+                            <video
+                              src={hotel.foto}
+                              className="w-full h-56 object-cover"
+                              muted
+                              loop
+                              autoPlay
+                              playsInline
+                              poster="/fallback.jpg"
+                            />
+                          ) : (
+                            <img
+                              src={hotel.foto}
+                              className="w-full h-56 object-cover"
+                              alt={hotel.namaHotel}
+                            />
+                          )}
 
                           <div className="p-4">
                             <h2 className="font-semibold text-lg">
@@ -144,10 +159,10 @@ const Hotel = () => {
 
                             <div className="mt-3 flex j items-center">
                               <p className="text-primary font font-semibold">
-                                Start from{" "}
+                                Mulai dari{" "}
                                 <span className="text-primary font-bold">
                                   Rp{" "}
-                                  {Number(hotel.harga).toLocaleString("id-ID")}
+                                  {Number(hotel.harga).toLocaleString("id-ID")} / malam
                                 </span>
                               </p>
 
@@ -188,11 +203,23 @@ const Hotel = () => {
                         className="overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition cursor-pointer"
                         onClick={() => setSelectedHotel(hotel)}
                       >
-                        <img
-                          src={hotel.foto}
-                          alt={hotel.namaHotel}
-                          className="h-56 w-full object-cover"
-                        />
+                        {isVideo(hotel.foto) ? (
+                          <video
+                            src={hotel.foto}
+                            className="w-full h-56 object-cover"
+                            muted
+                            loop
+                            autoPlay
+                            playsInline
+                            poster="/fallback.jpg"
+                          />
+                        ) : (
+                          <img
+                            src={hotel.foto}
+                            className="w-full h-56 object-cover"
+                            alt={hotel.namaHotel}
+                          />
+                        )}
 
                         <div className="p-4">
                           <h2 className="font-semibold text-lg">
@@ -204,9 +231,9 @@ const Hotel = () => {
 
                           <div className="mt-3 flex j items-center">
                             <p className="text-primary font font-semibold">
-                              Start from{" "}
+                              Mulai dari{" "}
                               <span className="text-primary font-bold">
-                                Rp {Number(hotel.harga).toLocaleString("id-ID")}
+                                Rp {Number(hotel.harga).toLocaleString("id-ID")} / malam
                               </span>
                             </p>
 
@@ -262,11 +289,23 @@ const Hotel = () => {
                 >
                   {/* FOTO */}
                   <div className="relative h-48 sm:h-64 md:h-72 w-full">
-                    <img
-                      src={selectedHotel.foto}
-                      alt={selectedHotel.namaHotel}
-                      className="h-full w-full object-cover"
-                    />
+                    {isVideo(selectedHotel.foto) ? (
+                      <video
+                        src={selectedHotel.foto}
+                        className="w-full h-full object-cover"
+                        autoPlay
+                        muted
+                        playsInline
+                        poster="/fallback.jpg"
+                        loop
+                      />
+                    ) : (
+                      <img
+                        src={selectedHotel.foto}
+                        className="w-full h-full object-cover"
+                        alt={selectedHotel.namaHotel}
+                      />
+                    )}
 
                     {/* OVERLAY */}
                     <div className="absolute inset-0 bg-black/40" />
@@ -292,7 +331,7 @@ const Hotel = () => {
                   >
                     {/* HARGA */}
                     <p className="text-xl font-semibold text-primary">
-                      Rp {Number(selectedHotel.harga).toLocaleString("id-ID")} /
+                      Mulai dari Rp {Number(selectedHotel.harga).toLocaleString("id-ID")} /
                       malam
                     </p>
 
@@ -311,24 +350,28 @@ const Hotel = () => {
                     {/* CTA BUTTONS */}
                     <div className="flex flex-wrap gap-3 pt-2">
                       {/* TELEPON */}
-                      <a
-                        href={`tel:${selectedHotel.telepon}`}
-                        className="inline-flex items-center gap-2 rounded-full bg-green-500 px-4 py-2 text-sm font-medium text-white hover:bg-green-600 transition"
-                      >
-                        <Phone size={16} />
-                        Telepon
-                      </a>
+                      {selectedHotel.telepon && (
+                        <a
+                          href={`tel:${selectedHotel.telepon}`}
+                          className="inline-flex items-center gap-2 rounded-full bg-green-500 px-4 py-2 text-sm font-medium text-white hover:bg-green-600 transition"
+                        >
+                          <Phone size={16} />
+                          Telepon
+                        </a>
+                      )}
 
                       {/* MAPS */}
-                      <a
-                        href={selectedHotel.linkGmaps}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 rounded-full bg-blue-500 px-4 py-2 text-sm font-medium text-white hover:bg-blue-600 transition"
-                      >
-                        <MapPin size={16} />
-                        Google Maps
-                      </a>
+                      {selectedHotel.linkGmaps && (
+                        <a
+                          href={selectedHotel.linkGmaps}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 rounded-full bg-blue-500 px-4 py-2 text-sm font-medium text-white hover:bg-blue-600 transition"
+                        >
+                          <MapPin size={16} />
+                          Google Maps
+                        </a>
+                      )}
 
                       {/* WEBSITE */}
                       {selectedHotel.linkWebsite && (

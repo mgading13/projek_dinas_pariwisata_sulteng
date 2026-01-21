@@ -20,7 +20,7 @@ import { motion } from "framer-motion";
 import LoadingCard from "@/components/ui/LoadingCard";
 import EmptyCard from "@/components/ui/EmptyCard";
 import ErrorCard from "@/components/ui/ErrorCard";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 export default function CarouselDesaWisata() {
   const [slides, setSlides] = useState([]);
@@ -33,7 +33,7 @@ export default function CarouselDesaWisata() {
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
   };
-  const langSuffix = i18n.language === 'en' ? 'en' : 'id';
+  const langSuffix = i18n.language === "en" ? "en" : "id";
 
   useEffect(() => {
     if (!api) return;
@@ -54,7 +54,7 @@ export default function CarouselDesaWisata() {
         const data = res.data.data || res.data;
 
         const desaWisata = data.filter(
-          (item) => item.jenisDesa === "DESA_WISATA"
+          (item) => item.jenisDesa === "DESA_WISATA",
         );
 
         setSlides(desaWisata);
@@ -84,10 +84,10 @@ export default function CarouselDesaWisata() {
           className="relative z-10 mb-12 text-center"
         >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
-            {t('desa_wisata')}
+            {t("desa_wisata")}
           </h2>
           <p className="mt-3 text-white/80 max-w-xl mx-auto text-sm sm:text-base">
-            {t('desc_desa_wisata')}
+            {t("desc_desa_wisata")}
           </p>
         </motion.div>
 
@@ -129,7 +129,7 @@ export default function CarouselDesaWisata() {
             {error && (
               <CarouselItem className="pl-3 sm:pl-4 flex justify-center">
                 <ErrorCard
-                  title={t('error_desa_wisata')}
+                  title={t("error_desa_wisata")}
                   message={error}
                   onRetry={() => window.location.reload()}
                 />
@@ -186,14 +186,27 @@ export default function CarouselDesaWisata() {
                             !isActive &&
                             !isPrev &&
                             !isNext &&
-                            "z-10 scale-75 blur-[3px] opacity-40"
+                            "z-10 scale-75 blur-[3px] opacity-40",
                         )}
                       >
-                        <img
-                          src={`http://localhost:3000${desa.foto}`}
-                          alt={desa.namaDesa}
-                          className="absolute inset-0 h-full w-full object-cover"
-                        />
+                        {desa?.foto &&
+                          (desa.foto.match(/\.(mp4|webm|ogg)$/i) ? (
+                            <video
+                              src={`http://localhost:3000${desa.foto}`}
+                              className="absolute inset-0 h-full w-full object-cover"
+                              autoPlay
+                              muted
+                              loop
+                              playsInline
+                              poster="/fallback.jpg"
+                            />
+                          ) : (
+                            <img
+                              src={`http://localhost:3000${desa.foto}`}
+                              alt={desa.namaDesa}
+                              className="absolute inset-0 h-full w-full object-cover"
+                            />
+                          ))}
 
                         <div className="absolute inset-0 bg-black/40" />
 
@@ -245,7 +258,7 @@ export default function CarouselDesaWisata() {
               onClick={() => api?.scrollTo(idx)}
               className={cn(
                 "h-2 rounded-full transition-all duration-300",
-                idx === current ? "w-8 bg-white" : "w-2 bg-white/40"
+                idx === current ? "w-8 bg-white" : "w-2 bg-white/40",
               )}
             />
           ))}

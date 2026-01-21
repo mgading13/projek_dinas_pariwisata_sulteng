@@ -10,7 +10,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 export default function DetailEvent() {
   const { slug } = useParams();
@@ -27,35 +27,29 @@ export default function DetailEvent() {
   const contentY = useTransform(scrollY, [0, 300], ["0%", "-10%"]);
 
   useEffect(() => {
-  const getAtraksi = async () => {
-    try {
-      const res = await axios.get(
-        "http://localhost:3000/api/atraksi"
-      );
+    const getAtraksi = async () => {
+      try {
+        const res = await axios.get("http://localhost:3000/api/atraksi");
 
-      // ✅ ambil array event
-      const events = res.data.data;
+        // ✅ ambil array event
+        const events = res.data.data;
 
-      // ✅ cari berdasarkan slug
-      const foundEvent = events.find(
-        (item) =>
-          item.nameEvent
-            .toLowerCase()
-            .replace(/\s+/g, "-") === slug
-      );
+        // ✅ cari berdasarkan slug
+        const foundEvent = events.find(
+          (item) => item.nameEvent.toLowerCase().replace(/\s+/g, "-") === slug,
+        );
 
-      setEvent(foundEvent);
-    } catch (error) {
-      console.error("Error loading detail atraksi:", error);
-      setEvent(null);
-    } finally {
-      setLoading(false);
-    }
-  };
+        setEvent(foundEvent);
+      } catch (error) {
+        console.error("Error loading detail atraksi:", error);
+        setEvent(null);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  getAtraksi();
-}, [slug]);
-
+    getAtraksi();
+  }, [slug]);
 
   if (loading || !event) {
     return (
@@ -70,7 +64,7 @@ export default function DetailEvent() {
   }
 
   const bgImage = `http://localhost:3000${event.foto}`;
-  const locale = i18n.language === 'en' ? 'en-US' : 'id-ID';
+  const locale = i18n.language === "en" ? "en-US" : "id-ID";
 
   const startDate = new Date(event.startdate).toLocaleDateString(locale, {
     day: "numeric",
@@ -96,16 +90,35 @@ export default function DetailEvent() {
         {/* HERO SECTION */}
         <section className="relative min-h-screen overflow-hidden">
           {/* PARALLAX BACKGROUND */}
-          <motion.div
-            initial={{ opacity: 0, scale: 1.05 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
-            style={{ y: bgY, backgroundImage: `url(${bgImage})` }}
-            className="absolute inset-0 bg-cover bg-center"
-          />
+          {bgImage?.match(/\.(mp4|webm|ogg)$/i) ? (
+            <motion.video
+              src={bgImage}
+              style={{ y: bgY }}
+              autoPlay
+              muted
+              loop
+              poster="/fallback.jpg"
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover"
+              initial={{ opacity: 0, scale: 1.05 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1.2, ease: "easeOut" }}
+            />
+          ) : (
+            <motion.div
+              style={{
+                y: bgY,
+                backgroundImage: `url(${bgImage})`,
+              }}
+              className="absolute inset-0 bg-cover bg-center"
+              initial={{ opacity: 0, scale: 1.05 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1.2, ease: "easeOut" }}
+            />
+          )}
 
           {/* OVERLAY */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black/90" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/50" />
 
           {/* CONTENT */}
           <motion.div
@@ -140,7 +153,9 @@ export default function DetailEvent() {
                     transition={{ delay: 0.45 }}
                     className="text-center text-gray-300 text-sm sm:text-base"
                   >
-                    {i18n.language === 'en' ? event.location_en : event.location_id}
+                    {i18n.language === "en"
+                      ? event.location_en
+                      : event.location_id}
                   </motion.p>
 
                   {/* COUNTDOWN */}
@@ -173,7 +188,9 @@ export default function DetailEvent() {
                     transition={{ delay: 0.9 }}
                     className="text-gray-200 leading-relaxed text-justify text-sm sm:text-base"
                   >
-                    {i18n.language === 'en' ? event.description_en : event.description_id}
+                    {i18n.language === "en"
+                      ? event.description_en
+                      : event.description_id}
                   </motion.p>
                 </CardContent>
               </Card>
