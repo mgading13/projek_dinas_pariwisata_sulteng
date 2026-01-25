@@ -20,7 +20,7 @@ import { Search, ChevronDown, ChevronUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { WhatsappLogo } from "@phosphor-icons/react";
 import Navbar from "../Component/NavBar";
-import Paisupok from "../assets/LukPanenteng.png";
+import Paisupok from "../assets/Luk-Panenteng.jpg";
 import { useTranslation } from "react-i18next";
 
 const PaketWisata = () => {

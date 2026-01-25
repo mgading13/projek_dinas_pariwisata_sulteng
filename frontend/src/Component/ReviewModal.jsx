@@ -43,7 +43,7 @@ export default function ReviewModal({ isOpen, onClose, onSubmit }) {
       <DialogContent
         className="
           max-w-md w-[92%]
-          bg-white/70 backdrop-blur-xl
+          bg-blue-100 backdrop-blur-xl
           border border-white/60
           rounded-2xl
           shadow-xl
@@ -60,7 +60,7 @@ export default function ReviewModal({ isOpen, onClose, onSubmit }) {
         <div className="space-y-5 mt-4">
           {/* Nama */}
           <Input
-            placeholder="Your Name"
+            placeholder="Nama Anda"
             value={nama}
             onChange={(e) => setNama(e.target.value)}
             className="
@@ -73,7 +73,7 @@ export default function ReviewModal({ isOpen, onClose, onSubmit }) {
 
           {/* Komentar */}
           <Textarea
-            placeholder=""
+            placeholder="Tuliskan komentar Anda di sini..."
             value={komentar}
             onChange={(e) => setKomentar(e.target.value)}
             className="
@@ -128,6 +128,7 @@ export default function ReviewModal({ isOpen, onClose, onSubmit }) {
               onClick={handleSubmit}
               className="
                 rounded-full
+                text-white font-semibold
                 bg-blue-600
                 hover:bg-blue-700
                 transition

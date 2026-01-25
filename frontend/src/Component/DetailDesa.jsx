@@ -154,7 +154,13 @@ const DetailDesa = () => {
 
               {/* DESKRIPSI */}
               <motion.p
-                className="text-gray-200 leading-relaxed text-justify text-sm sm:text-base"
+                className="
+    text-gray-200 leading-relaxed text-justify
+    text-sm sm:text-base
+    max-h-[45vh]
+    overflow-y-auto
+    pr-2
+  "
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}

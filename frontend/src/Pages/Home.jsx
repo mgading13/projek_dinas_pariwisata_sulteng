@@ -1,7 +1,7 @@
 import NavBar from '../Component/NavBar.jsx'
 import usePageView from '../hook/usePageView'
 import '../index.css'
-import LukPanenteng from '../assets/LukPanenteng.png'
+import LukPanenteng from '../assets/Luk-Panenteng.jpg'
 import CarouselWisataUnggulan from '../Component/CarouselWisataUnggulan.jsx'
 import CarouselDesaWisata from '../Component/CarouselDesaWisata.jsx'
 import CarouselEvent from '../Component/CarouselEvent.jsx'

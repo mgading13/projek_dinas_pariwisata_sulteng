@@ -126,7 +126,13 @@ export default function DetailEvent() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="relative z-10 min-h-screen flex items-center justify-center px-4"
+            className="
+    relative z-10
+    min-h-[calc(100vh-80px)]
+    flex items-center justify-center
+    px-4
+    pt-20
+  "
           >
             {/* GLASS CARD */}
             <motion.div
@@ -186,7 +192,13 @@ export default function DetailEvent() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.9 }}
-                    className="text-gray-200 leading-relaxed text-justify text-sm sm:text-base"
+                    className="
+    text-gray-200 leading-relaxed text-justify
+    text-sm sm:text-base
+    max-h-[45vh]
+    overflow-y-auto
+    pr-2
+  "
                   >
                     {i18n.language === "en"
                       ? event.description_en
