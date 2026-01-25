@@ -57,30 +57,30 @@ const Footer = () => {
                 className="
                   flex gap-4
                   sm:gap-5
-                  lg:grid lg:grid-cols-2
+                  lg:grid lg:grid-cols-3
                 "
               >
                 {[
                   {
                     icon: Instagram,
                     color: "from-pink-500 to-purple-500",
+                    url: "https://www.instagram.com/wonderfulindonesiatourism/",
                   },
                   {
                     icon: Youtube,
                     color: "from-red-500 to-red-600",
+                    url: "https://www.youtube.com/@wonderfulindonesiatourism",
                   },
                   {
                     icon: Facebook,
                     color: "from-blue-500 to-blue-700",
+                    url: "https://www.facebook.com/wonderfulindonesiatourism",
                   },
-                  {
-                    icon: Twitter,
-                    color: "from-black to-gray-800",
-                  },
-                ].map(({ icon: Icon, color }, i) => (
+                  
+                ].map(({ icon: Icon, color, url }, i) => (
                   <motion.a
                     key={i}
-                    href="#"
+                    href={url}
                     whileHover={{ scale: 1.12 }}
                     whileTap={{ scale: 0.95 }}
                     className={`
