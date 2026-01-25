@@ -110,12 +110,8 @@ export default function PetaDesaWisata() {
   }, []);
 
   return (
-    <section
-      className="w-full py-20 px-6"
-      style={{
-        background: "linear-gradient(135deg, #6BB42C, #ffffff)",
-      }}
-    >
+    <section className="w-full py-20 px-6 bg-gradient-to-b from-[#2D3C59]  to-[#94A378]">
+      
       {/* ===== HEADER ===== */}
       <div className="mb-8 text-center">
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
@@ -161,10 +157,6 @@ export default function PetaDesaWisata() {
                 opacity={1}
                 interactive
               >
-                {/* <Link
-                  to={`/desa/${createSlug(getNamaDesa(desa, i18n.language))}`}
-                  className="block"
-                > */}
                 <div className="tooltip-card cursor-pointer">
                   {isVideo(desa.foto) ? (
                     <video
@@ -246,5 +238,6 @@ export default function PetaDesaWisata() {
         </MapContainer>
       </AspectRatio>
     </section>
+    
   );
 }

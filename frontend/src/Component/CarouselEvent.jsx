@@ -77,13 +77,12 @@ export default function CarouselEvent() {
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="relative w-full py-28 overflow-hidden bg-gradient-to-br from-[#0086CD] to-[#f9f2f2]"
+      className="relative w-full py-28 overflow-hidden bg-gradient-to-b from-[#D1855C] to-[#F3E6DC]"
     >
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
-        className="absolute inset-0 bg-black/10"
       />
 
       <div
@@ -191,7 +190,7 @@ export default function CarouselEvent() {
                           className={cn(
                             `
     relative overflow-hidden rounded-3xl
-    transition-all duration-500 bg-black shadow-2xl
+    transition-all duration-500 
 
     h-[380px] w-[260px]
     sm:h-[440px] sm:w-[320px]

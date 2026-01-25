@@ -72,9 +72,8 @@ export default function CarouselDesaWisata() {
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="relative w-full py-28 overflow-hidden bg-gradient-to-br from-[#6F519D] to-[#f9f2f2]"
+      className="relative w-full py-28 overflow-hidden bg-gradient-to-b from-[#E5BA41] to-[#D1855C]"
     >
-      <div className="absolute inset-0 bg-black/10" />
 
       <div className="mx-auto max-w-full sm:max-w-5xl lg:max-w-6xl xl:max-w-[1400px] px-4 sm:px-6">
         <motion.div
@@ -171,7 +170,7 @@ export default function CarouselDesaWisata() {
                         className={cn(
                           `
               relative overflow-hidden rounded-3xl
-              transition-all duration-500 bg-black shadow-2xl
+              transition-all duration-500 
               h-[380px] w-[260px]
               sm:h-[440px] sm:w-[320px]
               lg:h-[480px] lg:w-[400px]

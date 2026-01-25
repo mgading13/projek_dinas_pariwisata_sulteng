@@ -9,7 +9,7 @@ const Footer = () => {
     i18n.changeLanguage(lng);
   };
   return (
-    <footer className="relative bg-gradient-to-br from-[#f5f7fa] to-[#e4ecf5]">
+    <footer className="relative bg-gradient-to-b from-[#F3E6DC] to-[#e4ecf5]">
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
