@@ -158,7 +158,15 @@ export default function CarouselEvent() {
             {!loading &&
               !error &&
               slides.map((slide, idx) => {
+                // Ambil data sesuai bahasa. Jika bahasa Inggris kosong, fallback ke ID
+                const isEnglish = i18n.language === 'en';
+                
+
+                const locationDisplay = isEnglish 
+                    ? (slide.location_en || slide.location_id) 
+                    : slide.location_id;
                 const isSingle = slides.length === 1;
+
                 const total = slides.length;
 
                 const prevIndex = (current - 1 + total) % total;
@@ -244,9 +252,9 @@ export default function CarouselEvent() {
                               {slide.nameEvent}
                             </h3>
 
-                            {slide.location && (
+                            {locationDisplay && (
                               <p className="mt-1 text-xs sm:text-sm text-gray-300">
-                                {slide.location}
+                                {locationDisplay}
                               </p>
                             )}
 

@@ -150,6 +150,14 @@ export default function CarouselWisataUnggulan() {
             {!loading &&
               !error &&
               slides.map((desa, idx) => {
+                const isEnglish = i18n.language === 'en';
+                const namaDisplay = isEnglish
+                    ? (desa.namaDesa_en || desa.namaDesa_id) 
+                    : desa.namaDesa_id;
+
+                const lokasiDisplay = isEnglish 
+                    ? (desa.lokasi_en || desa.lokasi_id) 
+                    : desa.lokasi_id;
                 const isSingle = slides.length === 1;
 
                 const total = slides.length;
@@ -226,11 +234,11 @@ export default function CarouselWisataUnggulan() {
 
                         <CardContent className="relative z-10 flex h-full flex-col justify-end p-4 sm:p-5 lg:p-6 text-white">
                           <h3 className="text-base sm:text-lg lg:text-xl font-semibold">
-                            {desa.namaDesa_id}
+                            {namaDisplay}
                           </h3>
 
                           <p className="mt-1 text-xs sm:text-sm text-gray-300">
-                            {desa.lokasi_id}
+                            {lokasiDisplay}
                           </p>
 
                           <Link
