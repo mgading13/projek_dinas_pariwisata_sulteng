@@ -60,7 +60,7 @@ export default function ReviewModal({ isOpen, onClose, onSubmit }) {
         <div className="space-y-5 mt-4">
           {/* Nama */}
           <Input
-            placeholder="Nama Anda"
+            placeholder={t('placeholder_name')}
             value={nama}
             onChange={(e) => setNama(e.target.value)}
             className="
@@ -73,7 +73,7 @@ export default function ReviewModal({ isOpen, onClose, onSubmit }) {
 
           {/* Komentar */}
           <Textarea
-            placeholder="Tuliskan komentar Anda di sini..."
+            placeholder={t('placeholder_desc')}
             value={komentar}
             onChange={(e) => setKomentar(e.target.value)}
             className="
@@ -121,7 +121,7 @@ export default function ReviewModal({ isOpen, onClose, onSubmit }) {
               onClick={onClose}
               className="rounded-full"
             >
-              Batal
+              {t('ulasan_batal')}
             </Button>
 
             <Button
@@ -134,7 +134,7 @@ export default function ReviewModal({ isOpen, onClose, onSubmit }) {
                 transition
               "
             >
-              Kirim Ulasan
+              {t('ulasan_kirim')}
             </Button>
           </div>
         </div>

@@ -40,5 +40,9 @@
     "contact_via_wa": "WhatsApp",
     "lihat_rumah_makan": "Lihat Rumah Makan",
     "rumah_makan": "Rumah Makan",
-    "title_kuliner": "Kuliner Khas Sulawesi Tengah"
+    "title_kuliner": "Kuliner Khas Sulawesi Tengah",
+    "ulasan_batal": "Batal",
+    "ulasan_kirim": "Kirim Ulasan",
+    "placeholder_name": "Nama Anda",
+    "placeholder_desc": "Tuliskan Komentar Anda di sini"
 }

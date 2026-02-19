@@ -40,5 +40,9 @@
     "contact_via_wa": "WhatsApp",
     "lihat_rumah_makan": "View Restaurants",
     "rumah_makan": "Restaurant",
-    "title_kuliner": "Culinary Delights of Central Sulawesi"
+    "title_kuliner": "Culinary Delights of Central Sulawesi",
+    "ulasan_batal": "Cancel",
+    "ulasan_kirim": "Send a Review",
+    "placeholder_name": "Your Name",
+    "placeholder_desc": "Write Your Comments Here"
 }
