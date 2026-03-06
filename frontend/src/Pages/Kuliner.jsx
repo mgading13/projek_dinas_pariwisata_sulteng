@@ -56,7 +56,12 @@ const Kuliner = () => {
           deskripsi:
             i18n.language === "en" ? item.deskripsi_en : item.deskripsi_id,
           lokasi: item.lokasi,
-          foto: `http://localhost:3000${item.foto}`,
+          foto:
+            item.foto && item.foto !== ""
+              ? `http://localhost:3000${item.foto}`
+              : item.link_video && item.link_video !== ""
+                ? item.link_video
+                : null,
         }));
 
         setDataKuliner(formatted);
@@ -89,7 +94,6 @@ const Kuliner = () => {
     setLoading(false);
   }, [i18n.language]);
 
-  // ⭐ Ketika pilih kuliner → tampilkan rumah makan berdasarkan nama
   useEffect(() => {
     if (!selectedKuliner) return;
 
@@ -100,14 +104,42 @@ const Kuliner = () => {
     setRumahMakanTerkait(filtered);
   }, [selectedKuliner, dataRumahMakan]);
 
-  // Search filter
   const filteredKuliner = dataKuliner.filter((p) =>
     p.nama.toLowerCase().includes(search.toLowerCase()),
   );
 
-  const isVideo = (url) => {
-    if (!url) return false;
-    return url.match(/\.(mp4|webm|ogg|mov)$/i);
+  const getMediaType = (url) => {
+    if (!url) return "none";
+
+    if (url.match(/\.(mp4|webm|ogg)$/i)) return "video";
+    if (url.match(/\.(jpg|jpeg|png|webp|gif)$/i)) return "image";
+    if (url.includes("youtube.com") || url.includes("youtu.be"))
+      return "youtube";
+
+    return "unknown";
+  };
+
+  const convertYoutubeLink = (url) => {
+    if (!url) return null;
+
+    try {
+      const urlObj = new URL(url);
+      let videoId = null;
+
+      if (urlObj.hostname.includes("youtu.be")) {
+        videoId = urlObj.pathname.replace("/", "");
+      }
+
+      if (urlObj.hostname.includes("youtube.com")) {
+        videoId = urlObj.searchParams.get("v");
+      }
+
+      if (!videoId) return null;
+
+      return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0&playsinline=1&loop=1&playlist=${videoId}`;
+    } catch {
+      return null;
+    }
   };
 
   return (
@@ -175,23 +207,51 @@ const Kuliner = () => {
                           onClick={() => setSelectedKuliner(kuliner)}
                           className="rounded-xl overflow-hidden shadow-md hover:shadow-xl transition cursor-pointer"
                         >
-                          {isVideo(kuliner.foto) ? (
-                            <video
-                              src={kuliner.foto}
-                              className="h-48 w-full object-cover"
-                              muted
-                              autoPlay
-                              loop
-                              playsInline
-                              poster="/fallback.jpg"
-                            />
-                          ) : (
-                            <img
-                              src={kuliner.foto}
-                              className="h-48 w-full object-cover"
-                              alt="Kuliner"
-                            />
-                          )}
+                          {(() => {
+                            const type = getMediaType(kuliner.foto);
+                            const embedUrl = convertYoutubeLink(kuliner.foto);
+
+                            if (type === "video") {
+                              return (
+                                <video
+                                  src={kuliner.foto}
+                                  className="w-full h-56 object-cover"
+                                  muted
+                                  loop
+                                  autoPlay
+                                  playsInline
+                                />
+                              );
+                            }
+
+                            if (type === "image") {
+                              return (
+                                <img
+                                  src={kuliner.foto}
+                                  className="w-full h-56 object-cover"
+                                  alt={kuliner.nama}
+                                />
+                              );
+                            }
+
+                            if (type === "youtube" && embedUrl) {
+                              return (
+                                <iframe
+                                  src={embedUrl}
+                                  className="w-full h-56 object-cover pointer-events-none"
+                                  allow="autoplay; fullscreen"
+                                />
+                              );
+                            }
+
+                            return (
+                              <img
+                                src="/fallback.jpg"
+                                className="w-full h-56 object-cover"
+                                alt="fallback"
+                              />
+                            );
+                          })()}
 
                           <div className="p-4 space-y-2">
                             <h2 className="text-lg font-semibold">
@@ -201,7 +261,10 @@ const Kuliner = () => {
                               {kuliner.lokasi}
                             </p>
 
-                            <Badge className="bg-green-200 text-green-700 dark:bg-green-950 dark:text-green-300 text-sm" variant="secondary">
+                            <Badge
+                              className="bg-green-200 text-green-700 dark:bg-green-950 dark:text-green-300 text-sm"
+                              variant="secondary"
+                            >
                               {t("lihat_rumah_makan")}
                             </Badge>
                           </div>
@@ -239,23 +302,51 @@ const Kuliner = () => {
                         onClick={() => setSelectedKuliner(kuliner)}
                         className="rounded-xl overflow-hidden shadow-md hover:shadow-xl transition cursor-pointer"
                       >
-                        {isVideo(kuliner.foto) ? (
-                          <video
-                            src={kuliner.foto}
-                            className="h-48 w-full object-cover"
-                            muted
-                            autoPlay
-                            loop
-                            playsInline
-                            poster="/fallback.jpg"
-                          />
-                        ) : (
-                          <img
-                            src={kuliner.foto}
-                            className="h-48 w-full object-cover"
-                            alt="Kuliner"
-                          />
-                        )}
+                        {(() => {
+                          const type = getMediaType(kuliner.foto);
+                          const embedUrl = convertYoutubeLink(kuliner.foto);
+
+                          if (type === "video") {
+                            return (
+                              <video
+                                src={kuliner.foto}
+                                className="w-full h-56 object-cover"
+                                muted
+                                loop
+                                autoPlay
+                                playsInline
+                              />
+                            );
+                          }
+
+                          if (type === "image") {
+                            return (
+                              <img
+                                src={kuliner.foto}
+                                className="w-full h-56 object-cover"
+                                alt={kuliner.nama}
+                              />
+                            );
+                          }
+
+                          if (type === "youtube" && embedUrl) {
+                            return (
+                              <iframe
+                                src={embedUrl}
+                                className="w-full h-56 object-cover pointer-events-none"
+                                allow="autoplay; fullscreen"
+                              />
+                            );
+                          }
+
+                          return (
+                            <img
+                              src="/fallback.jpg"
+                              className="w-full h-56 object-cover"
+                              alt="fallback"
+                            />
+                          );
+                        })()}
 
                         <div className="p-4 space-y-2">
                           <h2 className="text-lg font-semibold">
@@ -265,7 +356,10 @@ const Kuliner = () => {
                             {kuliner.lokasi}
                           </p>
 
-                          <Badge className="bg-green-200 text-green-700 dark:bg-green-950 dark:text-green-900 text-sm" variant="secondary">
+                          <Badge
+                            className="bg-green-200 text-green-700 dark:bg-green-950 dark:text-green-900 text-sm"
+                            variant="secondary"
+                          >
                             {t("lihat_rumah_makan")}
                           </Badge>
                         </div>
@@ -303,23 +397,51 @@ const Kuliner = () => {
               <DialogContent className="max-w-4xl p-0 overflow-hidden">
                 {/* HEADER IMAGE */}
                 <div className="relative h-64">
-                  {isVideo(selectedKuliner.foto) ? (
-                    <video
-                      src={selectedKuliner.foto}
-                      className="h-full w-full object-cover"
-                      muted
-                      autoPlay
-                      loop
-                      playsInline
-                      poster="/fallback.jpg"
-                    />
-                  ) : (
-                    <img
-                      src={selectedKuliner.foto}
-                      className="h-full w-full object-cover"
-                      alt={selectedKuliner.nama}
-                    />
-                  )}
+                  {(() => {
+                    const type = getMediaType(selectedKuliner.foto);
+                    const embedUrl = convertYoutubeLink(selectedKuliner.foto);
+
+                    if (type === "video") {
+                      return (
+                        <video
+                          src={selectedKuliner.foto}
+                          className="w-full h-56 object-cover"
+                          muted
+                          loop
+                          autoPlay
+                          playsInline
+                        />
+                      );
+                    }
+
+                    if (type === "image") {
+                      return (
+                        <img
+                          src={selectedKuliner.foto}
+                          className="w-full h-56 object-cover"
+                          alt={selectedKuliner.nama}
+                        />
+                      );
+                    }
+
+                    if (type === "youtube" && embedUrl) {
+                      return (
+                        <iframe
+                          src={embedUrl}
+                          className="w-full h-56 object-cover pointer-events-none"
+                          allow="autoplay; fullscreen"
+                        />
+                      );
+                    }
+
+                    return (
+                      <img
+                        src="/fallback.jpg"
+                        className="w-full h-56 object-cover"
+                        alt="fallback"
+                      />
+                    );
+                  })()}
                   <div className="absolute inset-0 bg-black/50" />
                   <div className="absolute bottom-4 left-4 text-white">
                     <h2 className="text-2xl font-bold">

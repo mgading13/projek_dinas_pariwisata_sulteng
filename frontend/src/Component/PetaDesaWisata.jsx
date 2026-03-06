@@ -109,9 +109,37 @@ export default function PetaDesaWisata() {
     fetchData();
   }, []);
 
+  const isYoutube = (url) => {
+    if (!url) return false;
+    return url.includes("youtube.com") || url.includes("youtu.be");
+  };
+
+  const convertYoutubeLink = (url) => {
+    if (!url) return null;
+
+    try {
+      const urlObj = new URL(url);
+
+      let videoId = null;
+
+      if (urlObj.hostname.includes("youtu.be")) {
+        videoId = urlObj.pathname.replace("/", "");
+      }
+
+      if (urlObj.hostname.includes("youtube.com")) {
+        videoId = urlObj.searchParams.get("v");
+      }
+
+      if (!videoId) return null;
+
+      return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${videoId}`;
+    } catch {
+      return null;
+    }
+  };
+
   return (
     <section className="w-full py-20 px-6 bg-gradient-to-b from-[#2D3C59]  to-[#94A378]">
-      
       {/* ===== HEADER ===== */}
       <div className="mb-8 text-center">
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
@@ -158,20 +186,38 @@ export default function PetaDesaWisata() {
                 interactive
               >
                 <div className="tooltip-card cursor-pointer">
-                  {isVideo(desa.foto) ? (
-                    <video
-                      src={`http://localhost:3000${desa.foto}`}
+                  {/* PRIORITAS 1 : FOTO / VIDEO dari field foto */}
+                  {desa.foto ? (
+                    isVideo(desa.foto) ? (
+                      <video
+                        src={`http://localhost:3000${desa.foto}`}
+                        className="tooltip-media"
+                        muted
+                        autoPlay
+                        loop
+                        playsInline
+                      />
+                    ) : (
+                      <img
+                        src={`http://localhost:3000${desa.foto}`}
+                        alt={getNamaDesa(desa, i18n.language)}
+                        className="tooltip-media"
+                      />
+                    )
+                  ) : /* PRIORITAS 2 : VIDEO YOUTUBE dari link_video */
+                  desa.link_video ? (
+                    <iframe
+                      src={convertYoutubeLink(desa.link_video)}
                       className="tooltip-media"
-                      muted
-                      autoPlay
-                      loop
-                      playsInline
+                      allow="autoplay; encrypted-media"
+                      allowFullScreen
                     />
                   ) : (
+                    /* PRIORITAS 3 : FALLBACK */
                     <img
-                      src={`http://localhost:3000${desa.foto}`}
-                      alt={getNamaDesa(desa, i18n.language)}
+                      src="/fallback.jpg"
                       className="tooltip-media"
+                      alt="fallback"
                     />
                   )}
 
@@ -207,20 +253,38 @@ export default function PetaDesaWisata() {
                 interactive
               >
                 <div className="tooltip-card cursor-pointer">
-                  {isVideo(desa.foto) ? (
-                    <video
-                      src={`http://localhost:3000${desa.foto}`}
+                  {/* PRIORITAS 1 : FOTO / VIDEO dari field foto */}
+                  {desa.foto ? (
+                    isVideo(desa.foto) ? (
+                      <video
+                        src={`http://localhost:3000${desa.foto}`}
+                        className="tooltip-media"
+                        muted
+                        autoPlay
+                        loop
+                        playsInline
+                      />
+                    ) : (
+                      <img
+                        src={`http://localhost:3000${desa.foto}`}
+                        alt={getNamaDesa(desa, i18n.language)}
+                        className="tooltip-media"
+                      />
+                    )
+                  ) : /* PRIORITAS 2 : VIDEO YOUTUBE dari link_video */
+                  desa.link_video ? (
+                    <iframe
+                      src={convertYoutubeLink(desa.link_video)}
                       className="tooltip-media"
-                      muted
-                      autoPlay
-                      loop
-                      playsInline
+                      allow="autoplay; encrypted-media"
+                      allowFullScreen
                     />
                   ) : (
+                    /* PRIORITAS 3 : FALLBACK */
                     <img
-                      src={`http://localhost:3000${desa.foto}`}
-                      alt={getNamaDesa(desa, i18n.language)}
+                      src="/fallback.jpg"
                       className="tooltip-media"
+                      alt="fallback"
                     />
                   )}
 
@@ -238,6 +302,5 @@ export default function PetaDesaWisata() {
         </MapContainer>
       </AspectRatio>
     </section>
-    
   );
 }

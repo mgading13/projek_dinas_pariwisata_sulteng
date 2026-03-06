@@ -62,6 +62,31 @@ export default function CarouselEvent() {
     fetchData();
   }, []);
 
+   function convertYoutubeLink(url) {
+    if (!url) return null;
+
+    try {
+      const urlObj = new URL(url);
+
+      let videoId = "";
+
+      if (urlObj.hostname.includes("youtu.be")) {
+        videoId = urlObj.pathname.replace("/", "");
+      }
+
+      if (urlObj.hostname.includes("youtube.com")) {
+        videoId = urlObj.searchParams.get("v");
+      }
+
+      if (!videoId) return null;
+
+      return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0&playsinline=1&rel=0&modestbranding=1`;
+    } catch (err) {
+      console.error("Error converting YouTube link:", err);
+      return null;
+    }
+  }
+
   const cardVariants = {
     hidden: { opacity: 0, y: 40, scale: 0.95 },
     show: {
@@ -159,12 +184,11 @@ export default function CarouselEvent() {
               !error &&
               slides.map((slide, idx) => {
                 // Ambil data sesuai bahasa. Jika bahasa Inggris kosong, fallback ke ID
-                const isEnglish = i18n.language === 'en';
-                
+                const isEnglish = i18n.language === "en";
 
-                const locationDisplay = isEnglish 
-                    ? (slide.location_en || slide.location_id) 
-                    : slide.location_id;
+                const locationDisplay = isEnglish
+                  ? slide.location_en || slide.location_id
+                  : slide.location_id;
                 const isSingle = slides.length === 1;
 
                 const total = slides.length;
@@ -221,26 +245,54 @@ export default function CarouselEvent() {
                               "z-10 scale-75 blur-[3px] opacity-40",
                           )}
                         >
-                          {slide?.foto &&
-                            (slide.foto.match(/\.(mp4|webm|ogg)$/i) ? (
-                              <video
-                                src={`http://localhost:3000${slide.foto}`}
-                                className="absolute inset-0 h-full w-full object-cover"
-                                autoPlay
-                                muted
-                                loop
-                                playsInline
-                                poster="/fallback.jpg"
-                              />
-                            ) : (
-                              <img
-                                src={`http://localhost:3000${slide.foto}`}
-                                alt={slide.nameEvent}
-                                className="absolute inset-0 h-full w-full object-cover"
-                              />
-                            ))}
+                          {slide && (
+                            <>
+                              {/* PRIORITAS 1: Jika ada foto */}
+                              {slide.foto ? (
+                                slide.foto.match(/\.(mp4|webm|ogg)$/i) ? (
+                                  <video
+                                    src={`http://localhost:3000${slide.foto}`}
+                                    className="absolute inset-0 h-full w-full object-cover"
+                                    autoPlay
+                                    muted
+                                    loop
+                                    playsInline
+                                  />
+                                ) : (
+                                  <img
+                                    src={`http://localhost:3000${slide.foto}`}
+                                    alt={slide.nameEvent}
+                                    className="absolute inset-0 h-full w-full object-cover"
+                                  />
+                                )
+                              ) : /* PRIORITAS 2: Jika tidak ada foto tapi ada link video */
+                              slide.link_video ? (
+                                <iframe
+                                  src={convertYoutubeLink(slide.link_video)}
+                                  className="
+        absolute
+        top-1/2 left-1/2
+        min-w-full min-h-full
+        w-auto h-auto
+        -translate-x-1/2 -translate-y-1/2
+        scale-150
+      "
+                                  allow="autoplay; fullscreen"
+                                  allowFullScreen
+                                  controls="0"
+                                />
+                              ) : (
+                                /* PRIORITAS 3: Fallback */
+                                <img
+                                  src="/fallback.jpg"
+                                  alt="fallback"
+                                  className="absolute inset-0 h-full w-full object-cover"
+                                />
+                              )}
 
-                          <div className="absolute inset-0 bg-black/40" />
+                              <div className="absolute inset-0 bg-black/40" />
+                            </>
+                          )}
 
                           <CardContent
                             className="

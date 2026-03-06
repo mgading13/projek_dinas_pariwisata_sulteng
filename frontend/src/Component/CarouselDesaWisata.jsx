@@ -67,6 +67,31 @@ export default function CarouselDesaWisata() {
     };
     fetchData();
   }, []);
+
+  function convertYoutubeLink(url) {
+    if (!url) return null;
+
+    try {
+      const urlObj = new URL(url);
+
+      let videoId = "";
+
+      if (urlObj.hostname.includes("youtu.be")) {
+        videoId = urlObj.pathname.replace("/", "");
+      }
+
+      if (urlObj.hostname.includes("youtube.com")) {
+        videoId = urlObj.searchParams.get("v");
+      }
+
+      if (!videoId) return null;
+
+      return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0&playsinline=1&rel=0&modestbranding=1`;
+    } catch (err) {
+      console.error("Error converting YouTube link:", err);
+      return null;
+    }
+  }
   return (
     <motion.section
       initial={{ opacity: 0, y: 40 }}
@@ -74,7 +99,6 @@ export default function CarouselDesaWisata() {
       transition={{ duration: 0.8, ease: "easeOut" }}
       className="relative w-full py-28 overflow-hidden bg-gradient-to-b from-[#E5BA41] to-[#D1855C]"
     >
-
       <div className="mx-auto max-w-full sm:max-w-5xl lg:max-w-6xl xl:max-w-[1400px] px-4 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -139,16 +163,15 @@ export default function CarouselDesaWisata() {
             {!loading &&
               !error &&
               slides.map((desa, idx) => {
-                
                 // Ambil data sesuai bahasa. Jika bahasa Inggris kosong, fallback ke ID
-                const isEnglish = i18n.language === 'en';
+                const isEnglish = i18n.language === "en";
                 const namaDisplay = isEnglish
-                    ? (desa.namaDesa_en || desa.namaDesa_id) 
-                    : desa.namaDesa_id;
+                  ? desa.namaDesa_en || desa.namaDesa_id
+                  : desa.namaDesa_id;
 
-                const lokasiDisplay = isEnglish 
-                    ? (desa.lokasi_en || desa.lokasi_id) 
-                    : desa.lokasi_id;
+                const lokasiDisplay = isEnglish
+                  ? desa.lokasi_en || desa.lokasi_id
+                  : desa.lokasi_id;
                 const isSingle = slides.length === 1;
 
                 const total = slides.length;
@@ -199,26 +222,54 @@ export default function CarouselDesaWisata() {
                             "z-10 scale-75 blur-[3px] opacity-40",
                         )}
                       >
-                        {desa?.foto &&
-                          (desa.foto.match(/\.(mp4|webm|ogg)$/i) ? (
-                            <video
-                              src={`http://localhost:3000${desa.foto}`}
-                              className="absolute inset-0 h-full w-full object-cover"
-                              autoPlay
-                              muted
-                              loop
-                              playsInline
-                              poster="/fallback.jpg"
-                            />
-                          ) : (
-                            <img
-                              src={`http://localhost:3000${desa.foto}`}
-                              alt={desa.namaDesa}
-                              className="absolute inset-0 h-full w-full object-cover"
-                            />
-                          ))}
+                        {desa && (
+                          <>
+                            {/* PRIORITAS 1: Jika ada foto */}
+                            {desa.foto ? (
+                              desa.foto.match(/\.(mp4|webm|ogg)$/i) ? (
+                                <video
+                                  src={`http://localhost:3000${desa.foto}`}
+                                  className="absolute inset-0 h-full w-full object-cover"
+                                  autoPlay
+                                  muted
+                                  loop
+                                  playsInline
+                                />
+                              ) : (
+                                <img
+                                  src={`http://localhost:3000${desa.foto}`}
+                                  alt={desa.namaDesa}
+                                  className="absolute inset-0 h-full w-full object-cover"
+                                />
+                              )
+                            ) : /* PRIORITAS 2: Jika tidak ada foto tapi ada link video */
+                            desa.link_video ? (
+                              <iframe
+                                src={convertYoutubeLink(desa.link_video)}
+                                className="
+        absolute
+        top-1/2 left-1/2
+        min-w-full min-h-full
+        w-auto h-auto
+        -translate-x-1/2 -translate-y-1/2
+        scale-150
+      "
+                                allow="autoplay; fullscreen"
+                                allowFullScreen
+                                controls="0"
+                              />
+                            ) : (
+                              /* PRIORITAS 3: Fallback */
+                              <img
+                                src="/fallback.jpg"
+                                alt="fallback"
+                                className="absolute inset-0 h-full w-full object-cover"
+                              />
+                            )}
 
-                        <div className="absolute inset-0 bg-black/40" />
+                            <div className="absolute inset-0 bg-black/40" />
+                          </>
+                        )}
 
                         <CardContent className="relative z-10 flex h-full flex-col justify-end p-4 sm:p-5 lg:p-6 text-white">
                           <h3 className="text-base sm:text-lg lg:text-xl font-semibold">

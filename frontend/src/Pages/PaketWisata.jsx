@@ -47,7 +47,12 @@ const PaketWisata = () => {
           deskripsi: item[`deskripsi_${langSuffix}`] || item.deskripsi_id,
           lokasi: item[`lokasi_${langSuffix}`] || item.lokasi_id,
           harga: `Rp. ${Number(item.harga).toLocaleString("id-ID")}`,
-          foto: `http://localhost:3000${item.media}`,
+          media:
+            item.media && item.media !== ""
+              ? `http://localhost:3000${item.media}`
+              : item.link_video && item.link_video !== ""
+                ? item.link_video
+                : null,
           wa: `https://wa.me/${item.kontak}`,
         }));
 
@@ -62,12 +67,42 @@ const PaketWisata = () => {
     fetchData();
   }, [langSuffix]);
 
-  // Filter berdasarkan pencarian
   const filteredPaket = dataPaket.filter((p) =>
     p.nama.toLowerCase().includes(search.toLowerCase()),
   );
-  const isVideo = (url) => {
-    return /\.(mp4|webm|ogg)$/i.test(url);
+ 
+  const getMediaType = (url) => {
+    if (!url) return "none";
+
+    if (url.match(/\.(mp4|webm|ogg)$/i)) return "video";
+    if (url.match(/\.(jpg|jpeg|png|webp|gif)$/i)) return "image";
+    if (url.includes("youtube.com") || url.includes("youtu.be"))
+      return "youtube";
+
+    return "unknown";
+  };
+
+  const convertYoutubeLink = (url) => {
+    if (!url) return null;
+
+    try {
+      const urlObj = new URL(url);
+      let videoId = null;
+
+      if (urlObj.hostname.includes("youtu.be")) {
+        videoId = urlObj.pathname.replace("/", "");
+      }
+
+      if (urlObj.hostname.includes("youtube.com")) {
+        videoId = urlObj.searchParams.get("v");
+      }
+
+      if (!videoId) return null;
+
+      return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0&playsinline=1&loop=1&playlist=${videoId}`;
+    } catch {
+      return null;
+    }
   };
 
   return (
@@ -145,23 +180,53 @@ const PaketWisata = () => {
     w-full max-w-[360px] mx-auto
   "
                             >
-                              {isVideo(paket.foto) ? (
-                                <video
-                                  src={paket.foto}
-                                  className="w-full h-56 object-cover"
-                                  muted
-                                  loop
-                                  autoPlay
-                                  playsInline
-                                  poster="/fallback.jpg"
-                                />
-                              ) : (
-                                <img
-                                  src={paket.foto}
-                                  className="w-full h-56 object-cover"
-                                  alt={paket.nama}
-                                />
-                              )}
+                              {(() => {
+                                const type = getMediaType(paket.media);
+                                const embedUrl = convertYoutubeLink(
+                                  paket.media,
+                                );
+
+                                if (type === "video") {
+                                  return (
+                                    <video
+                                      src={paket.media}
+                                      className="w-full h-56 object-cover"
+                                      muted
+                                      loop
+                                      autoPlay
+                                      playsInline
+                                    />
+                                  );
+                                }
+
+                                if (type === "image") {
+                                  return (
+                                    <img
+                                      src={paket.media}
+                                      className="w-full h-56 object-cover"
+                                      alt={paket.nama}
+                                    />
+                                  );
+                                }
+
+                                if (type === "youtube" && embedUrl) {
+                                  return (
+                                    <iframe
+                                      src={embedUrl}
+                                      className="w-full h-56 object-cover pointer-events-none"
+                                      allow="autoplay; fullscreen"
+                                    />
+                                  );
+                                }
+
+                                return (
+                                  <img
+                                    src="/fallback.jpg"
+                                    className="w-full h-56 object-cover"
+                                    alt="fallback"
+                                  />
+                                );
+                              })()}
 
                               <CardContent className="p-4 space-y-2">
                                 <h2 className="font-semibold text-lg">
@@ -223,23 +288,51 @@ const PaketWisata = () => {
     w-full max-w-[360px] mx-auto
   "
                       >
-                        {isVideo(paket.foto) ? (
-                          <video
-                            src={paket.foto}
-                            className="w-full h-56 object-cover"
-                            muted
-                            loop
-                            autoPlay
-                            playsInline
-                            poster="/fallback.jpg"
-                          />
-                        ) : (
-                          <img
-                            src={paket.foto}
-                            className="w-full h-56 object-cover"
-                            alt={paket.nama}
-                          />
-                        )}
+                        {(() => {
+                          const type = getMediaType(paket.media);
+                          const embedUrl = convertYoutubeLink(paket.media);
+
+                          if (type === "video") {
+                            return (
+                              <video
+                                src={paket.media}
+                                className="w-full h-56 object-cover"
+                                muted
+                                loop
+                                autoPlay
+                                playsInline
+                              />
+                            );
+                          }
+
+                          if (type === "image") {
+                            return (
+                              <img
+                                src={paket.media}
+                                className="w-full h-56 object-cover"
+                                alt={paket.nama}
+                              />
+                            );
+                          }
+
+                          if (type === "youtube" && embedUrl) {
+                            return (
+                              <iframe
+                                src={embedUrl}
+                                className="w-full h-56 object-cover pointer-events-none"
+                                allow="autoplay; fullscreen"
+                              />
+                            );
+                          }
+
+                          return (
+                            <img
+                              src="/fallback.jpg"
+                              className="w-full h-56 object-cover"
+                              alt="fallback"
+                            />
+                          );
+                        })()}
 
                         <CardContent className="p-4 space-y-2">
                           <h2 className="font-semibold text-lg">
@@ -306,22 +399,51 @@ const PaketWisata = () => {
                 {selectedPaket && (
                   <div className="grid grid-cols-1 md:grid-cols-2">
                     {/* IMAGE */}
-                    {isVideo(selectedPaket.foto) ? (
-                      <video
-                        src={selectedPaket.foto}
-                        className="w-full h-full object-cover"
-                        autoPlay
-                        muted
-                        playsInline
-                        poster="/fallback.jpg"
-                      />
-                    ) : (
-                      <img
-                        src={selectedPaket.foto}
-                        className="w-full h-full object-cover"
-                        alt={selectedPaket.nama}
-                      />
-                    )}
+                    {(() => {
+                      const type = getMediaType(selectedPaket.media);
+                      const embedUrl = convertYoutubeLink(selectedPaket.media);
+
+                      if (type === "video") {
+                        return (
+                          <video
+                            src={selectedPaket.media}
+                            className="w-full h-56 object-cover"
+                            muted
+                            loop
+                            autoPlay
+                            playsInline
+                          />
+                        );
+                      }
+
+                      if (type === "image") {
+                        return (
+                          <img
+                            src={selectedPaket.media}
+                            className="w-full h-56 object-cover"
+                            alt={selectedPaket.nama}
+                          />
+                        );
+                      }
+
+                      if (type === "youtube" && embedUrl) {
+                        return (
+                          <iframe
+                            src={embedUrl}
+                            className="w-full h-56 object-cover pointer-events-none"
+                            allow="autoplay; fullscreen"
+                          />
+                        );
+                      }
+
+                      return (
+                        <img
+                          src="/fallback.jpg"
+                          className="w-full h-56 object-cover"
+                          alt="fallback"
+                        />
+                      );
+                    })()}
 
                     {/* CONTENT */}
                     <motion.div

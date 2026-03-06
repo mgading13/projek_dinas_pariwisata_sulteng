@@ -63,50 +63,91 @@ const DetailDesa = () => {
   if (loading) return <p className="p-10 text-center">Loading...</p>;
   if (!desa) return <p className="p-10 text-center">Desa tidak ditemukan.</p>;
 
-  const bgImage = `http://localhost:3000${desa.foto}`;
+  let mediaUrl = null;
 
-  // --- DISINI TEMPATNYA (Poin 2) ---
+  if (desa.foto) {
+    mediaUrl = `http://localhost:3000${desa.foto}`;
+  } else if (desa.link_video) {
+    mediaUrl = desa.link_video;
+  }
+
+  const mediaType = getMediaType(mediaUrl);
+  const embedUrl = convertVideoLink(mediaUrl);
+
   if (loading) {
     return <p className="p-10 text-center">Sedang memuat data...</p>;
   }
 
-  // Tambahkan proteksi tambahan ini untuk memastikan objek 'desa' tidak null
   if (!desa) {
     return <p className="p-10 text-center">Desa tidak ditemukan.</p>;
   }
-  // Di dalam komponen, sebelum return, tentukan suffix bahasa
+
   const langSuffix = i18n.language === "en" ? "en" : "id";
-  // Gunakan suffix untuk mengambil data secara dinamis
   const namaDisplay = desa[`namaDesa_${langSuffix}`];
   const lokasiDisplay = desa[`lokasi_${langSuffix}`];
   const deskripsiDisplay = desa[`deskripsi_${langSuffix}`];
+
+  function getMediaType(url) {
+    if (!url) return "none";
+
+    if (url.match(/\.(mp4|webm|ogg)$/i)) return "local-video";
+    if (url.match(/\.(jpg|jpeg|png|webp|gif)$/i)) return "image";
+    if (url.includes("youtube.com") || url.includes("youtu.be"))
+      return "youtube";
+    if (url.includes("drive.google.com")) return "drive";
+
+    return "unknown";
+  }
+
+  function convertVideoLink(url) {
+  if (!url) return null;
+
+  try {
+    const urlObj = new URL(url);
+
+    let videoId = null;
+
+    if (urlObj.hostname.includes("youtu.be")) {
+      videoId = urlObj.pathname.replace("/", "");
+    }
+
+    if (urlObj.hostname.includes("youtube.com")) {
+      videoId = urlObj.searchParams.get("v");
+    }
+
+    if (!videoId) return null;
+
+    return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0&playsinline=1&loop=1&playlist=${videoId}`;
+  } catch {
+    return null;
+  }
+}
 
   return (
     <>
       <NavBar />
 
-      {/* ===== HERO ===== */}
       <section className="relative min-h-screen overflow-hidden">
-        {/* PARALLAX BACKGROUND */}
-        {bgImage?.match(/\.(mp4|webm|ogg)$/i) ? (
+        {mediaType === "local-video" && (
           <motion.video
-            src={bgImage}
+            src={mediaUrl}
             style={{ y: bgY }}
             autoPlay
             muted
             loop
             playsInline
-            poster="/fallback.jpg"
             className="absolute inset-0 w-full h-full object-cover"
             initial={{ opacity: 0, scale: 1.05 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.2, ease: "easeOut" }}
           />
-        ) : (
+        )}
+
+        {mediaType === "image" && (
           <motion.div
             style={{
               y: bgY,
-              backgroundImage: `url(${bgImage})`,
+              backgroundImage: `url(${mediaUrl})`,
             }}
             className="absolute inset-0 bg-cover bg-center"
             initial={{ opacity: 0, scale: 1.05 }}
@@ -115,10 +156,30 @@ const DetailDesa = () => {
           />
         )}
 
-        {/* OVERLAY */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/60 to-black/50" />
+        {(mediaType === "youtube" || mediaType === "drive") && embedUrl && (
+          <div className="absolute inset-0 overflow-hidden">
+            <iframe
+              src={embedUrl}
+              className="
+        absolute
+        top-1/2 left-1/2
+        min-w-full min-h-full
+        w-auto h-auto
+        -translate-x-1/2 -translate-y-1/2
+        scale-150
+        pointer-events-none
+      "
+              allow="autoplay; fullscreen"
+              allowFullScreen
+            />
+          </div>
+        )}
 
-        {/* CONTENT */}
+        {mediaType === "none" && (
+          <motion.div className="absolute inset-0 bg-gray-900" />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/40 to-black/30" />
+
         <motion.div
           style={{ y: contentY }}
           className="relative z-10 min-h-screen flex items-center justify-center px-4"
@@ -128,7 +189,6 @@ const DetailDesa = () => {
         >
           <Card className="max-w-4xl w-full bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl">
             <CardContent className="p-6 sm:p-8 md:p-10 text-white space-y-6">
-              {/* NAMA DESA */}
               <motion.h1
                 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-center"
                 initial={{ opacity: 0, y: 20 }}
@@ -138,7 +198,6 @@ const DetailDesa = () => {
                 {namaDisplay}
               </motion.h1>
 
-              {/* LOKASI */}
               <motion.p
                 className="flex items-center justify-center gap-2 text-gray-300 text-sm sm:text-base"
                 initial={{ opacity: 0 }}
@@ -149,10 +208,8 @@ const DetailDesa = () => {
                 {lokasiDisplay}
               </motion.p>
 
-              {/* DIVIDER */}
               <div className="h-px bg-white/20" />
 
-              {/* DESKRIPSI */}
               <motion.p
                 className="
     text-gray-200 leading-relaxed text-justify
@@ -172,12 +229,8 @@ const DetailDesa = () => {
         </motion.div>
       </section>
 
-      {/* ===== PAGE CONTENT (BOXED) ===== */}
       <div className="bg-gradient-to-b from-blue-200 to-white">
         <div className="max-w-7xl mx-auto px-4">
-          {/* ===== DESKRIPSI ===== */}
-
-          {/* ===== HOW TO GET THERE ===== */}
           <motion.section
             className="py-20"
             initial={{ opacity: 0, y: 40 }}
@@ -191,7 +244,6 @@ const DetailDesa = () => {
               </h2>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* PALU */}
                 <div>
                   <h3 className="font-semibold mb-4 text-center">
                     {t("dari_palu")}
@@ -215,7 +267,6 @@ const DetailDesa = () => {
                   </div>
                 </div>
 
-                {/* LUWUK */}
                 <div>
                   <h3 className="font-semibold mb-4 text-center">
                     {t("dari_luwuk")}
@@ -241,7 +292,6 @@ const DetailDesa = () => {
               </div>
             </section>
           </motion.section>
-          {/* ===== ULASAN ===== */}
           <motion.section
             className="py-20"
             initial={{ opacity: 0, y: 40 }}

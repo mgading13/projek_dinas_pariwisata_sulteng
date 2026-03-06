@@ -49,7 +49,12 @@ const Hotel = () => {
           telepon: item.telepon,
           linkWebsite: item.website,
           linkGmaps: item.link_gmaps,
-          foto: `http://localhost:3000${item.foto}`,
+          foto:
+            item.foto && item.foto !== ""
+              ? `http://localhost:3000${item.foto}`
+              : item.link_video && item.link_video !== ""
+                ? item.link_video
+                : null,
         }));
         setDataHotel(formatted);
       } catch (err) {
@@ -67,6 +72,40 @@ const Hotel = () => {
   );
   const isVideo = (url) => {
     return /\.(mp4|webm|ogg)$/i.test(url);
+  };
+
+  const getMediaType = (url) => {
+    if (!url) return "none";
+
+    if (url.match(/\.(mp4|webm|ogg)$/i)) return "video";
+    if (url.match(/\.(jpg|jpeg|png|webp|gif)$/i)) return "image";
+    if (url.includes("youtube.com") || url.includes("youtu.be"))
+      return "youtube";
+
+    return "unknown";
+  };
+
+  const convertYoutubeLink = (url) => {
+    if (!url) return null;
+
+    try {
+      const urlObj = new URL(url);
+      let videoId = null;
+
+      if (urlObj.hostname.includes("youtu.be")) {
+        videoId = urlObj.pathname.replace("/", "");
+      }
+
+      if (urlObj.hostname.includes("youtube.com")) {
+        videoId = urlObj.searchParams.get("v");
+      }
+
+      if (!videoId) return null;
+
+      return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0&playsinline=1&loop=1&playlist=${videoId}`;
+    } catch {
+      return null;
+    }
   };
   return (
     <>
@@ -131,23 +170,51 @@ const Hotel = () => {
                           className="overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition cursor-pointer"
                           onClick={() => setSelectedHotel(hotel)}
                         >
-                          {isVideo(hotel.foto) ? (
-                            <video
-                              src={hotel.foto}
-                              className="w-full h-56 object-cover"
-                              muted
-                              loop
-                              autoPlay
-                              playsInline
-                              poster="/fallback.jpg"
-                            />
-                          ) : (
-                            <img
-                              src={hotel.foto}
-                              className="w-full h-56 object-cover"
-                              alt={hotel.namaHotel}
-                            />
-                          )}
+                          {(() => {
+                            const type = getMediaType(hotel.foto);
+                            const embedUrl = convertYoutubeLink(hotel.foto);
+
+                            if (type === "video") {
+                              return (
+                                <video
+                                  src={hotel.foto}
+                                  className="w-full h-56 object-cover"
+                                  muted
+                                  loop
+                                  autoPlay
+                                  playsInline
+                                />
+                              );
+                            }
+
+                            if (type === "image") {
+                              return (
+                                <img
+                                  src={hotel.foto}
+                                  className="w-full h-56 object-cover"
+                                  alt={hotel.namaHotel}
+                                />
+                              );
+                            }
+
+                            if (type === "youtube" && embedUrl) {
+                              return (
+                                <iframe
+                                  src={embedUrl}
+                                  className="w-full h-56 object-cover pointer-events-none"
+                                  allow="autoplay; fullscreen"
+                                />
+                              );
+                            }
+
+                            return (
+                              <img
+                                src="/fallback.jpg"
+                                className="w-full h-56 object-cover"
+                                alt="fallback"
+                              />
+                            );
+                          })()}
 
                           <div className="p-4">
                             <h2 className="font-semibold text-lg">
@@ -162,7 +229,8 @@ const Hotel = () => {
                                 Mulai dari{" "}
                                 <span className="text-primary font-bold">
                                   Rp{" "}
-                                  {Number(hotel.harga).toLocaleString("id-ID")} / malam
+                                  {Number(hotel.harga).toLocaleString("id-ID")}{" "}
+                                  / malam
                                 </span>
                               </p>
 
@@ -203,23 +271,51 @@ const Hotel = () => {
                         className="overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition cursor-pointer"
                         onClick={() => setSelectedHotel(hotel)}
                       >
-                        {isVideo(hotel.foto) ? (
-                          <video
-                            src={hotel.foto}
-                            className="w-full h-56 object-cover"
-                            muted
-                            loop
-                            autoPlay
-                            playsInline
-                            poster="/fallback.jpg"
-                          />
-                        ) : (
-                          <img
-                            src={hotel.foto}
-                            className="w-full h-56 object-cover"
-                            alt={hotel.namaHotel}
-                          />
-                        )}
+                        {(() => {
+                          const type = getMediaType(hotel.foto);
+                          const embedUrl = convertYoutubeLink(hotel.foto);
+
+                          if (type === "video") {
+                            return (
+                              <video
+                                src={hotel.foto}
+                                className="w-full h-56 object-cover"
+                                muted
+                                loop
+                                autoPlay
+                                playsInline
+                              />
+                            );
+                          }
+
+                          if (type === "image") {
+                            return (
+                              <img
+                                src={hotel.foto}
+                                className="w-full h-56 object-cover"
+                                alt={hotel.namaHotel}
+                              />
+                            );
+                          }
+
+                          if (type === "youtube" && embedUrl) {
+                            return (
+                              <iframe
+                                src={embedUrl}
+                                className="w-full h-56 object-cover pointer-events-none"
+                                allow="autoplay; fullscreen"
+                              />
+                            );
+                          }
+
+                          return (
+                            <img
+                              src="/fallback.jpg"
+                              className="w-full h-56 object-cover"
+                              alt="fallback"
+                            />
+                          );
+                        })()}
 
                         <div className="p-4">
                           <h2 className="font-semibold text-lg">
@@ -233,7 +329,8 @@ const Hotel = () => {
                             <p className="text-primary font font-semibold">
                               Mulai dari{" "}
                               <span className="text-primary font-bold">
-                                Rp {Number(hotel.harga).toLocaleString("id-ID")} / malam
+                                Rp {Number(hotel.harga).toLocaleString("id-ID")}{" "}
+                                / malam
                               </span>
                             </p>
 
@@ -289,23 +386,51 @@ const Hotel = () => {
                 >
                   {/* FOTO */}
                   <div className="relative h-48 sm:h-64 md:h-72 w-full">
-                    {isVideo(selectedHotel.foto) ? (
-                      <video
-                        src={selectedHotel.foto}
-                        className="w-full h-full object-cover"
-                        autoPlay
-                        muted
-                        playsInline
-                        poster="/fallback.jpg"
-                        loop
-                      />
-                    ) : (
-                      <img
-                        src={selectedHotel.foto}
-                        className="w-full h-full object-cover"
-                        alt={selectedHotel.namaHotel}
-                      />
-                    )}
+                    {(() => {
+                      const type = getMediaType(selectedHotel.foto);
+                      const embedUrl = convertYoutubeLink(selectedHotel.foto);
+
+                      if (type === "video") {
+                        return (
+                          <video
+                            src={selectedHotel.foto}
+                            className="w-full h-56 object-cover"
+                            muted
+                            loop
+                            autoPlay
+                            playsInline
+                          />
+                        );
+                      }
+
+                      if (type === "image") {
+                        return (
+                          <img
+                            src={selectedHotel.foto}
+                            className="w-full h-56 object-cover"
+                            alt={selectedHotel.namaHotel}
+                          />
+                        );
+                      }
+
+                      if (type === "youtube" && embedUrl) {
+                        return (
+                          <iframe
+                            src={embedUrl}
+                            className="w-full h-56 object-cover pointer-events-none"
+                            allow="autoplay; fullscreen"
+                          />
+                        );
+                      }
+
+                      return (
+                        <img
+                          src="/fallback.jpg"
+                          className="w-full h-56 object-cover"
+                          alt="fallback"
+                        />
+                      );
+                    })()}
 
                     {/* OVERLAY */}
                     <div className="absolute inset-0 bg-black/40" />
@@ -331,7 +456,8 @@ const Hotel = () => {
                   >
                     {/* HARGA */}
                     <p className="text-xl font-semibold text-primary">
-                      Mulai dari Rp {Number(selectedHotel.harga).toLocaleString("id-ID")} /
+                      Mulai dari Rp{" "}
+                      {Number(selectedHotel.harga).toLocaleString("id-ID")} /
                       malam
                     </p>
 

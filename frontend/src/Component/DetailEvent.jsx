@@ -21,7 +21,6 @@ export default function DetailEvent() {
     i18n.changeLanguage(lng);
   };
 
-  /* 🔥 PARALLAX */
   const { scrollY } = useScroll();
   const bgY = useTransform(scrollY, [0, 500], ["0%", "25%"]);
   const contentY = useTransform(scrollY, [0, 300], ["0%", "-10%"]);
@@ -63,7 +62,16 @@ export default function DetailEvent() {
     );
   }
 
-  const bgImage = `http://localhost:3000${event.foto}`;
+  let mediaUrl = null;
+
+  if (event.foto) {
+    mediaUrl = `http://localhost:3000${event.foto}`;
+  } else if (event.link_video) {
+    mediaUrl = event.link_video;
+  }
+
+  const mediaType = getMediaType(mediaUrl);
+  const embedUrl = convertVideoLink(mediaUrl);
   const locale = i18n.language === "en" ? "en-US" : "id-ID";
 
   const startDate = new Date(event.startdate).toLocaleDateString(locale, {
@@ -78,6 +86,42 @@ export default function DetailEvent() {
     year: "numeric",
   });
 
+  function getMediaType(url) {
+    if (!url) return "none";
+
+    if (url.match(/\.(mp4|webm|ogg)$/i)) return "local-video";
+    if (url.match(/\.(jpg|jpeg|png|webp|gif)$/i)) return "image";
+    if (url.includes("youtube.com") || url.includes("youtu.be"))
+      return "youtube";
+    if (url.includes("drive.google.com")) return "drive";
+
+    return "unknown";
+  }
+
+  function convertVideoLink(url) {
+    if (!url) return null;
+
+    try {
+      const urlObj = new URL(url);
+
+      let videoId = null;
+
+      if (urlObj.hostname.includes("youtu.be")) {
+        videoId = urlObj.pathname.replace("/", "");
+      }
+
+      if (urlObj.hostname.includes("youtube.com")) {
+        videoId = urlObj.searchParams.get("v");
+      }
+
+      if (!videoId) return null;
+
+      return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0&playsinline=1&loop=1&playlist=${videoId}`;
+    } catch {
+      return null;
+    }
+  }
+
   return (
     <>
       <motion.main
@@ -90,25 +134,26 @@ export default function DetailEvent() {
         {/* HERO SECTION */}
         <section className="relative min-h-screen overflow-hidden">
           {/* PARALLAX BACKGROUND */}
-          {bgImage?.match(/\.(mp4|webm|ogg)$/i) ? (
+          {mediaType === "local-video" && (
             <motion.video
-              src={bgImage}
+              src={mediaUrl}
               style={{ y: bgY }}
               autoPlay
               muted
               loop
-              poster="/fallback.jpg"
               playsInline
               className="absolute inset-0 w-full h-full object-cover"
               initial={{ opacity: 0, scale: 1.05 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1.2, ease: "easeOut" }}
             />
-          ) : (
+          )}
+
+          {mediaType === "image" && (
             <motion.div
               style={{
                 y: bgY,
-                backgroundImage: `url(${bgImage})`,
+                backgroundImage: `url(${mediaUrl})`,
               }}
               className="absolute inset-0 bg-cover bg-center"
               initial={{ opacity: 0, scale: 1.05 }}
@@ -117,8 +162,29 @@ export default function DetailEvent() {
             />
           )}
 
-          {/* OVERLAY */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/50" />
+          {(mediaType === "youtube" || mediaType === "drive") && embedUrl && (
+            <div className="absolute inset-0 overflow-hidden">
+              <iframe
+                src={embedUrl}
+                className="
+        absolute
+        top-1/2 left-1/2
+        min-w-full min-h-full
+        w-auto h-auto
+        -translate-x-1/2 -translate-y-1/2
+        scale-150
+        pointer-events-none
+      "
+                allow="autoplay; fullscreen"
+                allowFullScreen
+              />
+            </div>
+          )}
+
+          {mediaType === "none" && (
+            <motion.div className="absolute inset-0 bg-gray-900" />
+          )}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/40 to-black/30" />
 
           {/* CONTENT */}
           <motion.div
