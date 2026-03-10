@@ -2,8 +2,6 @@
 
 import { useEffect, useState } from "react";
 import "keen-slider/keen-slider.min.css";
-import axios from "axios";
-import * as React from "react";
 import {
   Carousel,
   CarouselContent,
@@ -20,6 +18,7 @@ import LoadingCard from "@/components/ui/LoadingCard";
 import EmptyCard from "@/components/ui/EmptyCard";
 import ErrorCard from "@/components/ui/ErrorCard";
 import { useTranslation } from "react-i18next";
+import API_URL from "@/lib/api";
 
 export default function CarouselEvent() {
   const [slides, setSlides] = useState([]);
@@ -49,7 +48,7 @@ export default function CarouselEvent() {
         setLoading(true);
         setError(null);
 
-        const res = await axios.get("http://localhost:3000/api/atraksi");
+        const res = await API_URL.get("/atraksi");
         setSlides(res.data.data || res.data);
       } catch (err) {
         console.error("Gagal fetch event:", err);
@@ -62,7 +61,7 @@ export default function CarouselEvent() {
     fetchData();
   }, []);
 
-   function convertYoutubeLink(url) {
+  function convertYoutubeLink(url) {
     if (!url) return null;
 
     try {

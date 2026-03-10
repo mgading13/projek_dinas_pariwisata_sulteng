@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import NavBar from "./NavBar.jsx";
-import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import Ulasan from "./Ulasan.jsx";
 import { MapPin, Car, Ship, Plane } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslation } from "react-i18next";
+import API_URL from "@/lib/API";
 
 const DetailDesa = () => {
   const { slug } = useParams();
@@ -28,7 +28,7 @@ const DetailDesa = () => {
       try {
         setLoading(true);
         // ambil desa
-        const desaRes = await axios.get("http://localhost:3000/api/desaWisata");
+        const desaRes = await API_URL.get("/desaWisata");
         const found = desaRes.data.find(
           (d) => d.namaDesa_id.toLowerCase().replace(/\s+/g, "-") === slug,
         );
@@ -37,7 +37,7 @@ const DetailDesa = () => {
 
         // ambil jarak
         if (found) {
-          const jarakRes = await axios.get("http://localhost:3000/api/jarak");
+          const jarakRes = await API_URL.get("/jarak");
 
           const palu = jarakRes.data.find(
             (j) => j.desaId === found.id && j.titikKota === "PALU",

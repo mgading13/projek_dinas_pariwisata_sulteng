@@ -10,18 +10,12 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useTranslation } from "react-i18next";
+import API_URL from "@/lib/api";
 
-/* =======================
-   DEFAULT MAP
-======================= */
 const DEFAULT_CENTER = [-1.43, 121.4456];
 const DEFAULT_ZOOM = 6;
 
-/* =======================
-   MARKER ICON
-======================= */
 const desaIcon = L.divIcon({
   className: "",
   html: `<div class="marker-dot"></div>`,
@@ -36,9 +30,6 @@ const unggulanIcon = L.divIcon({
   iconAnchor: [10, 10],
 });
 
-/* =======================
-   AUTO FIT BOUNDS
-======================= */
 function AutoFitBounds({ data }) {
   const map = useMap();
 
@@ -65,9 +56,6 @@ function AutoFitBounds({ data }) {
   return null;
 }
 
-/* =======================
-   HELPERS
-======================= */
 const getNamaDesa = (desa, lang) =>
   lang === "en" ? desa.namaDesa_en : desa.namaDesa_id;
 
@@ -83,9 +71,6 @@ const createSlug = (text) =>
     .replace(/\s+/g, "-")
     .replace(/[^\w-]/g, "");
 
-/* =======================
-   MAIN COMPONENT
-======================= */
 export default function PetaDesaWisata() {
   const [desaWisata, setDesaWisata] = useState([]);
   const [wisataUnggulan, setWisataUnggulan] = useState([]);
@@ -95,7 +80,7 @@ export default function PetaDesaWisata() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/desaWisata/");
+        const res = await API_URL.get("/desaWisata");
 
         setDesaWisata(res.data.filter((d) => d.jenisDesa === "DESA_WISATA"));
         setWisataUnggulan(
@@ -108,11 +93,6 @@ export default function PetaDesaWisata() {
 
     fetchData();
   }, []);
-
-  const isYoutube = (url) => {
-    if (!url) return false;
-    return url.includes("youtube.com") || url.includes("youtu.be");
-  };
 
   const convertYoutubeLink = (url) => {
     if (!url) return null;

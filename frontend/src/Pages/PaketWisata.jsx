@@ -22,6 +22,7 @@ import { WhatsappLogo } from "@phosphor-icons/react";
 import Navbar from "../Component/NavBar";
 import Paisupok from "../assets/Luk-Panenteng.jpg";
 import { useTranslation } from "react-i18next";
+import API_URL from "@/lib/api";
 
 const PaketWisata = () => {
   const [search, setSearch] = useState("");
@@ -39,7 +40,7 @@ const PaketWisata = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/tourPackage");
+        const res = await API_URL.get("/tourPackage");
 
         const formatted = res.data.map((item) => ({
           id: item.id,

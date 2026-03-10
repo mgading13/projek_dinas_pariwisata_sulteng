@@ -2,10 +2,7 @@ import {
   NavigationMenu,
   NavigationMenuList,
   NavigationMenuItem,
-  NavigationMenuTrigger,
-  NavigationMenuContent,
   NavigationMenuLink,
-  NavigationMenuViewport,
 } from "@/components/ui/navigation-menu";
 import {
   DropdownMenu,
@@ -15,12 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import {
-  Collapsible,
-  CollapsibleTrigger,
-  CollapsibleContent,
-} from "@/components/ui/collapsible";
-import axios from "axios";
+
 import { Button } from "@/components/ui/button";
 import { Menu, ChevronDown, X } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -28,33 +20,16 @@ import { useTranslation } from "react-i18next";
 
 import Logo from "../assets/Logo-Sulteng.png";
 import { useState, useEffect } from "react";
+import API_URL from "@/lib/api";
 
 export default function Navbar() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [desaUnggulan, setDesaUnggulan] = useState([]);
-  const [desaWisata, setDesaWisata] = useState([]);
   const { t, i18n } = useTranslation();
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
   };
   const langSuffix = i18n.language === "en" ? "en" : "id";
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get("http://localhost:3000/api/desaWisata/");
-        const data = res.data;
-
-        setDesaUnggulan(data.filter((d) => d.jenisDesa === "DESA_UNGGULAN"));
-        setDesaWisata(data.filter((d) => d.jenisDesa === "DESA_WISATA"));
-      } catch (error) {
-        console.error("Error fetching desa:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 10);

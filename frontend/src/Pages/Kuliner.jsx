@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import {
   Carousel,
   CarouselContent,
@@ -22,6 +21,7 @@ import Navbar from "../Component/NavBar";
 import Paisupok from "../assets/Luk-Panenteng.jpg";
 import { Badge } from "@/components/ui/badge";
 import { useTranslation } from "react-i18next";
+import API_URL from "@/lib/api";
 
 const Kuliner = () => {
   const [search, setSearch] = useState("");
@@ -48,7 +48,7 @@ const Kuliner = () => {
   useEffect(() => {
     const fetchDataKuliner = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/kuliner");
+        const res = await API_URL.get("/kuliner");
 
         const formatted = res.data.map((item) => ({
           id: item.id,
@@ -73,7 +73,7 @@ const Kuliner = () => {
 
     const fetchDataRumahMakan = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/rumahMakan");
+        const res = await API_URL.get("/rumahMakan");
 
         const formatted = res.data.map((item) => ({
           id: item.id,

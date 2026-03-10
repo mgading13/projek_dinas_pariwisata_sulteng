@@ -1,8 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import * as React from "react";
-import axios from "axios";
 import "keen-slider/keen-slider.min.css";
 
 import {
@@ -21,6 +19,7 @@ import LoadingCard from "@/components/ui/LoadingCard";
 import EmptyCard from "@/components/ui/EmptyCard";
 import ErrorCard from "@/components/ui/ErrorCard";
 import { useTranslation } from "react-i18next";
+import API_URL from "@/lib/api";
 
 export default function CarouselDesaWisata() {
   const [slides, setSlides] = useState([]);
@@ -48,9 +47,8 @@ export default function CarouselDesaWisata() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        setError(null);
 
-        const res = await axios.get("http://localhost:3000/api/desaWisata");
+        const res = await API_URL.get("/desaWisata");
         const data = res.data.data || res.data;
 
         const desaWisata = data.filter(

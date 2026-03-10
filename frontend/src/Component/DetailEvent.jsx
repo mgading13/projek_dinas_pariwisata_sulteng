@@ -2,21 +2,19 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import Navbar from "./NavBar";
 import CountDown from "./CountDown";
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslation } from "react-i18next";
+import API_URL from "@/lib/api";
 
 export default function DetailEvent() {
   const { slug } = useParams();
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
   };
@@ -28,7 +26,7 @@ export default function DetailEvent() {
   useEffect(() => {
     const getAtraksi = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/atraksi");
+        const res = await API_URL.get("/atraksi");
 
         // ✅ ambil array event
         const events = res.data.data;

@@ -10,7 +10,8 @@ import {
 } from "@/components/ui/carousel";
 import { motion } from "framer-motion";
 import ReviewModal from "./ReviewModal";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
+import API_URL from "@/lib/api";
 
 const Ulasan = () => {
   const [open, setOpen] = useState(false);
@@ -21,18 +22,14 @@ const Ulasan = () => {
   };
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/api/ulasan")
+    API_URL.get("/ulasan")
       .then((res) => setReviews(res.data))
       .catch((err) => console.error(err));
   }, []);
 
   const handleAddReview = async (newReview) => {
     try {
-      const res = await axios.post(
-        "http://localhost:3000/api/ulasan/insert",
-        newReview
-      );
+      const res = await API_URL.post("/ulasan/insert", newReview);
       setReviews((prev) => [...prev, res.data]);
       setOpen(false);
     } catch (err) {
@@ -53,7 +50,7 @@ const Ulasan = () => {
         {/* HEADER */}
         <div className="flex justify-between items-center mb-10">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
-            {t('apa_kata_mereka')}
+            {t("apa_kata_mereka")}
           </h2>
 
           <button
@@ -62,7 +59,7 @@ const Ulasan = () => {
               bg-blue-600 text-white text-sm font-semibold
               hover:bg-blue-700 transition"
           >
-            {t('tambah_ulasan')}
+            {t("tambah_ulasan")}
           </button>
         </div>
 

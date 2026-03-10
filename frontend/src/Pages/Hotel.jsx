@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import {
   Carousel,
   CarouselContent,
@@ -17,6 +16,7 @@ import { MapPin, Phone, Globe } from "lucide-react";
 import Navbar from "../Component/NavBar";
 import Paisupok from "../assets/Luk-Panenteng.jpg";
 import { useTranslation } from "react-i18next";
+import API_URL from "@/lib/api";
 const Hotel = () => {
   const [search, setSearch] = useState("");
   const [showAll, setShowAll] = useState(false);
@@ -37,7 +37,7 @@ const Hotel = () => {
   useEffect(() => {
     const fetchDataHotel = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/hotel");
+        const res = await API_URL.get("/hotel");
 
         const formatted = res.data.map((item) => ({
           id: item.id,

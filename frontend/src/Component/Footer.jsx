@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Instagram, Youtube, Facebook, Twitter } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 const Footer = () => {
   const { t, i18n } = useTranslation();
@@ -44,10 +44,10 @@ const Footer = () => {
             {/* LEFT */}
             <div className="space-y-4">
               <h2 className="text-xl sm:text-2xl font-bold text-gray-900">
-                {t('foot_heading')}
+                {t("foot_heading")}
               </h2>
               <p className="text-gray-700 text-sm sm:text-base leading-relaxed max-w-md mx-auto lg:mx-0">
-                {t('foot_desc')}
+                {t("foot_desc")}
               </p>
             </div>
 
@@ -64,19 +64,18 @@ const Footer = () => {
                   {
                     icon: Instagram,
                     color: "from-pink-500 to-purple-500",
-                    url: "https://www.instagram.com/wonderfulindonesiatourism/",
+                    url: "https://www.instagram.com/dinaspariwisatasulteng/",
                   },
                   {
                     icon: Youtube,
                     color: "from-red-500 to-red-600",
-                    url: "https://www.youtube.com/@wonderfulindonesiatourism",
+                    url: "https://www.youtube.com/@DinasPariwisataSulteng",
                   },
                   {
                     icon: Facebook,
                     color: "from-blue-500 to-blue-700",
-                    url: "https://www.facebook.com/wonderfulindonesiatourism",
+                    url: "https://www.facebook.com/dinaspariwisatasulteng/",
                   },
-                  
                 ].map(({ icon: Icon, color, url }, i) => (
                   <motion.a
                     key={i}
@@ -105,7 +104,7 @@ const Footer = () => {
                     href="mailto:info@wonderfulindonesia.id"
                     className="hover:underline hover:text-blue-600 transition"
                   >
-                    {t('foot_kontak_kami')}
+                    {t("foot_kontak_kami")}
                   </a>
                 </li>
 
@@ -114,7 +113,7 @@ const Footer = () => {
                     to="/hotel"
                     className="hover:underline hover:text-blue-600 transition"
                   >
-                    {t('nav_hotel')}
+                    {t("nav_hotel")}
                   </Link>
                 </li>
 
@@ -123,7 +122,7 @@ const Footer = () => {
                     to="/kuliner"
                     className="hover:underline hover:text-blue-600 transition"
                   >
-                    {t('nav_kuliner')}
+                    {t("nav_kuliner")}
                   </Link>
                 </li>
 
@@ -132,7 +131,7 @@ const Footer = () => {
                     to="/paket-wisata"
                     className="hover:underline hover:text-blue-600 transition"
                   >
-                    {t('nav_paket_wisata')}
+                    {t("nav_paket_wisata")}
                   </Link>
                 </li>
               </ul>
