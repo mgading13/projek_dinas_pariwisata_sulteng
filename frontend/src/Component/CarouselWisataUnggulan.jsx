@@ -239,7 +239,7 @@ export default function CarouselWisataUnggulan() {
                             {desa.foto ? (
                               desa.foto.match(/\.(mp4|webm|ogg)$/i) ? (
                                 <video
-                                  src={`http://localhost:3000${desa.foto}`}
+                                  src={`${import.meta.env.VITE_BASE_URL}${desa.foto}`}
                                   className="absolute inset-0 h-full w-full object-cover"
                                   autoPlay
                                   muted
@@ -248,7 +248,7 @@ export default function CarouselWisataUnggulan() {
                                 />
                               ) : (
                                 <img
-                                  src={`http://localhost:3000${desa.foto}`}
+                                  src={`${import.meta.env.VITE_BASE_URL}${desa.foto}`}
                                   alt={desa.namaDesa}
                                   className="absolute inset-0 h-full w-full object-cover"
                                 />

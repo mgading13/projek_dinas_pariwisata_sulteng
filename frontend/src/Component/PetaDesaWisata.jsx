@@ -170,7 +170,7 @@ export default function PetaDesaWisata() {
                   {desa.foto ? (
                     isVideo(desa.foto) ? (
                       <video
-                        src={`http://localhost:3000${desa.foto}`}
+                        src={`${import.meta.env.VITE_BASE_URL}${desa.foto}`}
                         className="tooltip-media"
                         muted
                         autoPlay
@@ -179,7 +179,7 @@ export default function PetaDesaWisata() {
                       />
                     ) : (
                       <img
-                        src={`http://localhost:3000${desa.foto}`}
+                        src={`${import.meta.env.VITE_BASE_URL}${desa.foto}`}
                         alt={getNamaDesa(desa, i18n.language)}
                         className="tooltip-media"
                       />
@@ -237,7 +237,7 @@ export default function PetaDesaWisata() {
                   {desa.foto ? (
                     isVideo(desa.foto) ? (
                       <video
-                        src={`http://localhost:3000${desa.foto}`}
+                        src={`${import.meta.env.VITE_BASE_URL}${desa.foto}`}
                         className="tooltip-media"
                         muted
                         autoPlay
@@ -246,7 +246,7 @@ export default function PetaDesaWisata() {
                       />
                     ) : (
                       <img
-                        src={`http://localhost:3000${desa.foto}`}
+                        src={`${import.meta.env.VITE_BASE_URL}${desa.foto}`}
                         alt={getNamaDesa(desa, i18n.language)}
                         className="tooltip-media"
                       />

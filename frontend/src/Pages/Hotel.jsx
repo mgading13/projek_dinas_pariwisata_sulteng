@@ -50,8 +50,9 @@ const Hotel = () => {
           linkWebsite: item.website,
           linkGmaps: item.link_gmaps,
           foto:
+          
             item.foto && item.foto !== ""
-              ? `http://localhost:3000${item.foto}`
+              ? `${import.meta.env.VITE_BASE_URL}${item.foto}`
               : item.link_video && item.link_video !== ""
                 ? item.link_video
                 : null,

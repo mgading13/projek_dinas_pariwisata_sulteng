@@ -250,7 +250,7 @@ export default function CarouselEvent() {
                               {slide.foto ? (
                                 slide.foto.match(/\.(mp4|webm|ogg)$/i) ? (
                                   <video
-                                    src={`http://localhost:3000${slide.foto}`}
+                                    src={`${import.meta.env.VITE_BASE_URL}${slide.foto}`}
                                     className="absolute inset-0 h-full w-full object-cover"
                                     autoPlay
                                     muted
@@ -259,7 +259,7 @@ export default function CarouselEvent() {
                                   />
                                 ) : (
                                   <img
-                                    src={`http://localhost:3000${slide.foto}`}
+                                    src={`${import.meta.env.VITE_BASE_URL}${slide.foto}`}
                                     alt={slide.nameEvent}
                                     className="absolute inset-0 h-full w-full object-cover"
                                   />

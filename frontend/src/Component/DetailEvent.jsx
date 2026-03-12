@@ -63,7 +63,7 @@ export default function DetailEvent() {
   let mediaUrl = null;
 
   if (event.foto) {
-    mediaUrl = `http://localhost:3000${event.foto}`;
+    mediaUrl = `${import.meta.env.VITE_BASE_URL}${event.foto}`;
   } else if (event.link_video) {
     mediaUrl = event.link_video;
   }

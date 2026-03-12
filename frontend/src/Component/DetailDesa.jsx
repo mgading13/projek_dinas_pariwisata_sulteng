@@ -66,7 +66,7 @@ const DetailDesa = () => {
   let mediaUrl = null;
 
   if (desa.foto) {
-    mediaUrl = `http://localhost:3000${desa.foto}`;
+    mediaUrl = `${import.meta.env.VITE_BASE_URL}${desa.foto}`;
   } else if (desa.link_video) {
     mediaUrl = desa.link_video;
   }

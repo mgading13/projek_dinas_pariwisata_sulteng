@@ -58,7 +58,7 @@ const Kuliner = () => {
           lokasi: item.lokasi,
           foto:
             item.foto && item.foto !== ""
-              ? `http://localhost:3000${item.foto}`
+              ? `${import.meta.env.VITE_BASE_URL}${item.foto}`
               : item.link_video && item.link_video !== ""
                 ? item.link_video
                 : null,

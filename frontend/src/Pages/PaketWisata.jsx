@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import {
   Carousel,
   CarouselContent,
@@ -10,12 +9,7 @@ import {
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Search, ChevronDown, ChevronUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { WhatsappLogo } from "@phosphor-icons/react";
@@ -50,7 +44,7 @@ const PaketWisata = () => {
           harga: `Rp. ${Number(item.harga).toLocaleString("id-ID")}`,
           media:
             item.media && item.media !== ""
-              ? `http://localhost:3000${item.media}`
+              ? `${import.meta.env.VITE_BASE_URL}${item.media}`
               : item.link_video && item.link_video !== ""
                 ? item.link_video
                 : null,
@@ -164,7 +158,7 @@ const PaketWisata = () => {
                       {filteredPaket.map((paket) => (
                         <CarouselItem
                           key={paket.id}
-                          className="basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/3"
+                          className="basis-full sm:basis-1/2 md:basis-1/3"
                         >
                           <motion.div
                             layout
@@ -175,12 +169,9 @@ const PaketWisata = () => {
                           >
                             <Card
                               onClick={() => setSelectedPaket(paket)}
-                              className="
-    overflow-hidden rounded-xl border
-    hover:shadow-xl transition duration-300 cursor-pointer
-    w-full max-w-[360px] mx-auto
-  "
+                              className="rounded-xl overflow-hidden shadow-md hover:shadow-xl transition cursor-pointer h-full flex flex-col"
                             >
+                              {/* MEDIA */}
                               {(() => {
                                 const type = getMediaType(paket.media);
                                 const embedUrl = convertYoutubeLink(
@@ -229,25 +220,28 @@ const PaketWisata = () => {
                                 );
                               })()}
 
-                              <CardContent className="p-4 space-y-2">
-                                <h2 className="font-semibold text-lg">
+                              {/* CONTENT */}
+                              <div className="p-4 space-y-2 flex-grow">
+                                <h2 className="text-lg font-semibold">
                                   {paket.nama}
                                 </h2>
-                                <p className="text-sm text-gray-600 line-clamp-3">
+
+                                <p className="text-sm text-muted-foreground line-clamp-2">
                                   {paket.deskripsi}
                                 </p>
-                              </CardContent>
+                              </div>
 
-                              <CardFooter className="flex justify-between items-center px-4 pb-4">
+                              {/* FOOTER */}
+                              <div className="px-4 pb-4 flex justify-between items-center">
                                 <span className="font-bold text-green-600">
                                   {paket.harga}
                                 </span>
                                 <WhatsappLogo
-                                  size={28}
+                                  size={24}
                                   weight="fill"
                                   className="text-green-500"
                                 />
-                              </CardFooter>
+                              </div>
                             </Card>
                           </motion.div>
                         </CarouselItem>
@@ -266,10 +260,10 @@ const PaketWisata = () => {
                 exit={{ opacity: 0, y: -50, scale: 0.95 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
                 className="
-  grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4
-  gap-6 place-items-center
-  w-full max-w-10xl
-"
+    grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4
+    gap-6
+    w-full px-6 md:px-16 lg:px-24
+  "
               >
                 <AnimatePresence mode="popLayout">
                   {filteredPaket.map((paket) => (
@@ -279,16 +273,17 @@ const PaketWisata = () => {
                       initial={{ opacity: 0, y: 30 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -30 }}
-                      transition={{ duration: 0.4, ease: "easeInOut" }}
+                      transition={{ duration: 0.4 }}
+                      className="h-full"
                     >
                       <Card
                         onClick={() => setSelectedPaket(paket)}
                         className="
-    overflow-hidden rounded-xl border
-    hover:shadow-xl transition duration-300 cursor-pointer
-    w-full max-w-[360px] mx-auto
-  "
+            rounded-xl overflow-hidden shadow-md hover:shadow-xl
+            transition cursor-pointer h-full flex flex-col bg-white
+          "
                       >
+                        {/* MEDIA */}
                         {(() => {
                           const type = getMediaType(paket.media);
                           const embedUrl = convertYoutubeLink(paket.media);
@@ -335,25 +330,28 @@ const PaketWisata = () => {
                           );
                         })()}
 
-                        <CardContent className="p-4 space-y-2">
-                          <h2 className="font-semibold text-lg">
+                        {/* CONTENT */}
+                        <div className="p-4 space-y-2 flex-grow">
+                          <h2 className="text-lg font-semibold">
                             {paket.nama}
                           </h2>
-                          <p className="text-sm text-gray-600 line-clamp-3">
+
+                          <p className="text-sm text-gray-600 line-clamp-2">
                             {paket.deskripsi}
                           </p>
-                        </CardContent>
+                        </div>
 
-                        <CardFooter className="flex justify-between items-center px-4 pb-4">
+                        {/* FOOTER */}
+                        <div className="px-4 pb-4 flex justify-between items-center">
                           <span className="font-bold text-green-600">
                             {paket.harga}
                           </span>
                           <WhatsappLogo
-                            size={22}
+                            size={24}
                             weight="fill"
                             className="text-green-500"
                           />
-                        </CardFooter>
+                        </div>
                       </Card>
                     </motion.div>
                   ))}
