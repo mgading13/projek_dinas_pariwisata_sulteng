@@ -292,7 +292,7 @@ export default function CarouselWisataUnggulan() {
                           </p>
 
                           <Link
-                            to={`/desa/${(
+                            to={`/desa-wisata/${(
                               desa.namaDesa_id ||
                               desa.namaDesa ||
                               ""

@@ -12,7 +12,7 @@ function App() {
     <Routes>
       {/* Halaman utama */}
       <Route path="/" element={<Home />} />
-      <Route path="/desa/:slug" element={<DetailDesa />} />
+      <Route path="/desa-wisata/:slug" element={<DetailDesa />} />
       {/* Halaman Detail Atraksi */}
       <Route path="/event/:slug" element={<DetailEvent />} />
       {/* Halaman Info Paket Wisata */}

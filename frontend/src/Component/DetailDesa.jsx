@@ -7,6 +7,7 @@ import { MapPin, Car, Ship, Plane } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import API_URL from "@/lib/api";
+import { Helmet } from "react-helmet-async";
 
 const DetailDesa = () => {
   const { slug } = useParams();
@@ -100,33 +101,74 @@ const DetailDesa = () => {
   }
 
   function convertVideoLink(url) {
-  if (!url) return null;
+    if (!url) return null;
 
-  try {
-    const urlObj = new URL(url);
+    try {
+      const urlObj = new URL(url);
 
-    let videoId = null;
+      let videoId = null;
 
-    if (urlObj.hostname.includes("youtu.be")) {
-      videoId = urlObj.pathname.replace("/", "");
+      if (urlObj.hostname.includes("youtu.be")) {
+        videoId = urlObj.pathname.replace("/", "");
+      }
+
+      if (urlObj.hostname.includes("youtube.com")) {
+        videoId = urlObj.searchParams.get("v");
+      }
+
+      if (!videoId) return null;
+
+      return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0&playsinline=1&loop=1&playlist=${videoId}`;
+    } catch {
+      return null;
     }
-
-    if (urlObj.hostname.includes("youtube.com")) {
-      videoId = urlObj.searchParams.get("v");
-    }
-
-    if (!videoId) return null;
-
-    return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0&playsinline=1&loop=1&playlist=${videoId}`;
-  } catch {
-    return null;
   }
-}
 
   return (
     <>
       <NavBar />
+      <Helmet>
+        <title>{namaDisplay} | Desa Wisata Sulawesi Tengah</title>
 
+        <meta name="description" content={deskripsiDisplay?.slice(0, 160)} />
+
+        <meta
+          name="keywords"
+          content={`${namaDisplay}, desa wisata ${lokasiDisplay}, wisata sulawesi tengah`}
+        />
+
+        <meta property="og:title" content={namaDisplay} />
+        <meta
+          property="og:description"
+          content={deskripsiDisplay?.slice(0, 160)}
+        />
+        <meta property="og:image" content={mediaUrl} />
+        <meta
+          property="og:url"
+          content={`https://beranikamaimo.sultengprov.go.id/desa-wisata/${slug}`}
+        />
+
+        <meta name="robots" content="index, follow" />
+        <script type="application/ld+json">
+          {`
+{
+  "@context": "https://schema.org",
+  "@type": "TouristAttraction",
+  "name": "${namaDisplay}",
+  "description": "${deskripsiDisplay?.replace(/"/g, "'")}",
+  "image": "${mediaUrl}",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "${lokasiDisplay}",
+    "addressRegion": "Sulawesi Tengah",
+    "addressCountry": "ID"
+  },
+  "url": "https://beranikamaimo.sultengprov.go.id/desa-wisata/${slug}",
+  "touristType": ["Domestic", "International"]
+}
+`}
+        </script>
+      </Helmet>
       <section className="relative min-h-screen overflow-hidden">
         {mediaType === "local-video" && (
           <motion.video

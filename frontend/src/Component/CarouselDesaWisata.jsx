@@ -279,7 +279,7 @@ export default function CarouselDesaWisata() {
                           </p>
 
                           <Link
-                            to={`/desa/${desa.namaDesa_id
+                            to={`/desa-wisata/${desa.namaDesa_id
                               .toLowerCase()
                               .replace(/\s+/g, "-")}`}
                             className="mt-3 sm:mt-4"

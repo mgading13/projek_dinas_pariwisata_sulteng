@@ -9,6 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import API_URL from "@/lib/api";
+import { Helmet } from "react-helmet-async";
 
 export default function DetailEvent() {
   const { slug } = useParams();
@@ -83,6 +84,14 @@ export default function DetailEvent() {
     month: "long",
     year: "numeric",
   });
+  const titleSEO = `${event.nameEvent} | Event Wisata Sulawesi Tengah`;
+
+  const descSEO = (
+    i18n.language === "en" ? event.description_en : event.description_id
+  )?.slice(0, 160);
+
+  const locationSEO =
+    i18n.language === "en" ? event.location_en : event.location_id;
 
   function getMediaType(url) {
     if (!url) return "none";
@@ -128,7 +137,56 @@ export default function DetailEvent() {
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
         <Navbar />
+        <Helmet>
+          <title>{titleSEO}</title>
 
+          <meta name="description" content={descSEO} />
+
+          <meta
+            name="keywords"
+            content={`${event.nameEvent}, event ${locationSEO}, event wisata sulawesi tengah`}
+          />
+
+          <meta property="og:title" content={event.nameEvent} />
+          <meta property="og:description" content={descSEO} />
+          <meta property="og:image" content={mediaUrl} />
+          <meta
+            property="og:url"
+            content={`https://beranikamaimo.sultengprov.go.id/event/${slug}`}
+          />
+
+          <meta name="robots" content="index, follow" />
+          <script type="application/ld+json">
+            {`
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "${event.nameEvent}",
+  "startDate": "${event.startdate}",
+  "endDate": "${event.enddate}",
+  "eventStatus": "https://schema.org/EventScheduled",
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+  "location": {
+    "@type": "Place",
+    "name": "${locationSEO}",
+    "address": {
+      "@type": "PostalAddress",
+      "addressRegion": "Sulawesi Tengah",
+      "addressCountry": "ID"
+    }
+  },
+  "image": ["${mediaUrl}"],
+  "description": "${descSEO?.replace(/"/g, "'")}",
+  "organizer": {
+    "@type": "Organization",
+    "name": "Dinas Pariwisata Provinsi Sulawesi Tengah",
+    "url": "https://beranikamaimo.sultengprov.go.id"
+  },
+  "url": "https://beranikamaimo.sultengprov.go.id/event/${slug}"
+}
+`}
+          </script>
+        </Helmet>
         {/* HERO SECTION */}
         <section className="relative min-h-screen overflow-hidden">
           {/* PARALLAX BACKGROUND */}
