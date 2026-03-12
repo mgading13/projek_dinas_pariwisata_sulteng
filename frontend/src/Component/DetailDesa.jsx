@@ -6,7 +6,7 @@ import Ulasan from "./Ulasan.jsx";
 import { MapPin, Car, Ship, Plane } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslation } from "react-i18next";
-import API_URL from "@/lib/API";
+import API_URL from "@/lib/api";
 
 const DetailDesa = () => {
   const { slug } = useParams();

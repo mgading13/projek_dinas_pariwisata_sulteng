@@ -56,7 +56,7 @@ const PaketWisata = () => {
                 : null,
           wa: `https://wa.me/${item.kontak}`,
         }));
-
+        console.log(res.data);
         setDataPaket(formatted);
       } catch (err) {
         console.error(err);
@@ -69,9 +69,9 @@ const PaketWisata = () => {
   }, [langSuffix]);
 
   const filteredPaket = dataPaket.filter((p) =>
-    p.nama.toLowerCase().includes(search.toLowerCase()),
+    (p.nama || "").toLowerCase().includes(search.toLowerCase()),
   );
- 
+
   const getMediaType = (url) => {
     if (!url) return "none";
 

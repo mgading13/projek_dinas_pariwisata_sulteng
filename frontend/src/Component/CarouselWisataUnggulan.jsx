@@ -19,7 +19,7 @@ import LoadingCard from "@/components/ui/LoadingCard";
 import EmptyCard from "@/components/ui/EmptyCard";
 import ErrorCard from "@/components/ui/ErrorCard";
 import { useTranslation } from "react-i18next";
-import API_URL from "@/lib/API";
+import API_URL from "@/lib/api";
 
 export default function CarouselWisataUnggulan() {
   const [slides, setSlides] = useState([]);
