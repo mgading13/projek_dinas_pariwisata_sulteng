@@ -221,7 +221,7 @@ export default function PetaDesaWisata() {
               eventHandlers={{
                 click: () => {
                   navigate(
-                    `/desa/${createSlug(getNamaDesa(desa, i18n.language))}`,
+                    `/desa-wisata/${createSlug(getNamaDesa(desa, i18n.language))}`,
                   );
                 },
               }}
