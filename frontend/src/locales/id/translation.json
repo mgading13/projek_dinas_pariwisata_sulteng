@@ -53,6 +53,12 @@
     "desc_skeleton_event": "Event yang kamu cari mungkin sudah berakhir atau belum tersedia.",
     "title_skeleton_desa": "Desa Tidak Ditemukan",
     "desc_skeleton_desa": "Destinasi yang kamu cari mungkin belum tersedia.",
-    "skeleton_button": "Kembali ke Beranda"
+    "skeleton_button": "Kembali ke Beranda",
+    "title_empty_wisata_unggulan": "Belum ada Wisata Unggulan",
+    "desc_empty_wisata_unggulan": "Wisata Unggulan akan ditampilkan jika tersedia.",
+    "title_empty_desa_wisata": "Belum ada Desa Wisata",
+    "desc_empty_desa_wisata": "Desa Wisata akan ditampilkan jika tersedia.",
+    "title_empty_atraksi": "Belum ada Atraksi",
+    "desc_empty_atraksi": "Atraksi akan ditampilkan jika tersedia."
 
 }

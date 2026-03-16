@@ -140,8 +140,8 @@ export default function CarouselDesaWisata() {
                   className="pl-3 sm:pl-4 flex justify-center"
                 >
                   <EmptyCard
-                    title="Belum ada Desa Wisata"
-                    description="Desa Wisata akan ditampilkan jika sudah tersedia"
+                    title={t("title_empty_desa_wisata")}
+                    description={t("desc_empty_desa_wisata")}
                   />
                 </CarouselItem>
               ))}

@@ -53,5 +53,11 @@
     "desc_skeleton_event": "The event you are looking for may have ended or is not yet available.",
     "title_skeleton_desa": "Village Not Found",
     "desc_skeleton_desa": "The destination you are looking for may not yet be available.",
-    "skeleton_button": "Back to Home"
+    "skeleton_button": "Back to Home",
+    "title_empty_wisata_unggulan": "No Featured Tourism Yet",
+    "desc_empty_wisata_unggulan": "Featured Tourism will be displayed if available.",
+    "title_empty_desa_wisata": "No Tourist Villages Yet",
+    "desc_empty_desa_wisata": "Tourist Villages will be displayed if available.",
+    "title_empty_atraksi": "No Attractions Yet",
+    "desc_empty_atraksi": "Attractions will be displayed if available."
 }

@@ -161,8 +161,8 @@ export default function CarouselEvent() {
                   className="pl-3 sm:pl-4 flex justify-center"
                 >
                   <EmptyCard
-                    title="Belum ada Atraksi"
-                    description="Atraksi akan ditampilkan jika sudah tersedia"
+                    title={t("title_empty_atraksi")}
+                    description={t("desc_empty_atraksi")}
                   />
                 </CarouselItem>
               ))}

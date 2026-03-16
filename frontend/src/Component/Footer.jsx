@@ -99,14 +99,14 @@ const Footer = () => {
             {/* RIGHT */}
             <div className="lg:text-right">
               <ul className="space-y-3 text-gray-800 text-sm sm:text-base">
-                <li>
+                {/* <li>
                   <a
                     href="mailto:info@wonderfulindonesia.id"
                     className="hover:underline hover:text-blue-600 transition"
                   >
                     {t("foot_kontak_kami")}
                   </a>
-                </li>
+                </li> */}
 
                 <li>
                   <Link
