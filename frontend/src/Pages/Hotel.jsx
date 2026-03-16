@@ -45,12 +45,12 @@ const Hotel = () => {
           lokasi: item.lokasi,
           jumlahKamar: item.jumlah_kamar,
           jumlahTempatTidur: item.jumlah_tempatTidur,
-          harga: item.harga,
+          harga_minimum: item.harga_minimum,
+          harga_maximum: item.harga_maximum,
           telepon: item.telepon,
           linkWebsite: item.website,
           linkGmaps: item.link_gmaps,
           foto:
-          
             item.foto && item.foto !== ""
               ? `${import.meta.env.VITE_BASE_URL}${item.foto}`
               : item.link_video && item.link_video !== ""
@@ -71,9 +71,6 @@ const Hotel = () => {
   const filteredHotel = dataHotel.filter((p) =>
     p.namaHotel.toLowerCase().includes(search.toLowerCase()),
   );
-  const isVideo = (url) => {
-    return /\.(mp4|webm|ogg)$/i.test(url);
-  };
 
   const getMediaType = (url) => {
     if (!url) return "none";
@@ -221,21 +218,28 @@ const Hotel = () => {
                             <h2 className="font-semibold text-lg">
                               {hotel.namaHotel}
                             </h2>
-                            <p className="text-sm text-muted-foreground">
+                            <p className="text-md text-muted-foreground">
                               {hotel.lokasi}
                             </p>
 
-                            <div className="mt-3 flex j items-center">
-                              <p className="text-primary font font-semibold">
+                            <div className="mt-3 flex items-center">
+                              <p className="text-primary font-semibold">
                                 Mulai dari{" "}
-                                <span className="text-primary font-bold">
+                                <span className="font-bold">
                                   Rp{" "}
-                                  {Number(hotel.harga).toLocaleString("id-ID")}{" "}
+                                  {Number(hotel.harga_minimum).toLocaleString(
+                                    "id-ID",
+                                  )}
+                                  <span className="font-bold">
+                                    {" "}
+                                    - Rp{" "}
+                                    {Number(hotel.harga_maximum).toLocaleString(
+                                      "id-ID",
+                                    )}
+                                  </span>{" "}
                                   / malam
                                 </span>
                               </p>
-
-                              <span className="text-xs text-muted-foreground"></span>
                             </div>
                           </div>
                         </Card>
@@ -322,20 +326,28 @@ const Hotel = () => {
                           <h2 className="font-semibold text-lg">
                             {hotel.namaHotel}
                           </h2>
-                          <p className="text-sm text-muted-foreground">
+                          <p className="text-md text-muted-foreground">
                             {hotel.lokasi}
                           </p>
 
-                          <div className="mt-3 flex j items-center">
-                            <p className="text-primary font font-semibold">
+                          <div className="mt-3 flex items-center">
+                            <p className="text-primary font-semibold">
                               Mulai dari{" "}
-                              <span className="text-primary font-bold">
-                                Rp {Number(hotel.harga).toLocaleString("id-ID")}{" "}
+                              <span className="font-bold">
+                                Rp{" "}
+                                {Number(hotel.harga_minimum).toLocaleString(
+                                  "id-ID",
+                                )}
+                                <span className="font-bold">
+                                  {" "}
+                                  - Rp{" "}
+                                  {Number(hotel.harga_maximum).toLocaleString(
+                                    "id-ID",
+                                  )}
+                                </span>{" "}
                                 / malam
                               </span>
                             </p>
-
-                            <span className="text-xs text-muted-foreground"></span>
                           </div>
                         </div>
                       </Card>
@@ -441,7 +453,7 @@ const Hotel = () => {
                       <h2 className="text-2xl font-bold">
                         {selectedHotel.namaHotel}
                       </h2>
-                      <p className="flex items-center gap-1 text-sm text-gray-200">
+                      <p className="flex items-center gap-1 text-md text-gray-200">
                         <MapPin size={14} />
                         {selectedHotel.lokasi}
                       </p>
@@ -458,8 +470,17 @@ const Hotel = () => {
                     {/* HARGA */}
                     <p className="text-xl font-semibold text-primary">
                       Mulai dari Rp{" "}
-                      {Number(selectedHotel.harga).toLocaleString("id-ID")} /
-                      malam
+                      {Number(selectedHotel.harga_minimum).toLocaleString(
+                        "id-ID",
+                      )}
+                      <span className="font-semibold">
+                        {" "}
+                        - Rp{" "}
+                        {Number(selectedHotel.harga_maximum).toLocaleString(
+                          "id-ID",
+                        )}
+                      </span>{" "}
+                      / malam
                     </p>
 
                     {/* INFO GRID */}
