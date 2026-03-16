@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "./NavBar";
 import CountDown from "./CountDown";
 import { Card, CardContent } from "@/components/ui/card";
@@ -15,6 +15,7 @@ export default function DetailEvent() {
   const { slug } = useParams();
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
   const { i18n } = useTranslation();
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
@@ -49,14 +50,67 @@ export default function DetailEvent() {
     getAtraksi();
   }, [slug]);
 
-  if (loading || !event) {
+  if (loading) {
     return (
-      <div className="min-h-scr een flex flex-col">
+      <div className="min-h-screen relative flex flex-col">
         <Navbar />
-        <div className="flex flex-col gap-6 p-10">
-          <Skeleton className="w-full h-[350px]" />
-          <Skeleton className="w-full h-[200px]" />
-        </div>
+
+        <section className="relative flex-1 flex items-center justify-center overflow-hidden">
+          {/* background shimmer */}
+          <div className="absolute inset-0 bg-gray-300 animate-pulse" />
+
+          {/* overlay */}
+          <div className="absolute inset-0 bg-black/40" />
+
+          {/* content skeleton */}
+          <div className="relative z-10 w-full max-w-4xl px-6">
+            <div className="space-y-6">
+              <div className="h-[320px] rounded-2xl bg-white/20 backdrop-blur animate-pulse" />
+
+              <div className="h-8 w-2/3 bg-white/30 rounded animate-pulse mx-auto" />
+
+              <div className="space-y-3">
+                <div className="h-4 bg-white/30 rounded animate-pulse" />
+                <div className="h-4 bg-white/30 rounded animate-pulse w-5/6" />
+                <div className="h-4 bg-white/30 rounded animate-pulse w-4/6" />
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    );
+  }
+
+  if (!event) {
+    return (
+      <div className="min-h-screen relative flex flex-col">
+        <Navbar />
+
+        <section className="relative flex-1 flex items-center justify-center text-white overflow-hidden">
+          {/* background image */}
+          <div className="absolute inset-0 bg-[url('/bg-error.jpg')] bg-cover bg-center opacity-40" />
+
+          {/* overlay */}
+          <div className="absolute inset-0 bg-black" />
+
+          {/* content */}
+          <div className="relative z-10 text-center px-6">
+            <h1 className="text-4xl md:text-5xl font-extrabold mb-4">
+              Event Tidak Ditemukan
+            </h1>
+
+            <p className="text-gray-300 mb-8 max-w-md mx-auto">
+              Event yang kamu cari mungkin sudah berakhir atau belum tersedia.
+            </p>
+
+            <button
+              onClick={() => navigate("/")}
+              className="px-6 py-3 rounded-lg bg-white text-black font-semibold hover:scale-105 transition"
+            >
+              Kembali ke Beranda
+            </button>
+          </div>
+        </section>
       </div>
     );
   }

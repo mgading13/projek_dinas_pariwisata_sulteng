@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import NavBar from "./NavBar.jsx";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import Ulasan from "./Ulasan.jsx";
 import { MapPin, Car, Ship, Plane } from "lucide-react";
@@ -13,6 +13,7 @@ const DetailDesa = () => {
   const { slug } = useParams();
   const [desa, setDesa] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
   const [palujalur, setPaluJalur] = useState(null);
   const [luwukjalur, setLuwukJalur] = useState(null);
   const { t, i18n } = useTranslation();
@@ -28,7 +29,6 @@ const DetailDesa = () => {
     const fetchDetail = async () => {
       try {
         setLoading(true);
-        // ambil desa
         const desaRes = await API_URL.get("/desaWisata");
         const found = desaRes.data.find(
           (d) => d.namaDesa_id.toLowerCase().replace(/\s+/g, "-") === slug,
@@ -61,8 +61,60 @@ const DetailDesa = () => {
     fetchDetail();
   }, [slug]);
 
-  if (loading) return <p className="p-10 text-center">Loading...</p>;
-  if (!desa) return <p className="p-10 text-center">Desa tidak ditemukan.</p>;
+  if (loading) {
+    return (
+      <>
+        <NavBar />
+
+        <section className="relative min-h-screen overflow-hidden">
+          {/* background skeleton */}
+          <div className="absolute inset-0 bg-gray-300 animate-pulse" />
+
+          {/* overlay */}
+          <div className="absolute inset-0 bg-black/30" />
+
+          {/* card skeleton */}
+          <div className="relative z-10 min-h-screen flex items-center justify-center px-4">
+            <div className="max-w-4xl w-full bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl p-8 space-y-6">
+              <div className="h-10 bg-gray-200/60 rounded animate-pulse w-2/3 mx-auto" />
+
+              <div className="h-4 bg-gray-200/60 rounded animate-pulse w-1/3 mx-auto" />
+
+              <div className="h-px bg-white/20" />
+
+              <div className="space-y-3">
+                <div className="h-4 bg-gray-200/60 rounded animate-pulse" />
+                <div className="h-4 bg-gray-200/60 rounded animate-pulse" />
+                <div className="h-4 bg-gray-200/60 rounded animate-pulse w-5/6" />
+                <div className="h-4 bg-gray-200/60 rounded animate-pulse w-4/6" />
+                <div className="h-4 bg-gray-200/60 rounded animate-pulse w-3/6" />
+              </div>
+            </div>
+          </div>
+        </section>
+      </>
+    );
+  }
+  if (!desa)
+    return (
+      <section className="relative min-h-screen bg-black flex items-center justify-center text-white">
+        <div className="absolute inset-0 bg-[url('/bg-error.jpg')] bg-cover opacity-40" />
+
+        <div className="relative z-10 text-center">
+          <h1 className="text-4xl font-extrabold mb-4">Desa Tidak Ditemukan</h1>
+          <p className="text-gray-300 mb-6">
+            Destinasi yang kamu cari mungkin belum tersedia.
+          </p>
+
+          <button
+            onClick={() => navigate("/")}
+            className="px-6 py-3 rounded-lg bg-white text-black font-semibold hover:scale-105 transition"
+          >
+            Kembali ke Beranda
+          </button>
+        </div>
+      </section>
+    );
 
   let mediaUrl = null;
 
@@ -74,14 +126,6 @@ const DetailDesa = () => {
 
   const mediaType = getMediaType(mediaUrl);
   const embedUrl = convertVideoLink(mediaUrl);
-
-  if (loading) {
-    return <p className="p-10 text-center">Sedang memuat data...</p>;
-  }
-
-  if (!desa) {
-    return <p className="p-10 text-center">Desa tidak ditemukan.</p>;
-  }
 
   const langSuffix = i18n.language === "en" ? "en" : "id";
   const namaDisplay = desa[`namaDesa_${langSuffix}`];
