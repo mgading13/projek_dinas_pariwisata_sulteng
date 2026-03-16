@@ -44,5 +44,14 @@
     "ulasan_batal": "Cancel",
     "ulasan_kirim": "Send a Review",
     "placeholder_name": "Your Name",
-    "placeholder_desc": "Write Your Comments Here"
+    "placeholder_desc": "Write Your Comments Here",
+    "malam": "Night",
+    "start_from": "Starting From",
+    "jumlah_kamar": "Number of Rooms",
+    "jumlah_tempat_tidur": "Number of Beds",
+    "title_skeleton_event": "Event Not Found",
+    "desc_skeleton_event": "The event you are looking for may have ended or is not yet available.",
+    "title_skeleton_desa": "Village Not Found",
+    "desc_skeleton_desa": "The destination you are looking for may not yet be available.",
+    "skeleton_button": "Back to Home"
 }

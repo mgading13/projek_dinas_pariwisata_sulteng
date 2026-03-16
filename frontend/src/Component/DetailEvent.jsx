@@ -10,6 +10,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import API_URL from "@/lib/api";
 import { Helmet } from "react-helmet-async";
+import { t } from "i18next";
 
 export default function DetailEvent() {
   const { slug } = useParams();
@@ -96,18 +97,18 @@ export default function DetailEvent() {
           {/* content */}
           <div className="relative z-10 text-center px-6">
             <h1 className="text-4xl md:text-5xl font-extrabold mb-4">
-              Event Tidak Ditemukan
+              {t("title_skeleton_event")}
             </h1>
 
             <p className="text-gray-300 mb-8 max-w-md mx-auto">
-              Event yang kamu cari mungkin sudah berakhir atau belum tersedia.
+              {t("desc_skeleton_event")}
             </p>
 
             <button
               onClick={() => navigate("/")}
               className="px-6 py-3 rounded-lg bg-white text-black font-semibold hover:scale-105 transition"
             >
-              Kembali ke Beranda
+              {t("skeleton_button")}
             </button>
           </div>
         </section>

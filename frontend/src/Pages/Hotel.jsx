@@ -224,7 +224,7 @@ const Hotel = () => {
 
                             <div className="mt-3 flex items-center">
                               <p className="text-primary font-semibold">
-                                Mulai dari{" "}
+                                {t("start_from")}{" "}
                                 <span className="font-bold">
                                   Rp{" "}
                                   {Number(hotel.harga_minimum).toLocaleString(
@@ -237,7 +237,7 @@ const Hotel = () => {
                                       "id-ID",
                                     )}
                                   </span>{" "}
-                                  / malam
+                                  / {t("malam")}
                                 </span>
                               </p>
                             </div>
@@ -332,7 +332,7 @@ const Hotel = () => {
 
                           <div className="mt-3 flex items-center">
                             <p className="text-primary font-semibold">
-                              Mulai dari{" "}
+                              {t("start_from")}{" "}
                               <span className="font-bold">
                                 Rp{" "}
                                 {Number(hotel.harga_minimum).toLocaleString(
@@ -345,7 +345,7 @@ const Hotel = () => {
                                     "id-ID",
                                   )}
                                 </span>{" "}
-                                / malam
+                                / {t("malam")}
                               </span>
                             </p>
                           </div>
@@ -469,7 +469,7 @@ const Hotel = () => {
                   >
                     {/* HARGA */}
                     <p className="text-xl font-semibold text-primary">
-                      Mulai dari Rp{" "}
+                      {t("start_from")} Rp{" "}
                       {Number(selectedHotel.harga_minimum).toLocaleString(
                         "id-ID",
                       )}
@@ -480,17 +480,17 @@ const Hotel = () => {
                           "id-ID",
                         )}
                       </span>{" "}
-                      / malam
+                      / {t("malam")}
                     </p>
 
                     {/* INFO GRID */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <div>
-                        <span className="font-semibold">Jumlah Kamar</span>
+                        <span className="font-semibold">{t("jumlah_kamar")}</span>
                         <p>{selectedHotel.jumlahKamar}</p>
                       </div>
                       <div>
-                        <span className="font-semibold">Tempat Tidur</span>
+                        <span className="font-semibold">{t("jumlah_tempat_tidur")}</span>
                         <p>{selectedHotel.jumlahTempatTidur}</p>
                       </div>
                     </div>

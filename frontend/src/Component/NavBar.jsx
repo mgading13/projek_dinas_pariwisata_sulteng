@@ -20,7 +20,6 @@ import { useTranslation } from "react-i18next";
 
 import Logo from "../assets/Logo-Sulteng.png";
 import { useState, useEffect } from "react";
-import API_URL from "@/lib/api";
 
 export default function Navbar() {
   const [drawerOpen, setDrawerOpen] = useState(false);

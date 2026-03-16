@@ -101,16 +101,16 @@ const DetailDesa = () => {
         <div className="absolute inset-0 bg-[url('/bg-error.jpg')] bg-cover opacity-40" />
 
         <div className="relative z-10 text-center">
-          <h1 className="text-4xl font-extrabold mb-4">Desa Tidak Ditemukan</h1>
+          <h1 className="text-4xl font-extrabold mb-4">{t("title_skeleton_desa")}</h1>
           <p className="text-gray-300 mb-6">
-            Destinasi yang kamu cari mungkin belum tersedia.
+            {t("desc_skeleton_desa")}
           </p>
 
           <button
             onClick={() => navigate("/")}
             className="px-6 py-3 rounded-lg bg-white text-black font-semibold hover:scale-105 transition"
           >
-            Kembali ke Beranda
+            {t("skeleton_button")}
           </button>
         </div>
       </section>

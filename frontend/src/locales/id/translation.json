@@ -44,5 +44,15 @@
     "ulasan_batal": "Batal",
     "ulasan_kirim": "Kirim Ulasan",
     "placeholder_name": "Nama Anda",
-    "placeholder_desc": "Tuliskan Komentar Anda di sini"
+    "placeholder_desc": "Tuliskan Komentar Anda di sini",
+    "malam": "Malam",
+    "start_from": "Mulai Dari",
+    "jumlah_kamar": "Jumlah Kamar",
+    "jumlah_tempat_tidur": "Jumlah Tempat Tidur",
+    "title_skeleton_event": "Event Tidak Ditemukan",
+    "desc_skeleton_event": "Event yang kamu cari mungkin sudah berakhir atau belum tersedia.",
+    "title_skeleton_desa": "Desa Tidak Ditemukan",
+    "desc_skeleton_desa": "Destinasi yang kamu cari mungkin belum tersedia.",
+    "skeleton_button": "Kembali ke Beranda"
+
 }
